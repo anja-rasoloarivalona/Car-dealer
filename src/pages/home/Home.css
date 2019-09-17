@@ -7,12 +7,6 @@
   grid-template-columns: 1fr repeat(2, 40vw) 1fr;
   grid-template-rows: max-content;
   grid-auto-rows: max-content;
-
-
-
-
- 
-
 }
 
 .home__intro {
@@ -26,7 +20,7 @@
 
 .home__router {
     grid-column: 1 / -1;
-    grid-row: 4 / 5;  
+    grid-row: 3 / 4;  
 }
 
 

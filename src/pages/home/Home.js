@@ -1,8 +1,14 @@
 import React from 'react';
 import './Home.css';
 import IconSvg from '../../utilities/svg/svg';
+import { Route, Switch} from 'react-router-dom';
+
+
+import HomeInventory from './homeInventory/HomeInventory';
+import HomeSearch from './homeSearch/HomeSearch';
 
 const home = () => {
+
     return (
         <div className="home">
 
@@ -26,6 +32,11 @@ const home = () => {
                 </div>
 
             </section>
+
+            <Switch>
+                <Route path="/" exact component={HomeInventory}/>
+                <Route path="/search" component={HomeSearch}/>
+            </Switch>
       
         </div>
     )
