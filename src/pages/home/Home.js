@@ -7,6 +7,9 @@ import { Route, Switch} from 'react-router-dom';
 import HomeInventory from './homeInventory/HomeInventory';
 import HomeSearch from './homeSearch/HomeSearch';
 
+
+import HomeService from './homeService/HomeService';
+
 const home = () => {
 
     return (
@@ -37,7 +40,9 @@ const home = () => {
                 <Route path="/" exact component={HomeInventory}/>
                 <Route path="/search" component={HomeSearch}/>
             </Switch>
-      
+
+            <HomeService />
+            
         </div>
     )
 }
