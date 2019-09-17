@@ -1,0 +1,46 @@
+.navtop {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 5rem;
+    background: var(--color-dark);
+    color: var(--color-white)
+}
+
+.navtop__logo {
+    font-size: 2.5rem;
+}
+
+.navtop__contact {
+    display: flex;
+    justify-content: space-between;
+    width: 25rem;
+}
+
+.navtop__contact__detail {
+    display: flex;
+    align-items: center;
+}
+
+.navtop__contact__detail svg {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--color-primary);
+    margin-right: 1rem;
+}
+
+
+
+.navtop__socialMedia {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 15rem;
+}
+
+.navtop__socialMedia svg {
+    width: 2rem;
+    height: 2rem;
+    fill: var(--color-primary);
+}

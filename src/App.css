@@ -1,0 +1,44 @@
+:root {
+  /* COLOR */ 
+  --color-white : #fff;
+  --color-primary: #d85803;
+  --color-dark: #1a1a1a;
+
+
+  
+  --color-secondary: #04776e;
+  --color-grey: #989084;
+}
+
+*,
+*::before,
+*::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  overflow-x: hidden;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 55%;
+  }
+}
+
+
+body {
+  box-sizing: border-box;
+  overflow-x: hidden;
+  font-family: 'Lato', sans-serif;
+}
+
+.app {
+  display: grid;
+  grid-template-columns: 1fr repeat(2, 40vw) 1fr;
+  grid-template-rows: max-content;
+  grid-auto-rows: max-content;
+}
