@@ -1,5 +1,5 @@
 import React from 'react';
-import './homeSearch.css'
+import './HomeSearch.css'
 
 
 const homeSearch = () => {

@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomeInventory.css';
 import IconSvg from '../../../utilities/svg/svg';
+import Button from '../../../components/button/Button';
 
 
 import intro1 from '../../../assets/img/intro1.jpeg';
@@ -59,6 +60,10 @@ const homeInventory = () => {
                     <img src={intro4} className="home-inventory__list__item__img" alt="car"/>
                 </li>
             </ul>
+            <Button color="primary">
+                Voir plus
+            </Button>
+        
         </div>
     )
 }
