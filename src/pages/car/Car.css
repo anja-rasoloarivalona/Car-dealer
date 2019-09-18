@@ -1,0 +1,20 @@
+.car {
+    grid-row: 3 / 4;
+    grid-column: 2 / 4;
+    height: 100vh;
+    background: red;
+    display: flex;
+}
+
+
+.car__presentation {
+    width: 75%;
+    height: 100vh;
+    background: yellow;
+}
+
+.car__presentation--right {
+    width: 25%;
+    height: 100vh;
+    background: green;
+}
