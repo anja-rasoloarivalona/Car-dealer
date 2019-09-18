@@ -6,6 +6,7 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 /*------------COMPONENTS---------------------*/
 import Navtop from './components/navigation/navtop/Navtop';
 import Navbar from './components/navigation/navbar/Navbar';
+import Footer from './components/footer/Footer'
 
 
 /*------------PAGES---------------------------*/
@@ -23,6 +24,9 @@ class App extends Component {
           <Route path='/' exact component={Home}/>
           <Route path='/inventory' component={Inventory}/>
         </Switch>
+
+        <Footer />
+        
       </div>
     );
   }
