@@ -1,12 +1,14 @@
-import React, { Component, useEffect } from 'react'
+import React, { Component } from 'react'
 import './Car.css';
-
 import { Gallery, GalleryImage } from "react-gesture-gallery";
+import { NavLink, Switch, Route } from 'react-router-dom'
 
+
+import Overview from './overview/Overview';
+import Technical from './technical/Technical';
+import Features from './features/Features';
 
 class Car extends Component {
-
-
 
     state = {
         index: 0,
@@ -44,7 +46,7 @@ class Car extends Component {
     }
 
     componentDidMount(){
-        this.imageSlideHandler()
+       /* this.imageSlideHandler()*/
     }
 
     componentWillUnmount(){
@@ -61,32 +63,54 @@ class Car extends Component {
     render() {
         return (
             <div className="car">
-            <section className="car__presentation">
-                <h1 className="car__presentation__title">BMW 535i, Navi, Leather, ABS</h1>
-                <div className="car__presentation__gallery">
-                    <Gallery
-                        index={this.state.index}
-                        onRequestChange={i => this.setState({index: i})}>
+                <section className="car__presentation">
+                    <h1 className="car__presentation__title">BMW 535i, Navi, Leather, ABS</h1>
+                    <div className="car__presentation__gallery">
+                        <Gallery
+                            index={this.state.index}
+                            onRequestChange={i => this.setState({index: i})}>
 
-                        {this.state.images.map(img => (
-                        <GalleryImage objectFit="cover" key={img} src={img} />
-                        ))}
+                            {this.state.images.map(img => (
+                            <GalleryImage objectFit="cover" key={img} src={img} />
+                            ))}
 
-                    </Gallery>
-                </div>
+                        </Gallery>
+                    </div>
+                    <div className="car__presentation__gallery__controller">
+                        {
+                            this.state.images.map(i => (
+                                <img src={i} alt="car" className="car__presentation__gallery__controller__img"
+                                    onClick={ () => this.changeGalleryImgIndex(i)}/>
+                            ))
+                        }
 
-                <div className="car__presentation__gallery__controller">
-                    {
-                        this.state.images.map(i => (
-                            <img src={i} alt="car" className="car__presentation__gallery__controller__img"
-                                onClick={ () => this.changeGalleryImgIndex(i)}/>
-                        ))
-                    }
+                    </div>
+                    
+                    <nav className="car__presentation__nav">
+                        <NavLink exact to="/car" className="car__presentation__nav__item">
+                            Overview
+                        </NavLink>
+                        <NavLink to="/car/technical" className="car__presentation__nav__item">
+                            Technical
+                        </NavLink>
+                        <NavLink to="/car/features" className="car__presentation__nav__item">
+                            Features
+                        </NavLink>
+                    </nav>
 
-                </div>
-                
+                    <Switch>
+                        <Route exact path="/car" component={Overview}/>
+                        <Route path="/car/technical" component={Technical}/>
+                        <Route path="/car/features" component={Features}/>
+                    </Switch>
 
-            </section>
+
+
+                    <div className="space">
+
+                    </div>
+                    
+                </section>
             <section className="car__presentation--right">
 
             </section>
