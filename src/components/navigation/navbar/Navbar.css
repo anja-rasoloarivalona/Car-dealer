@@ -4,6 +4,21 @@
     background: var(--color-grey);
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+.auth__cta {
+    position: absolute;
+    right: 5rem; 
+    top: 0;
+    bottom: 0;
+    margin: auto !important;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
 }
 
 .navbar__list {

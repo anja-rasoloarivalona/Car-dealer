@@ -1,0 +1,64 @@
+.input {
+    margin: 1.5rem 0;
+    height: 5rem;
+    position: relative;
+
+    
+}
+
+
+.input__label {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 14rem;
+    display: flex;
+    align-items: center;
+    padding-left: .5rem;
+    color: var(--color-grey);
+    transition: all .2s ease-in;
+    font-size: 1.45rem;
+    opacity: 0;
+}
+
+
+.input__field {
+    height: 100%;
+    width: 100%;
+    padding-left: .5rem;
+    border: none;
+    padding-bottom: -1rem; 
+}
+
+
+.input__field:focus {
+    outline: none;  
+}
+
+
+
+input:not(:placeholder-shown) + label {
+    opacity: 1;
+    transform: translateY(-1.7rem);
+    font-size: 1rem;
+}
+
+.input__border {
+    position: absolute;
+    bottom: .5rem;
+    width: 100%;
+    height: 1px;
+    background: var(--color-grey);
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+
+

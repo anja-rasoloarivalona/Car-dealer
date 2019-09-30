@@ -13,6 +13,7 @@ import Footer from './components/footer/Footer'
 import Home from './pages/home/Home';
 import Inventory from './pages/inventory/Inventory';
 import Car from './pages/car/Car';
+import Auth from './pages/auth/Auth';
 
 class App extends Component {
   render() {
@@ -25,6 +26,7 @@ class App extends Component {
           <Route path='/' exact component={Home}/>
           <Route path='/inventory' component={Inventory}/>
           <Route path='/car' component={Car}/>
+          <Route path='/auth' component={Auth} />
         </Switch>
 
         <Footer />

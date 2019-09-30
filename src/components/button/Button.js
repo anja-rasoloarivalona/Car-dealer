@@ -15,7 +15,7 @@ const button = props => !props.link ?
         :
     (
         <Link 
-            className={['button', `button--${props.color}`].join(' ')}
+            className={`button button--${props.color}  ${props.customClass}`}
             to={props.link}
             onClick={props.onClick}>
                 {props.children}

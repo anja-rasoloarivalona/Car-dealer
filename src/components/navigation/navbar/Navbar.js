@@ -3,6 +3,9 @@ import './Navbar.css';
 import { NavLink } from 'react-router-dom';
 
 
+import Button from '../../button/Button';
+
+
 const navbar = () => {
     return (    
             <nav className="navbarContainer">
@@ -23,6 +26,11 @@ const navbar = () => {
                         CAR
                     </NavLink>
                 </ul>
+
+                <Button color='primary' link='/auth'
+                        customClass='auth__cta'>
+                    Se connecter
+                </Button>
             </nav>
         
     )
