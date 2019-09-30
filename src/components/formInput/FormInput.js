@@ -19,7 +19,7 @@ const formInput = props => {
                                required={props.required}
                                value={props.value}
                                placeholder={props.placeholder}
-                               
+                               autoComplete= {props.autoComplete}
                                onChange={e => props.onChange(props.id, e.target.value, props.formType)}
                                />
                     )
