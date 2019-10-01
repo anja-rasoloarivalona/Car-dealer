@@ -70,3 +70,34 @@
 .chat__input textarea:focus {
     outline: none;
 }
+
+
+.chat__message {
+    display: inline-block;
+    border-radius: 3px;
+    
+    background: grey;
+    max-width: 70%;
+    margin: 1rem 0;
+    padding: .5rem;
+    font-size: 1.1rem;
+    width: auto;
+
+    cursor: pointer;
+}
+
+.chat__message--user {
+    margin-right: 2rem;
+} 
+
+.chat__message--admin {
+    background: var(--color-primary);
+    color: var(--color-white);
+    margin-left: 2rem;
+}
+
+.user__message__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

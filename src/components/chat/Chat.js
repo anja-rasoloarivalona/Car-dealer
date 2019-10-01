@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import './Chat.css';
-import Input from '../formInput/FormInput';
+
+
+import openSocket from 'socket.io-client';
+
+const socket = openSocket('http://localhost:8000')
 
 
 
@@ -9,32 +13,74 @@ import Input from '../formInput/FormInput';
 
 
     state = {
-        messages: [
-            {
-                from: 'Max',
-                type: 'user',
-                message: 'Bonjour',
-                date:  new Date()
-            },
-            {
-                from: 'Mario',
-                type: 'admin',
-                message: 'Salut Max',
-                date:  new Date()
-            },
-
-            {
-                from: 'Max',
-                type: 'user',
-                message: 'Ca va Max',
-                date:  new Date()
-            },
-
-        ],
+        messages: [],
 
         messageInput: '',
 
-        showChat: true
+        showChat: true,
+
+        name: 'Max'
+    }
+
+    componentDidMount(){
+        if( socket !== undefined) {
+            console.log('connected to socket')
+        }
+
+
+        let url = "http://localhost:8000/messages";
+        let method = "GET";
+
+        fetch( url, {
+           headers: {
+               "Content-Type": "application/json"
+           },
+           method: method
+        })
+        .then( res => {
+            if(res.status !== 200){
+                throw new Error('Failed to fetch messages')
+            }
+
+            return res.json()
+        })
+        .then( resData => {
+            this.setState({ messages: resData})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+
+        socket.on('message', data => {
+            this.addMessages(data)
+        })
+    }
+
+    sendMessageHandler = () => {
+        let url = "http://localhost:8000/messages";
+        let method = "POST";
+
+        fetch(url, {
+            method: method,
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                name: this.state.name,
+                message: this.state.messageInput
+            })
+        })
+        .then( res => {
+            this.setState({ messageInput: ''});
+        })
+        .catch( err => {
+            console.log(err)
+        })
+    } 
+
+    addMessages = message => {
+        let newMessages = [...this.state.messages, message]
+        this.setState({ messages: newMessages})
     }
 
     messageChangeHandler = (e) => {
@@ -42,7 +88,7 @@ import Input from '../formInput/FormInput';
     }
 
 
-    handleKeyDown(e) {
+    handleKeyDown = (e) => {
 
         e.target.style.height = 'inherit';
         e.target.style.height = `${e.target.scrollHeight}px`; 
@@ -53,8 +99,7 @@ import Input from '../formInput/FormInput';
       keypress = e => {
         if(e.key === 'Enter'){
             e.preventDefault();
-            console.log('value', e.target.value);
-            this.setState({ messageInput: ''})
+            this.sendMessageHandler()   
         }
       }
 
@@ -63,6 +108,8 @@ import Input from '../formInput/FormInput';
               showChat: !prevState.showChat
           }))
       }
+
+      
 
     render() {
         return (
@@ -76,11 +123,48 @@ import Input from '../formInput/FormInput';
                 <div className={`chat__body 
                                  ${this.state.showChat ? '' : 'hide'}`}> 
 
-                       {
+                        {
+                          this.state.messages.length > 0 && this.state.messages.map( message => (
+                                <div>
+                                        <div className="chat__message chat__message--admin">
+                                            {message.message}
+                                        </div>
+                                </div>
+                            ))
+                        }
 
-                       } 
+                       {/*
+                           this.state.messages.map( message => {
 
-                       
+                            if(message.type === 'user'){
+                                return (
+                                    <div className="user__message__container">
+                                        <div></div>
+                                        <div className="chat__message chat__message--user">
+                                            {message.message}
+                                        </div> 
+                                    </div>
+
+                                     
+                                )
+                            }
+
+                            if(message.type === 'admin'){
+                                return (
+                                    <div>
+                                        <div className="chat__message chat__message--admin">
+                                            {message.message}
+                                        </div>
+                                    </div>
+                                    
+
+                                )
+                            }
+                            
+                           })
+                        */} 
+
+
                 </div>
 
                 <div className={`chat__input 
