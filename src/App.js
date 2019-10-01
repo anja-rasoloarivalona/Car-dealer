@@ -9,6 +9,7 @@ import * as actions from './store/actions'
 import Navtop from './components/navigation/navtop/Navtop';
 import Navbar from './components/navigation/navbar/Navbar';
 import Footer from './components/footer/Footer'
+import Chat from './components/chat/Chat';
 
 
 /*------------PAGES---------------------------*/
@@ -56,6 +57,7 @@ class App extends Component {
       <div className="app">
         <Navtop />
         <Navbar logoutHandler={this.logoutHandler}/>
+        <Chat />
 
         <Switch>
           <Route path='/' exact component={Home}/>

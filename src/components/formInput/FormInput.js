@@ -35,6 +35,7 @@ const formInput = props => {
                             required={props.required}
                             value={props.value}
                             onChange={e => props.onChange(props.id, e.target.value)}
+                            placeholder={props.placeholder}
                             />
                     )
                 }
