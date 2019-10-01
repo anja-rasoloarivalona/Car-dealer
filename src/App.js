@@ -42,13 +42,20 @@ class App extends Component {
   }
 
 
+    logoutHandler = () => {
+      localStorage.removeItem('woto-token');
+      localStorage.removeItem('woto-expiryDate');
+      localStorage.removeItem('woto-userId');
+      this.props.setLoginStateToFalse()
+    }
+
 
 
   render() {
     return (
       <div className="app">
         <Navtop />
-        <Navbar />
+        <Navbar logoutHandler={this.logoutHandler}/>
 
         <Switch>
           <Route path='/' exact component={Home}/>

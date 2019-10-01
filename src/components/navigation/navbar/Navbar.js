@@ -6,7 +6,7 @@ import { NavLink } from 'react-router-dom';
 import Button from '../../button/Button';
 
 
-const navbar = () => {
+const navbar = props => {
     return (    
             <nav className="navbarContainer">
                 <ul className="navbar__list">
@@ -27,10 +27,19 @@ const navbar = () => {
                     </NavLink>
                 </ul>
 
-                <Button color='primary' link='/auth'
-                        customClass='auth__cta'>
-                    Se connecter
-                </Button>
+                <div className="navbar__cta">
+                    <Button color='primary' link='/auth'
+                            customClass='auth__cta'>
+                        Se connecter
+                    </Button>
+                    <Button color='secondary' 
+                            customClass='auth__cta'
+                            onClick={props.logoutHandler}>
+                        Logout
+                    </Button>
+                </div>
+
+                
             </nav>
         
     )
