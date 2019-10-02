@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
 import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
 
+import {timeStampGenerator } from '../../../utilities/timeStampGenerator';
 
  class Login extends Component {
 
@@ -59,6 +60,8 @@ import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
             }
         }
 
+        let timeStamp = timeStampGenerator();
+
 
         fetch('http://localhost:8000/auth/login', {
             method: 'POST',
@@ -67,7 +70,8 @@ import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
             },
             body: JSON.stringify({
                 email: loginFormData.email.value,
-                password: loginFormData.password.value
+                password: loginFormData.password.value,
+                timeStamp: timeStamp
             })
         })
         .then( res => {

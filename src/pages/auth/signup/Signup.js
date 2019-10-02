@@ -176,6 +176,7 @@ class Signup extends Component {
                             value={this.state.signupForm['userEmail'].value}
                             onChange={this.inputChangeHandler}
                             placeholder='email'
+                            
                             border
                             required={true}/>
 

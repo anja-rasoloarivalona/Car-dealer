@@ -18,10 +18,13 @@ import Inventory from './pages/inventory/Inventory';
 import Car from './pages/car/Car';
 import Auth from './pages/auth/Auth';
 
+/*-----------UTILITIES-----------*/
+import { timeStampGenerator } from './utilities/timeStampGenerator';
+
 class App extends Component {
 
 
-  componentWillMount(){
+  componentDidMount(){
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
     const connectedUserId = localStorage.getItem('woto-userId');
@@ -39,9 +42,40 @@ class App extends Component {
       return 
     }
 
-    this.props.setLoginStateToTrue(true, token, connectedUserId)
+    this.props.setLoginStateToTrue(true, token, connectedUserId);
+    
+    let timeStamp = timeStampGenerator();
+
+    this.updateLastConnection(connectedUserId, timeStamp)
   }
 
+
+    updateLastConnection = (userId, timeStamp) => {
+        fetch('http://localhost:8000/auth/updateLastConnection',{
+          method: 'POST',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            userId: userId,
+            timeStamp: timeStamp
+          })
+        })
+        .then(res => {
+          if(res.status === 401){
+            throw new Error('UserId not valid')
+          }
+
+          if(res.status !== 200 && res.status !== 201){
+            throw new Error('Could not update last connection')
+          }
+
+          return res.json()
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    }
 
     logoutHandler = () => {
       localStorage.removeItem('woto-token');
@@ -49,6 +83,8 @@ class App extends Component {
       localStorage.removeItem('woto-userId');
       this.props.setLoginStateToFalse()
     }
+
+    
 
 
 
