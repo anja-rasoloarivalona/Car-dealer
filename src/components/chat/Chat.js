@@ -21,7 +21,7 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
 
         messageInput: '',
 
-        showChat: true,
+        showChat: false,
 
         name: ''
     }
@@ -62,24 +62,48 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
 
         const socket = openSocket('http://localhost:8000');
 
-        socket.on('adminSentMessage', data => {
-            /*
-                data.messageData {
-                    userId: userId,
-                    sender: sender,
-                    timeStamp: timeStamp,
-                    type: type
-                }      
-            */
-           this.addMessages(data.messageData)
+
+        socket.on('adminSentMessage', data => {    
+
+           if(this.props.userId === data.messageData.userId && this.state.showChat === true){
+                this.readNewMessagesHandler();
+                this.addMessages(data.messageData)
+           }
 
         })
+    }
+
+    readNewMessagesHandler = () => {
+        let url = "http://localhost:8000/messages/" + this.props.userId;
+
+            let timeStamp = timeStampGenerator();
+
+                fetch( url, {
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        timeStamp: timeStamp,
+                        userName: this.state.name
+                    })
+                })
+                .then( res => {
+                    if(res.status !== 200){
+                        throw new Error('Failed to fetch messages')
+                    }
+                    return res.json()
+                })
+                .then( resData => {
+
+                    console.log('resdata', resData)
 
 
-    
-
-
-
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+           
     }
 
     sendMessageHandler = () => {
@@ -146,9 +170,25 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
       }
 
       toggleShowChat = () => {
+
+            let test = 0;
+
+            this.state.messages.forEach(i => {
+                if(i.read === false){
+                    test++
+                } else return 
+            })
+
+            if(test > 0){
+                this.readNewMessagesHandler()
+            }
+
+          
           this.setState( prevState => ({
               showChat: !prevState.showChat
           }))
+
+
       }
 
       
