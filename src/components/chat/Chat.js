@@ -4,7 +4,11 @@ import './Chat.css';
 
 import openSocket from 'socket.io-client';
 
-const socket = openSocket('http://localhost:8000')
+import { connect } from 'react-redux';
+
+import { timeStampGenerator } from '../../utilities/timeStampGenerator';
+
+
 
 
 
@@ -13,22 +17,20 @@ const socket = openSocket('http://localhost:8000')
 
 
     state = {
-        messages: [],
+        messages: null,
 
         messageInput: '',
 
         showChat: true,
 
-        name: 'Max'
+        name: ''
     }
 
     componentDidMount(){
-        if( socket !== undefined) {
-            console.log('connected to socket')
-        }
+        
+        console.log('userId', this.props.userId)
 
-
-        let url = "http://localhost:8000/messages";
+        let url = "http://localhost:8000/messages/" + this.props.userId;
         let method = "GET";
 
         fetch( url, {
@@ -45,19 +47,47 @@ const socket = openSocket('http://localhost:8000')
             return res.json()
         })
         .then( resData => {
-            this.setState({ messages: resData})
+
+            this.setState({ 
+                messages: resData.messages.messages,
+                name: resData.messages.firstName
+            })
+
+
         })
         .catch(err => {
             console.log(err)
         })
 
-        socket.on('message', data => {
-            this.addMessages(data)
+
+        const socket = openSocket('http://localhost:8000');
+
+        socket.on('adminSentMessage', data => {
+            /*
+                data.messageData {
+                    userId: userId,
+                    sender: sender,
+                    timeStamp: timeStamp,
+                    type: type
+                }      
+            */
+           this.addMessages(data.messageData)
+
         })
+
+
+    
+
+
+
     }
 
     sendMessageHandler = () => {
-        let url = "http://localhost:8000/messages";
+
+
+        let timeStamp = timeStampGenerator();
+
+        let url = "http://localhost:8000/messages/user/" + this.props.userId;
         let method = "POST";
 
         fetch(url, {
@@ -66,11 +96,23 @@ const socket = openSocket('http://localhost:8000')
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                name: this.state.name,
-                message: this.state.messageInput
+                from: this.state.name,
+                message: this.state.messageInput,
+                timeStamp: timeStamp
             })
         })
         .then( res => {
+            console.log('sent baby');
+            return res.json()
+
+        })
+        .then( resData => {
+
+
+            console.log('resData', resData);
+
+
+            this.addMessages(resData.data);
             this.setState({ messageInput: ''});
         })
         .catch( err => {
@@ -124,7 +166,7 @@ const socket = openSocket('http://localhost:8000')
                                  ${this.state.showChat ? '' : 'hide'}`}> 
 
                         {
-                          this.state.messages.length > 0 && this.state.messages.map( message => (
+                          this.state.messages && this.state.messages.map( message => (
                                 <div>
                                         <div className="chat__message chat__message--admin">
                                             {message.message}
@@ -183,4 +225,10 @@ const socket = openSocket('http://localhost:8000')
     }
 }
 
-export default Chat;
+const mapStateToProps = state => {
+    return {
+        userId: state.auth.userId
+    }
+}
+
+export default connect(mapStateToProps)(Chat);

@@ -33,6 +33,7 @@
 .chat__body {
     flex: 1;
     padding: .5rem;  
+    overflow-y: scroll;
 }
 
 .chat__body.hide {

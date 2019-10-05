@@ -26,9 +26,7 @@ class Car extends Component {
         initiatlIndex: 0
     }
 
-    componentWillReceiveProps() {
-
-    }
+   
 
 
     imageSlideHandler = () => {
@@ -46,7 +44,7 @@ class Car extends Component {
     }
 
     componentDidMount(){
-       /* this.imageSlideHandler()*/
+        this.imageSlideHandler()
     }
 
     componentWillUnmount(){

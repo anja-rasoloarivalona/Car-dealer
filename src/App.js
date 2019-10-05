@@ -24,7 +24,7 @@ import { timeStampGenerator } from './utilities/timeStampGenerator';
 class App extends Component {
 
 
-  componentDidMount(){
+  componentWillMount(){
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
     const connectedUserId = localStorage.getItem('woto-userId');
