@@ -6,7 +6,8 @@ export const loginSucceeded = data => {
     return {
         type: actionTypes.LOGIN_SUCCEDED,
         token: data.token,
-        userId: data.userId
+        userId: data.userId,
+        connectionId: data.connectionId
 
     }
 }
@@ -17,17 +18,25 @@ export const loginFailed = () => {
     }
 }
 
-export const setLoginStateToTrue = (isAuth, token, userId) => {
+export const setLoginStateToTrue = data => {
     return {
         type: actionTypes.SET_LOGIN_STATE_TO_TRUE,
-        isAuth: isAuth,
-        token: token,
-        userId: userId
+        isAuth: data.isAuth,
+        token: data.token,
+        userId: data.userId,
+        
     }
 }
 
 export const setLoginStateToFalse = () => {
     return {
         type: actionTypes.SET_LOGIN_STATE_TO_FALSE
+    }
+}
+
+export const setConnectionId = data => {
+    return {
+        type: actionTypes.SET_CONNECTION_ID,
+        connectionId: data
     }
 }

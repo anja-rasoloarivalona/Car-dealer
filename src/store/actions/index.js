@@ -3,4 +3,5 @@ export {
     loginFailed,
     setLoginStateToTrue,
     setLoginStateToFalse,
+    setConnectionId
 } from './auth'

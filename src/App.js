@@ -3,6 +3,7 @@ import './App.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect} from 'react-redux';
 import * as actions from './store/actions'
+import openSocket from 'socket.io-client';
 
 
 /*------------COMPONENTS---------------------*/
@@ -24,34 +25,55 @@ import { timeStampGenerator } from './utilities/timeStampGenerator';
 class App extends Component {
 
 
+  componentWillUnmount(){
+    /*
+    const connectionId = localStorage.getItem('woto-connectionId');
+    const userId = localStorage.getItem('woto-userId');
+    let timeStamp = timeStampGenerator();
+
+    this.endConnection(userId, connectionId, timeStamp);*/
+
+  
+  }
+
   componentWillMount(){
+
+ 
+
+
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
-    const connectedUserId = localStorage.getItem('woto-userId');
 
+    const userId = localStorage.getItem('woto-userId');
+    //const connectionId = localStorage.getItem('woto-connectionId');
 
     if(!token || !expiryDate){
         console.log('NO TOKEN')
         return
     }
-
-
     if(new Date(expiryDate) <= new Date()){
       console.log('Token not valid anymore')
       this.props.setLoginStateToFalse()
       return 
     }
 
-    this.props.setLoginStateToTrue(true, token, connectedUserId);
+    let loginData = {
+        isAuth: true,
+        token: token,
+        userId: userId,
+       // connectionId: connectionId
+    }
+
+    this.props.setLoginStateToTrue(loginData);
     
     let timeStamp = timeStampGenerator();
 
-    this.updateLastConnection(connectedUserId, timeStamp)
+    this.startConnection(userId, timeStamp)
   }
 
 
-    updateLastConnection = (userId, timeStamp) => {
-        fetch('http://localhost:8000/auth/updateLastConnection',{
+    startConnection = (userId, timeStamp) => {
+        fetch('http://localhost:8000/auth/start-connection',{
           method: 'POST',
           headers: {
             'Content-type': 'application/json'
@@ -69,8 +91,14 @@ class App extends Component {
           if(res.status !== 200 && res.status !== 201){
             throw new Error('Could not update last connection')
           }
-
           return res.json()
+        })
+        .then( resData => {
+          console.log('start connection token valid', resData)
+
+          let socket = openSocket('http://localhost:8000', {query: `data=${userId} ${resData.connectionId}`});
+          socket.connect();
+          this.props.setConnectionId(resData.connectionId)
         })
         .catch(err => {
           console.log(err)
@@ -78,11 +106,56 @@ class App extends Component {
     }
 
     logoutHandler = () => {
-      localStorage.removeItem('woto-token');
-      localStorage.removeItem('woto-expiryDate');
-      localStorage.removeItem('woto-userId');
-      this.props.setLoginStateToFalse()
+
+      this.props.setLoginStateToFalse();
+
+      let timeStamp = timeStampGenerator()
+
+      const userId = localStorage.getItem('woto-userId');
+      const connectionId = this.props.connectionId;
+
+      this.endConnection(userId, connectionId, timeStamp, true);
+
     }
+
+
+    endConnection = (userId, connectionId, timeStamp, logout) => {
+      fetch('http://localhost:8000/auth/end-connection',{
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          userId: userId,
+          connectionId: connectionId,
+          timeStamp: timeStamp
+        })
+      })
+      .then(res => {
+        if(res.status === 401){
+          throw new Error('UserId not valid')
+        }
+
+        if(res.status !== 200 && res.status !== 201){
+          throw new Error('Could not update last connection')
+        }
+        return
+      })
+      .then(() => {
+          localStorage.removeItem('woto-connectionId');
+
+          if(logout === true){
+            localStorage.removeItem('woto-token');
+            localStorage.removeItem('woto-expiryDate');
+            localStorage.removeItem('woto-userId');
+          }
+          
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }
+
 
     
 
@@ -93,7 +166,8 @@ class App extends Component {
       <div className="app">
         <Navtop />
         <Navbar logoutHandler={this.logoutHandler}/>
-        <Chat />
+        {/*<Chat />*/}
+        
 
         <Switch>
           <Route path='/' exact component={Home}/>
@@ -114,14 +188,16 @@ const mapStateToProps = state => {
   return {
     auth: state.auth.auth,
     token: state.auth.token,
-    userId: state.auth.userId
+    userId: state.auth.userId,
+    connectionId: state.auth.connectionId
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    setLoginStateToTrue: (isAuth, token, userId) => dispatch(actions.setLoginStateToTrue(isAuth, token, userId)),
-    setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse())
+    setLoginStateToTrue: (data) => dispatch(actions.setLoginStateToTrue(data)),
+    setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
+    setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId))
   }
 }
 

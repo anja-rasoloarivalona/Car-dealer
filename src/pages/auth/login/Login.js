@@ -8,6 +8,7 @@ import * as actions from '../../../store/actions';
 import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
 
 import {timeStampGenerator } from '../../../utilities/timeStampGenerator';
+import openSocket from 'socket.io-client';
 
  class Login extends Component {
 
@@ -90,10 +91,20 @@ import {timeStampGenerator } from '../../../utilities/timeStampGenerator';
             return res.json()
         })
         .then( resData => {
+
+            let socket = openSocket('http://localhost:8000', {query: `data=${resData.userId} ${resData.connectionId}`});
+            socket.connect()
+
+                
+
                 this.props.loginSucceeded(resData);
 
                 localStorage.setItem('woto-token', resData.token);
                 localStorage.setItem('woto-userId', resData.userId);
+
+                
+              //  localStorage.setItem('woto-connectionId', resData.connectionId)
+
 
                 const remainingMilliSeconds = 24 * 60 * 60 * 1000 //24hours
                 const expiryDate = new Date( new Date().getTime() + remainingMilliSeconds )

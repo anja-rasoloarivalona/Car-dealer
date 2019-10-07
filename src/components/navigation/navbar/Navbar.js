@@ -5,6 +5,8 @@ import { NavLink } from 'react-router-dom';
 
 import Button from '../../button/Button';
 
+import { connect } from 'react-redux';
+
 
 const navbar = props => {
     return (    
@@ -28,15 +30,28 @@ const navbar = props => {
                 </ul>
 
                 <div className="navbar__cta">
-                    <Button color='primary' link='/auth'
-                            customClass='auth__cta'>
-                        Se connecter
-                    </Button>
-                    <Button color='secondary' 
-                            customClass='auth__cta'
-                            onClick={props.logoutHandler}>
-                        Logout
-                    </Button>
+
+
+                    {
+                        !props.isAuth && ((
+                            <Button color='primary' link='/auth'
+                                    customClass='auth__cta'>
+                                    Se connecter
+                             </Button>
+                        ))
+                    }
+
+                    {
+                        props.isAuth && (
+                                <Button color='secondary' 
+                                    customClass='auth__cta'
+                                    onClick={props.logoutHandler}>
+                                Logout
+                                </Button>
+                        )
+                    }
+                    
+                    
                 </div>
 
                 
@@ -45,4 +60,9 @@ const navbar = props => {
     )
 }
 
-export default navbar;
+const mapStateToProps = state => {
+    return {
+        isAuth: state.auth.auth
+    }
+}
+export default connect(mapStateToProps)(navbar);
