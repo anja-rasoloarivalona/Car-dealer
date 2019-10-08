@@ -15,6 +15,10 @@ import Chat from './components/chat/Chat';
 
 /*------------PAGES---------------------------*/
 import Home from './pages/home/Home';
+
+
+
+
 import Inventory from './pages/inventory/Inventory';
 import Car from './pages/car/Car';
 import Auth from './pages/auth/Auth';
@@ -24,23 +28,19 @@ import { timeStampGenerator } from './utilities/timeStampGenerator';
 
 class App extends Component {
 
-
-  componentWillUnmount(){
-    /*
-    const connectionId = localStorage.getItem('woto-connectionId');
-    const userId = localStorage.getItem('woto-userId');
-    let timeStamp = timeStampGenerator();
-
-    this.endConnection(userId, connectionId, timeStamp);*/
-
-  
+  state = {
+    carsHomeIntro : [],
+    carsHomeInventory : [],
+    loading: false,
   }
 
   componentWillMount(){
 
- 
+    this.setState({ loading: true});
 
+    this.fetchHomeProducts();
 
+    
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
 
@@ -71,6 +71,34 @@ class App extends Component {
     this.startConnection(userId, timeStamp)
   }
 
+    fetchHomeProducts = () => {
+      let url = 'http://localhost:8000/user/home-products';
+      let method = 'GET';
+
+      fetch( url, {
+        method: method,
+        headers: {
+          'Content-type': 'application/json'
+        },
+      })
+      .then( res => {
+        if(res.status !== 200 && res.status !== 201){
+          throw new Error('Error fetching products')
+        }
+
+        return res.json()
+      })
+      .then(resData => {
+      //  console.log('fetched home products', resData);
+
+        this.setState({ carsHomeIntro: resData.publicityProducts},
+          () => this.setState({ loading: false}))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+      
+    }
 
     startConnection = (userId, timeStamp) => {
         fetch('http://localhost:8000/auth/start-connection',{
@@ -94,7 +122,7 @@ class App extends Component {
           return res.json()
         })
         .then( resData => {
-          console.log('start connection token valid', resData)
+      //    console.log('start connection token valid', resData)
 
           let socket = openSocket('http://localhost:8000', {query: `data=${userId} ${resData.connectionId}`});
           socket.connect();
@@ -117,7 +145,6 @@ class App extends Component {
       this.endConnection(userId, connectionId, timeStamp, true);
 
     }
-
 
     endConnection = (userId, connectionId, timeStamp, logout) => {
       fetch('http://localhost:8000/auth/end-connection',{
@@ -162,19 +189,29 @@ class App extends Component {
 
 
   render() {
+
+    let app;
+
+    if(this.state.loading === true){
+      app = (<div>Loading...</div>)
+    } else {
+      app = (
+      <Switch>
+          <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro}/>}/>
+          <Route path='/inventory' component={Inventory}/>
+          <Route path='/car' component={Car}/>
+          <Route path='/auth' component={Auth} />
+        </Switch>
+      )
+    }
     return (
       <div className="app">
         <Navtop />
         <Navbar logoutHandler={this.logoutHandler}/>
         {/*<Chat />*/}
         
-
-        <Switch>
-          <Route path='/' exact component={Home}/>
-          <Route path='/inventory' component={Inventory}/>
-          <Route path='/car' component={Car}/>
-          <Route path='/auth' component={Auth} />
-        </Switch>
+          {app}
+        
 
         <Footer />
         

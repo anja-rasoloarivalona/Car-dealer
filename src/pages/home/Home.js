@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { Component, Fragment, memo } from 'react'
 import './Home.css';
 import IconSvg from '../../utilities/svg/svg';
 import { Route, Switch} from 'react-router-dom';
+
+
+
+
 
 
 import HomeInventory from './homeInventory/HomeInventory';
@@ -10,12 +14,81 @@ import HomeSearch from './homeSearch/HomeSearch';
 
 import HomeService from './homeService/HomeService';
 
-const home = () => {
 
-    return (
-        <div className="home">
+
+
+
+
+class Home extends Component {
+
+    state = {
+        carsHomeIntro : this.props.carsHomeIntro,
+
+
+        index: 0,
+
+        initialIndex: 0,
+    }
+
+    componentDidMount(){
+        console.log(this.props.carsHomeIntro);
+
+       this.imageSlideHandler()
+    }
+
+    imageSlideHandler = () => {
+        let {index, carsHomeIntro} =  this.state;
+
+        this.inter = setInterval(() => {
+                    if(index === carsHomeIntro.length){
+                        console.log('clearing');
+                        
+                        this.setState({index: 0}, () => {
+                            clearInterval(this.inter);
+                            this.imageSlideHandler();
+                        })
+
+                    } else {
+                        this.setState({index: index++ })
+                    }
+                }, 4000)
+    }
+
+
+    onRequestChange = i => {
+        clearInterval(this.inter);
+        this.setState({ index: i}, () => this.imageSlideHandler())
+    }
+
+    render() {
+
+        const {carsHomeIntro} = this.state;
+
+        return (
+            <div className="home">
 
             <section className="home__intro">
+
+                {
+                    carsHomeIntro.map((product, index) => (
+                        <div className={`home__intro__background 
+                                        ${this.state.index === index ? 'active' : ''}
+                                        ${index === 0 ? 'keyframe' : ''}`}
+                              key={index}
+                             style={{
+                                 backgroundImage: "url(" + product.general[0].mainImgUrl +")"
+                             }}>
+
+                                 <div className={`test`}>
+                                    {product.general[0].made} {product.general[0].model}
+                                 </div>
+
+                        </div>
+                    ))
+                }
+
+                
+
 
             </section>
 
@@ -43,8 +116,12 @@ const home = () => {
 
             <HomeService />
             
-        </div>
-    )
+            </div>
+        )
+    }
 }
 
-export default home;
+
+
+
+export default Home;

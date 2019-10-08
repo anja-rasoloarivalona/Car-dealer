@@ -11,11 +11,66 @@
 
 .home__intro {
     grid-column: 1 / -1;
-    background-image: url('../../assets/img/home.jpg');
-    background-position: center;
-    background-size: cover; 
     height: calc(100vh - 10rem);
+    background: var(--color-grey);
+    position: relative;
 }
+
+.home__intro__background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    transition: all .5s ease-in-out;
+}
+
+.home__intro__background.active {
+    z-index: 1;
+    opacity: 1;
+}
+.test {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 15rem;
+    margin: auto;
+    font-size: 3rem;
+    background: rgba(29, 29, 29, 0.678);
+    text-transform: uppercase;
+    color: var(--color-primary);
+    width: 40%;
+    text-align: center;
+    padding: 2rem 0;
+    opacity: 0;
+    transition: all .3s ease-in-out;
+    transition-delay: 1s;
+}
+
+
+.home__intro__background.active.keyframe .test {
+    opacity: 0;
+    animation: first .3s forwards;
+    animation-delay: 1s;
+}
+
+@keyframes first {
+    0% {opacity: 0;bottom: 15rem;}
+    100% {opacity: 1;bottom: 12rem;}
+}
+
+.home__intro__background.active .test {
+    opacity: 1;
+    bottom: 12rem;
+}
+
+
+
+
 
 
 .home__router {
@@ -99,3 +154,11 @@
     fill: var(--color-grey);
     margin-right: 1rem;
 }
+
+
+
+
+
+
+
+
