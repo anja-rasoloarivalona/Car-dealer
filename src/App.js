@@ -93,9 +93,9 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-      //  console.log('fetched home products', resData);
+  
 
-        this.setState({ carsHomeIntro: resData.publicityProducts},
+        this.setState({ carsHomeIntro: resData.publicityProducts, carsHomeInventory: resData.homeInventoryProducts},
           () => this.setState({ loading: false}))
       })
       .catch(err => {
@@ -215,8 +215,8 @@ class App extends Component {
                     {/*<Chat />*/}
 
                     <Switch>
-                        <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} loadedOnce={this.state.loadedOnce}/>}/>
-                        <Route path='/inventory' component={Inventory}/>
+                        <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
+                        <Route path='/inventory' render={Inventory}/>
                         <Route path='/car' component={Car}/>
                         <Route path='/auth' component={Auth} />
                     </Switch>

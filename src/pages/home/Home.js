@@ -1,7 +1,7 @@
 import React, { Component, Fragment, memo } from 'react'
 import './Home.css';
 import IconSvg from '../../utilities/svg/svg';
-import HomeInventory from './homeInventory/HomeInventory';
+import {HomeInventoryMemo} from './homeInventory/HomeInventory';
 import HomeSearch from './homeSearch/HomeSearch';
 import HomeService from './homeService/HomeService';
 import Button from '../../components/button/Button';
@@ -24,7 +24,6 @@ class Home extends Component {
     }
 
     componentDidMount(){
-      console.log(this.props.carsHomeIntro);
       this.imageSlideHandler()
     }
 
@@ -85,7 +84,7 @@ class Home extends Component {
                 <div className="home__intro__list__controller">
                     {
                         carsHomeIntro.map( (product, index) => (
-                            <img src={product.general[0].mainImgUrl} alt="home image" 
+                            <img key={product.general[0].mainImgUrl}src={product.general[0].mainImgUrl} alt="home image" 
                             className={`home__intro__list__controller__item
                             ${this.state.index === index ? 'active': ''}`}/>
                         ))
@@ -161,7 +160,7 @@ class Home extends Component {
 
             {
                 this.state.partRequested === 'inventory' && (
-                    <HomeInventory />
+                    <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory}/>
                 )
             }
 

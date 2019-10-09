@@ -9,56 +9,49 @@ import intro2 from '../../../assets/img/intro2.jpg';
 import intro3 from '../../../assets/img/intro3.jpg';
 import intro4 from '../../../assets/img/intro4.jpg';
 
-const homeInventory = () => {
+const homeInventory = props => {
+
+    let cars = props.carsHomeInventory;
+
+    console.log('carrs', cars)
+
     return (
         <div className="home-inventory">
             <ul className="home-inventory__list">
 
-                <li className="home-inventory__list__item">
-                    <img src={intro1} className="home-inventory__list__item__img" alt="car"/>
+            {
+                cars.map(product => (
+
+                <li className="home-inventory__list__item" key={product._id}>
+                    <img src={product.general[0].mainImgUrl} className="home-inventory__list__item__img" alt="car"/>
                     
                     <div className="home-inventory__list__item__details">
                         <div className="home-inventory__list__item__details__model">
-                            <span>Nissan Elantra</span>
-                            <span>2016</span>
+                            <span>{product.general[0].made}&nbsp;{product.general[0].model}</span>
+                            <span>{product.general[0].year}</span>
                         </div>
                         <div className="home-inventory__list__item__details__price">
-                            1 200 000 MRU
+                            {product.general[0].price} &nbsp; MRU
                         </div>
                     </div>
 
                     <ul className="home-inventory__list__item__details__specList">
                         <li className="home-inventory__list__item__details__specList__item">
-                            <span>18 000</span>
+                            <span>{product.general[0].nbKilometers}</span>
                             <IconSvg icon="road"/>    
                         </li>
                         <li className="home-inventory__list__item__details__specList__item">
-                            <span>Essence</span>
+                            <span>{product.general[0].gazol}</span>
                             <IconSvg icon="gas-station"/>
                         </li>
                         <li className="home-inventory__list__item__details__specList__item">
-                            <span>Manuel</span>
+                            <span>{product.general[0].transmissionType}</span>
                             <IconSvg icon="gear"/>
                         </li>
                     </ul>
                 </li>
-
-
-                <li className="home-inventory__list__item">
-                    <img src={intro2} className="home-inventory__list__item__img" alt="car"/>
-                </li>
-                <li className="home-inventory__list__item">
-                    <img src={intro3} className="home-inventory__list__item__img" alt="car"/>
-                </li>
-                <li className="home-inventory__list__item">
-                    <img src={intro4} className="home-inventory__list__item__img" alt="car"/>
-                </li>
-                <li className="home-inventory__list__item">
-                    <img src={intro4} className="home-inventory__list__item__img" alt="car"/>
-                </li>
-                <li className="home-inventory__list__item">
-                    <img src={intro4} className="home-inventory__list__item__img" alt="car"/>
-                </li>
+                ))
+            }
             </ul>
             <Button color="primary">
                 Voir plus
@@ -68,4 +61,4 @@ const homeInventory = () => {
     )
 }
 
-export default homeInventory;
+export const HomeInventoryMemo = React.memo(homeInventory);

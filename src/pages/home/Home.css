@@ -4,7 +4,7 @@
 
 
   display: grid;
-  grid-template-columns: 1fr repeat(2, 40vw) 1fr;
+  grid-template-columns: 1fr repeat(2, 45vw) 1fr;
   grid-template-rows: max-content;
   grid-auto-rows: max-content;
 
