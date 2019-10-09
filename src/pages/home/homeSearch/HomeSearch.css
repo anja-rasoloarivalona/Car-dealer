@@ -1,0 +1,8 @@
+.home-search{
+
+    grid-column: 2 / 4;
+    grid-row: 4 / 5;
+
+    background: red;
+    height: 50vh;
+}

@@ -1,18 +1,10 @@
 import React, { Component, Fragment, memo } from 'react'
 import './Home.css';
 import IconSvg from '../../utilities/svg/svg';
-import { Route, Switch} from 'react-router-dom';
-
-
-
-
-
-
 import HomeInventory from './homeInventory/HomeInventory';
 import HomeSearch from './homeSearch/HomeSearch';
-
-
 import HomeService from './homeService/HomeService';
+import Button from '../../components/button/Button';
 
 
 
@@ -23,22 +15,21 @@ class Home extends Component {
 
     state = {
         carsHomeIntro : this.props.carsHomeIntro,
-
-
         index: 0,
-
         initialIndex: 0,
+
+        showIntroList: false,
+
+        partRequested: 'inventory'
     }
 
     componentDidMount(){
-        console.log(this.props.carsHomeIntro);
-
-       this.imageSlideHandler()
+      console.log(this.props.carsHomeIntro);
+      this.imageSlideHandler()
     }
 
     imageSlideHandler = () => {
         let {index, carsHomeIntro} =  this.state;
-
         this.inter = setInterval(() => {
                     if(index === carsHomeIntro.length){
                         console.log('clearing');
@@ -47,11 +38,10 @@ class Home extends Component {
                             clearInterval(this.inter);
                             this.imageSlideHandler();
                         })
-
                     } else {
                         this.setState({index: index++ })
                     }
-                }, 4000)
+                }, 3000)
     }
 
 
@@ -60,12 +50,48 @@ class Home extends Component {
         this.setState({ index: i}, () => this.imageSlideHandler())
     }
 
+    clearInterval = () => {
+        clearInterval(this.inter)
+    }
+
+    replayInterval = () => {
+       this.imageSlideHandler()
+    }
+
+    showIntroListToggler = () => {
+        this.setState( prevState => ({
+            showIntroList: !prevState.showIntroList
+        }))
+    }
+
     render() {
 
         const {carsHomeIntro} = this.state;
 
         return (
             <div className="home">
+            
+            <div className={`home__intro__list-toggler
+                        ${this.state.showIntroList ? 'active': ''}`}
+                 onClick={this.showIntroListToggler}>
+
+                    <span></span>
+                    <span></span>
+                    <span></span>
+            </div>
+
+            <div className={`home__intro__list
+                    ${this.state.showIntroList ? 'active' : ''}`}>
+                <div className="home__intro__list__controller">
+                    {
+                        carsHomeIntro.map( (product, index) => (
+                            <img src={product.general[0].mainImgUrl} alt="home image" 
+                            className={`home__intro__list__controller__item
+                            ${this.state.index === index ? 'active': ''}`}/>
+                        ))
+                    }
+                </div>
+            </div>
 
             <section className="home__intro">
 
@@ -78,18 +104,32 @@ class Home extends Component {
                              style={{
                                  backgroundImage: "url(" + product.general[0].mainImgUrl +")"
                              }}>
+                            <div className="home__intro__product-container"
+                                onMouseEnter={this.clearInterval}
+                                onMouseLeave={this.replayInterval}>
 
-                                 <div className={`test`}>
-                                    {product.general[0].made} {product.general[0].model}
-                                 </div>
+                                <div className="home__intro__product">
+                                    <div className="home__intro__product__detail">
+                                        <span>{product.general[0].made}</span> 
+                                        <span>{product.general[0].model}</span>
+                                        <span>{product.general[0].year}</span>
+                                    </div>
+                                    <div className="home__intro__product__price">
+                                        <span>{product.general[0].price}</span>
+                                        <span>MRU</span>
+                                    </div>
+                                </div>
+                                 
+                                 <Button color="primary">
+                                     Voir
+                                 </Button>
+                                 
+                            </div>
+                                 
 
                         </div>
                     ))
                 }
-
-                
-
-
             </section>
 
             <section className="home__router">
@@ -97,9 +137,19 @@ class Home extends Component {
                 <div className="home__router__nav">
                     <h1><span>WELCOME TO&nbsp;</span><span>WOTO MOTORS</span></h1>
                     <nav className="home__router__nav__list">
-                        <li className="home__router__nav__list__item">Inventory</li>
-                        <li className="home__router__nav__list__item">Search</li>
-                        <li className="home__router__nav__list__item">Contact</li>
+                        <li 
+                            className={`home__router__nav__list__item ${this.state.partRequested === 'inventory' ? 'active': ''}`} 
+                            onClick={() => this.setState({ partRequested: 'inventory'})}>
+                                Inventory
+                        </li>
+                        <li className={`home__router__nav__list__item ${this.state.partRequested === 'search' ? 'active': ''}`}
+                            onClick={() => this.setState({ partRequested: 'search'})}>
+                                Search
+                        </li>
+                        <li className={`home__router__nav__list__item ${this.state.partRequested === 'contact' ? 'active': ''}`}
+                            onClick={() => this.setState({ partRequested: 'contact'})}>
+                                Contact
+                        </li>
                     </nav>
                     <div className="home__router__nav__count">
                         <IconSvg icon="car"/>
@@ -109,10 +159,19 @@ class Home extends Component {
 
             </section>
 
-            <Switch>
-                <Route path="/" exact component={HomeInventory}/>
-                <Route path="/search" component={HomeSearch}/>
-            </Switch>
+            {
+                this.state.partRequested === 'inventory' && (
+                    <HomeInventory />
+                )
+            }
+
+            {
+                this.state.partRequested === 'search' && (
+                    <HomeSearch />
+                )
+            }
+
+      
 
             <HomeService />
             

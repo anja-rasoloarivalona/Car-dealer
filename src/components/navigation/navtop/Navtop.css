@@ -4,14 +4,15 @@
     align-items: center;
     justify-content: space-between;
     height: 5rem;
-    background: var(--color-dark);
-    color: var(--color-white)
+    background: var(--color-white);
+    
 }
 
 .navtop__logo {
     width: 30%;
     padding-left: 12rem;
     font-size: 2.5rem;
+    color: var(--color-primary);
 }
 
 .navtop__contact {

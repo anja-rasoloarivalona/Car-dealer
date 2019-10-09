@@ -4,6 +4,7 @@ import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect} from 'react-redux';
 import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
+import { Spring } from 'react-spring/renderprops'
 
 
 /*------------COMPONENTS---------------------*/
@@ -11,6 +12,7 @@ import Navtop from './components/navigation/navtop/Navtop';
 import Navbar from './components/navigation/navbar/Navbar';
 import Footer from './components/footer/Footer'
 import Chat from './components/chat/Chat';
+import Loader from './components/loader/Loader'
 
 
 /*------------PAGES---------------------------*/
@@ -32,6 +34,8 @@ class App extends Component {
     carsHomeIntro : [],
     carsHomeInventory : [],
     loading: false,
+
+
   }
 
   componentWillMount(){
@@ -193,30 +197,43 @@ class App extends Component {
     let app;
 
     if(this.state.loading === true){
-      app = (<div>Loading...</div>)
+      app = <Loader />
+
     } else {
       app = (
-      <Switch>
-          <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro}/>}/>
-          <Route path='/inventory' component={Inventory}/>
-          <Route path='/car' component={Car}/>
-          <Route path='/auth' component={Auth} />
-        </Switch>
+
+        <Spring
+          from={{marginTop: 1000}}
+          to = {{ marginTop: 0}}
+          config={{delay: 500}}>
+          {
+            props => (
+              <div style={props}>
+                <div className='app'>
+                    <Navtop />
+                    <Navbar logoutHandler={this.logoutHandler}/>
+                    {/*<Chat />*/}
+
+                    <Switch>
+                        <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} loadedOnce={this.state.loadedOnce}/>}/>
+                        <Route path='/inventory' component={Inventory}/>
+                        <Route path='/car' component={Car}/>
+                        <Route path='/auth' component={Auth} />
+                    </Switch>
+                    
+                    <Footer />      
+                </div>
+              </div>
+            )
+          }
+          
+
+
+        </Spring>
       )
     }
-    return (
-      <div className="app">
-        <Navtop />
-        <Navbar logoutHandler={this.logoutHandler}/>
-        {/*<Chat />*/}
-        
-          {app}
-        
-
-        <Footer />
-        
-      </div>
-    );
+    
+    return app
   }
 }
 

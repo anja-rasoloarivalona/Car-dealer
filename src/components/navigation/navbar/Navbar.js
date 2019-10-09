@@ -6,57 +6,64 @@ import { NavLink } from 'react-router-dom';
 import Button from '../../button/Button';
 
 import { connect } from 'react-redux';
+import { Spring} from 'react-spring/renderprops'
 
 
 const navbar = props => {
-    return (    
-            <nav className="navbarContainer">
-                <ul className="navbar__list">
-                    <NavLink to="/" exact className="navbar__list__item">
-                        Accueil
-                    </NavLink>
-                    <NavLink to="/inventaire" className="navbar__list__item">
-                        Inventaire
-                    </NavLink>
-                    <NavLink to="/services" className="navbar__list__item">
-                        Services
-                    </NavLink>
-                    <NavLink to="/contact" className="navbar__list__item">
-                        Contact
-                    </NavLink>
-                    <NavLink to="/car" className="navbar__list__item">
-                        CAR
-                    </NavLink>
-                </ul>
+    return (
+        <Spring
+          from={{marginBottom: -500}}
+          to = {{ marginBottom: 0}}
+          config={{delay: 1000}}>
+              {
+                  styleProps => (
+                 
+                            <nav className="navbarContainer" style={styleProps}>
+                                <ul className="navbar__list">
+                                    <NavLink to="/" exact className="navbar__list__item">
+                                        Accueil
+                                    </NavLink>
+                                    <NavLink to="/inventaire" className="navbar__list__item">
+                                        Inventaire
+                                    </NavLink>
+                                    <NavLink to="/services" className="navbar__list__item">
+                                        Services
+                                    </NavLink>
+                                    <NavLink to="/contact" className="navbar__list__item">
+                                        Contact
+                                    </NavLink>
+                                    <NavLink to="/car" className="navbar__list__item">
+                                        CAR
+                                    </NavLink>
+                                </ul>
 
-                <div className="navbar__cta">
+                                <div className="navbar__cta">
+                                    {
+                                        !props.isAuth && ((
+                                            <Button color='primary' link='/auth'
+                                                    customClass='auth__cta'>
+                                                    Se connecter
+                                            </Button>
+                                        ))
+                                    }
 
+                                    {
+                                        props.isAuth && (
+                                                <Button color='secondary' 
+                                                    customClass='auth__cta'
+                                                    onClick={props.logoutHandler}>
+                                                Logout
+                                                </Button>
+                                        )
+                                    }
+                                                    
+                                </div> 
+                            </nav>
+                  )
+              }
 
-                    {
-                        !props.isAuth && ((
-                            <Button color='primary' link='/auth'
-                                    customClass='auth__cta'>
-                                    Se connecter
-                             </Button>
-                        ))
-                    }
-
-                    {
-                        props.isAuth && (
-                                <Button color='secondary' 
-                                    customClass='auth__cta'
-                                    onClick={props.logoutHandler}>
-                                Logout
-                                </Button>
-                        )
-                    }
-                    
-                    
-                </div>
-
-                
-            </nav>
-        
+            
+        </Spring>
     )
 }
 

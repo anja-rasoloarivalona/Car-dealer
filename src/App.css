@@ -36,7 +36,7 @@ html {
 body {
   box-sizing: border-box;
   overflow-x: hidden;
-  font-family: 'Lato', sans-serif;
+  font-family: 'Open Sans', sans-serif;
 }
 
 .app {
@@ -44,4 +44,9 @@ body {
   grid-template-columns: 1fr repeat(2, 40vw) 1fr;
   grid-template-rows: max-content;
   grid-auto-rows: max-content;
+
+
+  transition: all .3s ease-in;
+  transition-delay: 1s;
 }
+
