@@ -3,15 +3,16 @@ import './HomeInventory.css';
 import IconSvg from '../../../utilities/svg/svg';
 import Button from '../../../components/button/Button';
 
+import { withRouter} from 'react-router-dom';
 
-import intro1 from '../../../assets/img/intro1.jpeg';
-import intro2 from '../../../assets/img/intro2.jpg';
-import intro3 from '../../../assets/img/intro3.jpg';
-import intro4 from '../../../assets/img/intro4.jpg';
+import * as actions from '../../../store/actions'
+import { connect } from 'react-redux';
 
 const homeInventory = props => {
 
     let cars = props.carsHomeInventory;
+
+    console.log('history', props)
 
     console.log('carrs', cars)
 
@@ -22,7 +23,12 @@ const homeInventory = props => {
             {
                 cars.map(product => (
 
-                <li className="home-inventory__list__item" key={product._id}>
+                <li className="home-inventory__list__item" key={product._id}
+                    onClick={() => {
+                        props.setProductRequestedId(product._id)
+                        props.history.push(`/car/${product._id}`)
+                        
+                    }}>
                     <img src={product.general[0].mainImgUrl} className="home-inventory__list__item__img" alt="car"/>
                     
                     <div className="home-inventory__list__item__details">
@@ -61,4 +67,10 @@ const homeInventory = props => {
     )
 }
 
-export const HomeInventoryMemo = React.memo(homeInventory);
+const mapDispatchToProps = dispatch => {
+    return {
+        setProductRequestedId: prodId => dispatch(actions.setProductRequestedId(prodId))
+    }
+}
+
+export const HomeInventoryMemo = connect(null, mapDispatchToProps)(React.memo(homeInventory));

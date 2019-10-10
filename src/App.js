@@ -217,7 +217,7 @@ class App extends Component {
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         <Route path='/inventory' render={Inventory}/>
-                        <Route path='/car' component={Car}/>
+                        <Route path='/car/:prodId' component={Car}/>
                         <Route path='/auth' component={Auth} />
                     </Switch>
                     

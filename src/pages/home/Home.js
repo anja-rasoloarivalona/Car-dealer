@@ -25,6 +25,14 @@ class Home extends Component {
 
     componentDidMount(){
       this.imageSlideHandler()
+
+      console.log(this.props.history);
+
+      
+    }
+
+    componentWillUnmount(){
+        this.clearInterval(this.inter)
     }
 
     imageSlideHandler = () => {
@@ -100,9 +108,11 @@ class Home extends Component {
                                         ${this.state.index === index ? 'active' : ''}
                                         ${index === 0 ? 'keyframe' : ''}`}
                               key={index}
-                             style={{
-                                 backgroundImage: "url(" + product.general[0].mainImgUrl +")"
-                             }}>
+                            >
+
+
+                            <img  src={product.general[0].mainImgUrl} className="home__intro__background__image" alt='home intro'/>
+
                             <div className="home__intro__product-container"
                                 onMouseEnter={this.clearInterval}
                                 onMouseLeave={this.replayInterval}>
@@ -160,7 +170,7 @@ class Home extends Component {
 
             {
                 this.state.partRequested === 'inventory' && (
-                    <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory}/>
+                    <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory} history={this.props.history}/>
                 )
             }
 

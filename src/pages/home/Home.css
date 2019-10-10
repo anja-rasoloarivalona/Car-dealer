@@ -20,19 +20,27 @@
 
 .home__intro__background {
     width: 100%;
+    
     height: 100%;
     position: absolute;
     top: 0;
     left: 0;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
     opacity: 0;
     transition: all .5s ease-in-out;
 
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.home__intro__background__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .home__intro__background.active {

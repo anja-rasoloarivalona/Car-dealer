@@ -8,22 +8,20 @@ import Overview from './overview/Overview';
 import Technical from './technical/Technical';
 import Features from './features/Features';
 
+import Loader from '../../components/loader/Loader';
+
 class Car extends Component {
 
     state = {
         index: 0,
-        images: [
-            "https://images.unsplash.com/photo-1557958114-3d2440207108?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-            "https://images.unsplash.com/photo-1557939403-1760a0e47505?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1931&q=80",
-            "https://images.unsplash.com/photo-1558029062-a37889b87526?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80",
-            "https://images.unsplash.com/photo-1558088458-b65180740294?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1579&q=80",
-            "https://images.unsplash.com/photo-1557958114-3d2440207108?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80",
-            "https://images.unsplash.com/photo-1557939403-1760a0e47505?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1931&q=80",
-            "https://images.unsplash.com/photo-1558029062-a37889b87526?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=975&q=80",
-            "https://images.unsplash.com/photo-1558088458-b65180740294?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1579&q=80"
-        ],
+        
+        product: null,
 
-        initiatlIndex: 0
+        initiatlIndex: 0,
+        loading: true,
+
+
+        partRequested: 'overview'
     }
 
    
@@ -44,7 +42,43 @@ class Car extends Component {
     }
 
     componentDidMount(){
-        this.imageSlideHandler()
+
+        let prodId;
+
+        if(!this.props.prodId){
+            prodId = this.props.match.params.prodId
+        } else {
+            prodId = this.props.prodId
+        }
+
+        let url = "http://localhost:8000/user/" + prodId
+        let method = 'GET'
+
+
+        
+        fetch( url, {
+        method: method,
+        headers: {
+          'Content-type': 'application/json'
+        },
+      })
+      .then( res => {
+        if(res.status !== 200 && res.status !== 201){
+          throw new Error('Error fetching products')
+        }
+
+        return res.json()
+      })
+      .then(resData => {
+        this.setState({ product: resData.product, loading: false}, () => console.log(this.state.product))
+      })
+      .catch(err => {
+        console.log(err)
+      })
+
+
+
+      //  this.imageSlideHandler()
     }
 
     componentWillUnmount(){
@@ -59,61 +93,95 @@ class Car extends Component {
     }
 
     render() {
-        return (
-            <div className="car">
-                <section className="car__presentation">
-                    <h1 className="car__presentation__title">BMW 535i, Navi, Leather, ABS</h1>
-                    <div className="car__presentation__gallery">
-                        <Gallery
-                            index={this.state.index}
-                            onRequestChange={i => this.setState({index: i})}>
 
-                            {this.state.images.map(img => (
-                            <GalleryImage objectFit="cover" key={img} src={img} />
-                            ))}
+        const { product } = this.state;
 
-                        </Gallery>
-                    </div>
-                    <div className="car__presentation__gallery__controller">
-                        {
-                            this.state.images.map(i => (
-                                <img src={i} alt="car" className="car__presentation__gallery__controller__img"
-                                    onClick={ () => this.changeGalleryImgIndex(i)}/>
-                            ))
+        let prod;
+
+        if(this.state.loading){
+                prod = <Loader />
+        } else {
+            prod = (
+                <div className="car">
+                    <section className="car__presentation">
+                        <h1 className="car__presentation__title">{product.general[0].title}</h1>
+                        <div className="car__presentation__gallery">
+
+                            
+                                
+                            <Gallery
+                                index={this.state.index}
+                                onRequestChange={i => this.setState({index: i})}>
+
+                                {product.imageUrls.map(img => (
+                                <GalleryImage objectFit="cover" key={img} src={img} />
+                                ))}
+
+                            </Gallery>
+
+                                
+                            
+                            
+                        </div>
+                        <div className="car__presentation__gallery__controller">
+                            {
+                            
+                                product.imageUrls.map(i => (
+                                    <img src={i} alt="car" key={i} className="car__presentation__gallery__controller__img"
+                                        onClick={ () => this.changeGalleryImgIndex(i)}/>
+                                ))
+                            
                         }
 
-                    </div>
+                        </div>
+                        
+                        <ul className="car__presentation__nav">
+                            <li className={`car__presentation__nav__item
+                                        ${this.state.partRequested === 'overview' ? 'active': ''}`}
+                                onClick={() => this.setState({ partRequested: 'overview'})}>
+                                Overview
+                            </li>
+                            <li className={`car__presentation__nav__item
+                                        ${this.state.partRequested === 'technical' ? 'active': ''}`}
+                                onClick={() => this.setState({ partRequested: 'technical'})}>
+                                Technical
+                            </li>
+                            <li className={`car__presentation__nav__item
+                                        ${this.state.partRequested === 'features' ? 'active': ''}`}
+                                onClick={() => this.setState({ partRequested: 'features'})}>
+                                Features
+                            </li>
+                        </ul>
+
+
+                        {
+                            this.state.partRequested === 'overview' && <Overview />
+                        }
+
+                        {
+                            this.state.partRequested === 'technical' && <Technical product={this.state.product}/>
+                        }
+
+                        {
+                            this.state.partRequested === 'features' && <Features />
+                        }
+
                     
-                    <nav className="car__presentation__nav">
-                        <NavLink exact to="/car" className="car__presentation__nav__item">
-                            Overview
-                        </NavLink>
-                        <NavLink to="/car/technical" className="car__presentation__nav__item">
-                            Technical
-                        </NavLink>
-                        <NavLink to="/car/features" className="car__presentation__nav__item">
-                            Features
-                        </NavLink>
-                    </nav>
-
-                    <Switch>
-                        <Route exact path="/car" component={Overview}/>
-                        <Route path="/car/technical" component={Technical}/>
-                        <Route path="/car/features" component={Features}/>
-                    </Switch>
 
 
 
-                    <div className="space">
+                        <div className="space">
 
-                    </div>
-                    
+                        </div>
+                        
+                    </section>
+                <section className="car__presentation--right">
+
                 </section>
-            <section className="car__presentation--right">
-
-            </section>
-        </div>
-        )
+            </div>
+            )
+        }
+        return prod
     }
 }
 

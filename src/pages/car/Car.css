@@ -66,27 +66,40 @@
     display: flex;
     align-items: center;
     padding-left: 1rem;
+    list-style: none;
 
   
 }
 
-.car__presentation__nav a {
+.car__presentation__nav__item {
     height: 100%;
     width: 13rem;
     text-transform: uppercase;
     font-size: 1.3rem;
-    text-decoration: none;
     font-weight: 600;
     color: var(--color-white);
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
+    cursor: pointer;
 }
 
-.car__presentation__nav a.active {
+.car__presentation__nav__item::before {
+    position: absolute;
+    top: -4px;
+    width: 100%;
+    height: 4px;
+    background: var(--color-primary)
+}
+
+.car__presentation__nav__item.active {
     background: var(--color-white);
     color: var(--color-dark);
+}
+
+.car__presentation__nav__item.active::before {
+    content: ''
 }
 
 .car__presentation__nav a.active::before {

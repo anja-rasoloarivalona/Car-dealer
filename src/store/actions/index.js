@@ -5,3 +5,10 @@ export {
     setLoginStateToFalse,
     setConnectionId
 } from './auth'
+
+
+
+export {
+    setProductRequestedId
+} from './product'
+
