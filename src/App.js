@@ -35,7 +35,7 @@ class App extends Component {
     carsHomeInventory : [],
     loading: false,
 
-
+    pos: 0,
   }
 
   componentWillMount(){
@@ -73,6 +73,15 @@ class App extends Component {
     let timeStamp = timeStampGenerator();
 
     this.startConnection(userId, timeStamp)
+  }
+
+  componentDidMount(){
+
+    window.addEventListener('scroll', () => {
+      let pos = window.scrollY;
+      this.setState({ pos: pos})
+    })
+
   }
 
     fetchHomeProducts = () => {
@@ -196,6 +205,12 @@ class App extends Component {
 
     let app;
 
+    let chat = null
+
+    if(this.props.auth && this.props.token && this.props.userId){
+      chat = <Chat />
+    }
+
     if(this.state.loading === true){
       app = <Loader />
 
@@ -211,8 +226,10 @@ class App extends Component {
               <div style={props}>
                 <div className='app'>
                     <Navtop />
-                    <Navbar logoutHandler={this.logoutHandler}/>
-                    {/*<Chat />*/}
+                    <Navbar logoutHandler={this.logoutHandler}
+                            pos={this.state.pos}/>
+                   
+                    {chat}
 
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>

@@ -28,8 +28,6 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
 
     componentDidMount(){
         
-        console.log('userId', this.props.userId)
-
         let url = "http://localhost:8000/messages/" + this.props.userId;
         let method = "GET";
 
@@ -206,13 +204,17 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
                                  ${this.state.showChat ? '' : 'hide'}`}> 
 
                         {
-                          this.state.messages && this.state.messages.map( message => (
+                          this.state.messages && this.state.messages.map( message => 
+                            
+                            (
                                 <div>
-                                        <div className="chat__message chat__message--admin">
+                                        <div className={`chat__message ${message.senderType === 'admin' ? 'chat__message--admin' : 'chat__message--user' }`}>
                                             {message.message}
                                         </div>
                                 </div>
-                            ))
+                            )
+                            
+                            )
                         }
 
                        {/*

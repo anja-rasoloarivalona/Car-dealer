@@ -10,15 +10,19 @@ import { Spring} from 'react-spring/renderprops'
 
 
 const navbar = props => {
+
+    let pos = props.pos;
+
     return (
         <Spring
-          from={{marginBottom: -500}}
+          from={{marginBottom: 0}}
           to = {{ marginBottom: 0}}
           config={{delay: 1000}}>
               {
                   styleProps => (
                  
-                            <nav className="navbarContainer" style={styleProps}>
+                            <nav className={`navbarContainer
+                                ${pos > 50 ? 'fixed' : ''}`} style={styleProps}>
                                 <ul className="navbar__list">
                                     <NavLink to="/" exact className="navbar__list__item">
                                         Accueil
