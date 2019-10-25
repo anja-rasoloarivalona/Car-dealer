@@ -1,5 +1,4 @@
 .car {
-    grid-row: 3 / 4;
     grid-column: 2 / 4;
     display: flex;
 }

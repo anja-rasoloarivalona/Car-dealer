@@ -1,10 +1,7 @@
 import React from 'react';
 import './HomeInventory.css';
-import IconSvg from '../../../utilities/svg/svg';
 import Button from '../../../components/button/Button';
-
-import { withRouter} from 'react-router-dom';
-
+import ProductCard from '../../../components/ProductCard/ProductCard'
 import * as actions from '../../../store/actions'
 import { connect } from 'react-redux';
 
@@ -12,9 +9,11 @@ const homeInventory = props => {
 
     let cars = props.carsHomeInventory;
 
-    console.log('history', props)
 
-    console.log('carrs', cars)
+    const requestProductDetails = prodId => {
+            props.setProductRequestedId(prodId)
+            props.history.push(`/car/${prodId}`)
+    }
 
     return (
         <div className="home-inventory">
@@ -23,42 +22,24 @@ const homeInventory = props => {
             {
                 cars.map(product => (
 
-                <li className="home-inventory__list__item" key={product._id}
-                    onClick={() => {
-                        props.setProductRequestedId(product._id)
-                        props.history.push(`/car/${product._id}`)
-                        
-                    }}>
-                    <img src={product.general[0].mainImgUrl} className="home-inventory__list__item__img" alt="car"/>
-                    
-                    <div className="home-inventory__list__item__details">
-                        <div className="home-inventory__list__item__details__model">
-                            <span>{product.general[0].made}&nbsp;{product.general[0].model}</span>
-                            <span>{product.general[0].year}</span>
-                        </div>
-                        <div className="home-inventory__list__item__details__price">
-                            {product.general[0].price} &nbsp; MRU
-                        </div>
-                    </div>
-
-                    <ul className="home-inventory__list__item__details__specList">
-                        <li className="home-inventory__list__item__details__specList__item">
-                            <span>{product.general[0].nbKilometers}</span>
-                            <IconSvg icon="road"/>    
-                        </li>
-                        <li className="home-inventory__list__item__details__specList__item">
-                            <span>{product.general[0].gazol}</span>
-                            <IconSvg icon="gas-station"/>
-                        </li>
-                        <li className="home-inventory__list__item__details__specList__item">
-                            <span>{product.general[0].transmissionType}</span>
-                            <IconSvg icon="gear"/>
-                        </li>
-                    </ul>
-                </li>
-                ))
+               <ProductCard 
+                    key= {product._id}
+                    _id = {product._id}
+                    mainImgUrl={product.general[0].mainImgUrl}
+                    made={product.general[0].made}
+                    model={product.general[0].model}
+                    year={product.general[0].year}
+                    price={product.general[0].price}
+                    nbKilometers={product.general[0].nbKilometers}
+                    gazol={product.general[0].gazol}
+                    transmissionType={product.general[0].transmissionType}
+                    requestProductDetails={requestProductDetails}
+                />
+                    )
+                )
             }
             </ul>
+            
             <Button color="primary">
                 Voir plus
             </Button>

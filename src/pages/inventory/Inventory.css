@@ -1,13 +1,18 @@
 .inventory {
-    grid-column: 1 / -1;
-    display: grid;
-    grid-template-columns: 1fr repeat(2, 40vw) 1fr;
-    grid-template-rows: max-content;
-    grid-auto-rows: max-content;
-  
-  
-  
-  
+    grid-column: 2 / 4;
     min-height: 100vh;
-    background: blue; 
+    width: 110%
+}
+
+
+.inventory__list {
+    display: grid;
+   
+    grid-template-columns: repeat(auto-fit, 25rem);
+    grid-template-rows: repeat(auto-fit, 25rem);
+    grid-auto-rows: 25rem;
+   
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+    padding: 2rem 0;
 }
