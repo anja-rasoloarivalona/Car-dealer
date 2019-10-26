@@ -39,8 +39,9 @@ const homeInventory = props => {
                 )
             }
             </ul>
-            
-            <Button color="primary">
+
+            <Button color="primary"
+                    onClick={() => props.history.push('/inventaire')}>
                 Voir plus
             </Button>
         
