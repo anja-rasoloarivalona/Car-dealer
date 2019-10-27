@@ -1,4 +1,25 @@
 .overview {
-    background: red;
     min-height: 50vh;
+    padding: 1rem 0;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.overview__list {
+    margin-top: 2rem;
+    list-style: none;
+    align-self: center;
+    width: 100%;
+}
+
+.overview__list__item {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    padding: 1rem 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-grey);
+    border-bottom: 1px solid var(--color-grey);
 }

@@ -5,7 +5,6 @@
 
 .technical__section {
     margin-bottom: 2rem;
-    padding-right: 2rem;
 }
 
 .technical__title {
@@ -16,8 +15,8 @@
 }
 
 .technical__title svg {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     fill: var(--color-primary);
     margin-right: 1rem;
 }
