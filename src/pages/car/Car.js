@@ -7,6 +7,7 @@ import { NavLink, Switch, Route } from 'react-router-dom'
 import Overview from './overview/Overview';
 import Technical from './technical/Technical';
 import Features from './features/Features';
+import Cta from './cta/Cta'
 
 import Loader from '../../components/loader/Loader';
 
@@ -103,6 +104,7 @@ class Car extends Component {
         } else {
             prod = (
                 <div className="car">
+                
                     <section className="car__presentation">
                         <h1 className="car__presentation__title">{product.general[0].title}</h1>
                         <div className="car__presentation__gallery">
@@ -173,11 +175,12 @@ class Car extends Component {
                         <div className="space">
 
                         </div>
-                        
+  
                     </section>
-                <section className="car__presentation--right">
+                    
+                    <Cta product={product}/>
 
-                </section>
+                    
             </div>
             )
         }

@@ -1,0 +1,52 @@
+.timePicker {
+    width: 16rem;
+    position: relative;
+}
+
+.timePicker__selected {
+    background: white;
+    padding: .3rem 0;
+    padding-left: .5rem;
+    cursor: pointer;
+}
+
+.timePicker__table  {
+    width: 17rem;
+    grid-template-columns: repeat(auto-fit, 7rem);
+    grid-template-rows: repeat(auto-fit, 3rem);
+    grid-auto-rows: 3rem;    
+    justify-content: center;   
+    background: grey;
+    position: absolute;
+    transform: translateY(1rem);
+    padding: .5rem;
+    column-gap: .5rem;
+    row-gap: .5rem;
+    
+    transition: all .3s ease-in;
+    
+    display: none;
+ 
+}
+
+.timePicker__table.shown {
+    display: grid;
+}
+
+.timePicker__table__option {
+    width: 7rem;
+    background: var(--color-white);
+    border: 1px solid grey;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.timePicker__table__option:hover {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+

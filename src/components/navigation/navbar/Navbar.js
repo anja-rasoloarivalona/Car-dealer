@@ -22,7 +22,7 @@ const navbar = props => {
                   styleProps => (
                  
                             <nav className={`navbarContainer
-                                ${pos > 50 ? 'fixed' : ''}`} style={styleProps}>
+                                ${pos < -1 ? 'fixed' : ''}`} style={styleProps}>
                                 <ul className="navbar__list">
                                     <NavLink to="/" exact className="navbar__list__item">
                                         Accueil

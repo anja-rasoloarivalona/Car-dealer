@@ -13,10 +13,7 @@
     padding: 2rem 0;
 }
 
-.car__presentation--right {
-    width: 25%;
-    background: green;
-}
+
 
 .car__presentation__gallery {
     width: 100%;
@@ -113,3 +110,5 @@
 .space {
     height: 50vh;
 }
+
+
