@@ -5,6 +5,7 @@
     grid-template-rows: max-content;
     grid-auto-rows: max-content;
     width: 100%;
+    column-gap: 2rem;
 
 }
 

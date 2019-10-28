@@ -1,15 +1,19 @@
 import React from 'react';
 import './Overview.css';
+import IconSvg from '../../../utilities/svg/svg';
 
 const overview = () => {
     return (
         <div className="overview">
 
-            <div>
-                Ut efficitur volutpat massa id efficitur. Suspendisse purus quam, eleifend varius dolor quis, porttitor venenatis metus. Ut lectus felis, laoreet sit amet ultrices et, maximus ac quam. Morbi sit amet massa nunc. Vivamus ultrices velit vel odio viverra, eu mollis sapien vestibulum. Etiam facilisis id nisi quis consectetur. Proin nibh neque, tempus nec venenatis a, tincidunt vitae turpis. Nulla aliquam risus vel fermentum maximus.
-            </div>
+       
 
-            <ul className="overview__list">
+            <section className="overview__section">
+                <div className="overview__title">
+                    <IconSvg icon="file"/>
+                    <div>General</div>
+                </div>
+                <ul className="overview__list">
                 <li className="overview__list__item">
                     <div className="overview__list__item__key">Marque</div>
                     <div className="overview__list__item__value">Toyota</div>
@@ -38,21 +42,31 @@ const overview = () => {
                     <div className="overview__list__item__key">Nombre de places</div>
                     <div className="overview__list__item__value">5</div>
                 </li>
-                <li className="overview__list__item">
-                    <div className="overview__list__item__key">Couleur extérieur</div>
-                    <div className="overview__list__item__value">gris</div>
-                </li>
-                <li className="overview__list__item">
-                    <div className="overview__list__item__key">Couleur intérieur</div>
-                    <div className="overview__list__item__value">gris</div>
-                </li>
-                <li className="overview__list__item">
-                    <div className="overview__list__item__key">Numéro de référence</div>
-                    <div className="overview__list__item__value">X4598Y7</div>
-                </li>
+                
                 
                 
             </ul>
+            </section>
+
+
+            <section className="overview__section">
+                <div className="overview__title">
+                    <IconSvg icon="design"/>
+                    <div>Design</div>
+                </div>
+                <ul className="overview__list">
+                    <li className="overview__list__item">
+                        <div className="overview__list__item__key">Couleur extérieur</div>
+                        <div className="overview__list__item__value">gris</div>
+                    </li>
+                    <li className="overview__list__item">
+                        <div className="overview__list__item__key">Couleur intérieur</div>
+                        <div className="overview__list__item__value">gris</div>
+                    </li>                            
+            </ul>
+            </section>
+
+            
            
         </div>
     )

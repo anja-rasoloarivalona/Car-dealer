@@ -93,9 +93,35 @@ class Cta extends Component {
                         </div>
                         
 
-                        
-                        <div className="car__cta__forfait">
-                            <div className="car__cta__appointment__title">Forfait</div>
+
+                        <div className="car__cta__info">
+                            <div className="car__cta__appointment__title">Info</div>
+                            <ul className="car__cta__info__list">
+                                <li className="car__cta__info__list__item">
+                                    <div>Marque</div>
+                                    <div className="car__cta__info__list__item__value">Toyota</div>
+                                </li>
+                                <li className="car__cta__info__list__item">
+                                    <div>Modèle</div>
+                                    <div className="car__cta__info__list__item__value">Corolla</div>
+                                </li>
+                                <li className="car__cta__info__list__item">
+                                    <div>Année</div>
+                                    <div className="car__cta__info__list__item__value">2016</div>
+                                </li>
+                                <li className="car__cta__info__list__item">
+                                    <div>Numéro de référence</div>
+                                    <div className="car__cta__info__list__item__value">X4598Y7</div>
+                                </li>
+                                <li className="car__cta__info__list__item">
+                                    <div>Nombre de vues</div>
+                                    <div className="car__cta__info__list__item__value">14</div>
+                                </li>
+                                <li className="car__cta__info__list__item">
+                                    <div>Suivi par</div>
+                                    <div className="car__cta__info__list__item__value">5 personnes</div>
+                                </li>
+                            </ul>
                         </div>
                         
                         <div className="car__cta__appointment">

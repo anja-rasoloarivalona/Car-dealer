@@ -183,3 +183,27 @@ select {
   .react-datepicker__month-container {
     width: 100%;
   }
+
+  .car__cta__info {
+    background: rgb(224, 224, 224);
+    margin-bottom: 3rem;
+    padding-bottom: 1rem;
+    
+}
+
+.car__cta__info__list {
+    padding: 0 1rem;
+    list-style: none;
+}
+
+.car__cta__info__list__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.car__cta__info__list__item__value{
+    color: var(--color-grey);
+
+}
