@@ -16,7 +16,7 @@ class Inventory extends Component {
     }
 
     fetchProductsHandler = () => {
-        let url = 'http://localhost:8000/products';
+        let url = 'http://localhost:8000/product';
         let method = 'GET';
   
         fetch( url, {
@@ -41,9 +41,12 @@ class Inventory extends Component {
         })
     }
 
-    requestProductDetails = prodId => {
-        this.props.setProductRequestedId(prodId)
-        this.props.history.push(`/car/${prodId}`)
+    requestProductDetails = data => {
+
+
+        this.props.setProductRequestedData(data)
+
+        this.props.history.push(`/car/${data.productId}`)
     }
 
 
@@ -67,7 +70,7 @@ class Inventory extends Component {
                                         nbKilometers={product.general[0].nbKilometers}
                                         gazol={product.general[0].gazol}
                                         transmissionType={product.general[0].transmissionType}
-                                        requestProductDetails={this.requestProductDetails}
+                                        requestProductDetails={this.requestProductDetails.bind(this)}
                                     />
                                         )
                         )
@@ -80,7 +83,7 @@ class Inventory extends Component {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setProductRequestedId: prodId => dispatch(actions.setProductRequestedId(prodId))
+        setProductRequestedData: data => dispatch(actions.setProductRequestedData(data))
     }
 }
 

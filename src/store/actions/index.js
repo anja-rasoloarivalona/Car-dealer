@@ -9,6 +9,6 @@ export {
 
 
 export {
-    setProductRequestedId
+    setProductRequestedData
 } from './product'
 

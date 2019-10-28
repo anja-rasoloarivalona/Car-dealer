@@ -1,9 +1,9 @@
 .car__cta {
-    width: 30%;
     padding: 1rem 2rem;
+    grid-row: 1 / 2;
+    grid-column: 2 / 3;
 
 
-   
 }
 
 .car__cta__price {

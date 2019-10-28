@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import './Car.css';
 import { Gallery, GalleryImage } from "react-gesture-gallery";
-import { NavLink, Switch, Route } from 'react-router-dom'
+
+import { connect } from 'react-redux'
+import * as actions from '../../store/actions'
 
 
 import Overview from './overview/Overview';
@@ -10,6 +12,7 @@ import Features from './features/Features';
 import Cta from './cta/Cta'
 
 import Loader from '../../components/loader/Loader';
+import ProductCard from '../../components/ProductCard/ProductCard';
 
 class Car extends Component {
 
@@ -17,6 +20,7 @@ class Car extends Component {
         index: 0,
         
         product: null,
+        relatedProducts: [],
 
         initiatlIndex: 0,
         loading: true,
@@ -43,44 +47,11 @@ class Car extends Component {
     }
 
     componentDidMount(){
-
-        let prodId;
-
-        if(!this.props.prodId){
-            prodId = this.props.match.params.prodId
-        } else {
-            prodId = this.props.prodId
-        }
-
-        let url = "http://localhost:8000/user/" + prodId
-        let method = 'GET'
-
-
-        
-        fetch( url, {
-        method: method,
-        headers: {
-          'Content-type': 'application/json'
-        },
-      })
-      .then( res => {
-        if(res.status !== 200 && res.status !== 201){
-          throw new Error('Error fetching products')
-        }
-
-        return res.json()
-      })
-      .then(resData => {
-        this.setState({ product: resData.product, loading: false}, () => console.log(this.state.product))
-      })
-      .catch(err => {
-        console.log(err)
-      })
-
-
-
       //  this.imageSlideHandler()
+      this.fetchProductDetailsHandler()
     }
+
+ 
 
     componentWillUnmount(){
         clearInterval(this.inter)
@@ -93,9 +64,57 @@ class Car extends Component {
         this.setState({ index: index})
     }
 
+    fetchProductDetailsHandler = data => {
+        let {productId, made, model, price} = this.props;
+
+        let prodId;
+
+        if(!productId){
+            prodId = this.props.match.params.prodId
+        } else {
+            prodId = productId
+        }
+
+        if(data){
+            prodId = data.productId
+        }
+
+        console.log('fetching', data)
+
+        let url = `http://localhost:8000/product/${prodId}?made=${made}&model=${model}&price=${price}`
+    
+        fetch( url, {
+        headers: {
+          'Content-type': 'application/json'
+        },
+      })
+      .then( res => {
+
+        if(res.status !== 200 && res.status !== 201){
+          throw new Error('Error fetching products')
+        }
+
+        return res.json()
+      })
+      .then(resData => {
+          console.log('resData', resData)
+          window.scrollTo(0, 0)
+       this.setState({ product: resData.product, relatedProducts: resData.relatedProducts,loading: false})
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    }
+
+    requestProductDetails = data => {
+        this.props.setProductRequestedData(data)
+        this.fetchProductDetailsHandler(data)
+    }
+
     render() {
 
-        const { product } = this.state;
+        let product = this.state.product
+        let products = this.state.relatedProducts
 
         let prod;
 
@@ -168,19 +187,42 @@ class Car extends Component {
                             this.state.partRequested === 'features' && <Features />
                         }
 
-                    
-
-
-
-                        <div className="space">
-
-                        </div>
+                
   
                     </section>
                     
                     <Cta product={product}/>
 
-                    
+                    <section className="car__related">
+                        <h2 className="car__section__title">
+                            Les clients ayant consulté ce modèle ont également regardé
+                        </h2>
+                            <ul className="car__related__list">
+                                {
+                                    products.map(product => (
+                                        <ProductCard 
+                                        key= {product._id}
+                                        _id = {product._id}
+                                        mainImgUrl={product.general[0].mainImgUrl}
+                                        made={product.general[0].made}
+                                        model={product.general[0].model}
+                                        year={product.general[0].year}
+                                        price={product.general[0].price}
+                                        nbKilometers={product.general[0].nbKilometers}
+                                        gazol={product.general[0].gazol}
+                                        transmissionType={product.general[0].transmissionType}
+                                        requestProductDetails={this.requestProductDetails.bind(this)}
+                                    />
+                                    ))
+                                }
+                            </ul>
+                    </section>
+
+                    <section className="car__mostPopular">
+                                <h2 className="car__section__title">
+                                    Les modèles les plus populaires
+                                </h2>
+                    </section>
             </div>
             )
         }
@@ -188,5 +230,20 @@ class Car extends Component {
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        productId: state.product.productRequestedId,
+        made: state.product.madeRequested,
+        model: state.product.modelRequested,
+        price: state.product.priceRequested
+    }
+}
 
-export default Car;
+const mapDispatchToProps = dispatch => {
+    return {
+        setProductRequestedData : data =>  dispatch(actions.setProductRequestedData(data))
+    }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Car);

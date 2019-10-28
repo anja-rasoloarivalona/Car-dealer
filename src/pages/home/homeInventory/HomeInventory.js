@@ -10,9 +10,11 @@ const homeInventory = props => {
     let cars = props.carsHomeInventory;
 
 
-    const requestProductDetails = prodId => {
-            props.setProductRequestedId(prodId)
-            props.history.push(`/car/${prodId}`)
+    const requestProductDetails = data => {
+
+        
+         //   props.setProductRequestedData(data)
+         //   props.history.push(`/car/${prodId}`)
     }
 
     return (
@@ -51,7 +53,7 @@ const homeInventory = props => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setProductRequestedId: prodId => dispatch(actions.setProductRequestedId(prodId))
+        setProductRequestedData: data => dispatch(actions.setProductRequestedData(data))
     }
 }
 

@@ -4,9 +4,16 @@ import IconSvg from '../../utilities/svg/svg';
 
 const ProductCard = props  => {
 
+    let productData = {
+        productId: props._id,
+        productMade: props.made,
+        productModel: props.model,
+        productPrice: props.price
+    }
+
     return (
         <article className="product-card"
-                 onClick={() => props.requestProductDetails(props._id)}>
+                 onClick={() => props.requestProductDetails(productData)}>
                     <img src={props.mainImgUrl} className="product-card__img" alt="car"/>
                     
                     <div className="product-card__details">
