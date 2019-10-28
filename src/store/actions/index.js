@@ -9,6 +9,7 @@ export {
 
 
 export {
-    setProductRequestedData
+    setProductRequestedData,
+    setMadeAndModelsData
 } from './product'
 

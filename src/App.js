@@ -102,10 +102,13 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-  
 
-        this.setState({ carsHomeIntro: resData.publicityProducts, carsHomeInventory: resData.homeInventoryProducts},
+        this.setState({ 
+            carsHomeIntro: resData.publicityProducts, 
+            carsHomeInventory: resData.homeInventoryProducts,},
           () => this.setState({ loading: false}))
+
+        this.props.setMadeAndModelsData(resData.madeAndModelsData)
       })
       .catch(err => {
         console.log(err)
@@ -268,7 +271,8 @@ const mapDispatchToProps = dispatch => {
   return {
     setLoginStateToTrue: (data) => dispatch(actions.setLoginStateToTrue(data)),
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
-    setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId))
+    setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
+    setMadeAndModelsData : data => dispatch(actions.setMadeAndModelsData(data))
   }
 }
 

@@ -10,3 +10,13 @@ export const setProductRequestedData = prodData => {
         productPrice: prodData.productPrice
     }
 }
+
+
+export const setMadeAndModelsData = data => {
+
+    console.log('datata', data)
+    return {
+        type: actionTypes.SET_MADE_AND_MODELS_DATAS,
+        data: data
+    }
+}
