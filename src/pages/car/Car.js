@@ -66,7 +66,6 @@ class Car extends Component {
 
     fetchProductDetailsHandler = data => {
         let {productId, made, model, price} = this.props;
-
         let prodId;
 
         if(!productId){
@@ -78,8 +77,6 @@ class Car extends Component {
         if(data){
             prodId = data.productId
         }
-
-        console.log('fetching', data)
 
         let url = `http://localhost:8000/product/${prodId}?made=${made}&model=${model}&price=${price}`
     
@@ -97,9 +94,8 @@ class Car extends Component {
         return res.json()
       })
       .then(resData => {
-          console.log('resData', resData)
           window.scrollTo(0, 0)
-       this.setState({ product: resData.product, relatedProducts: resData.relatedProducts,loading: false})
+          this.setState({ product: resData.product, relatedProducts: resData.relatedProducts,loading: false})
       })
       .catch(err => {
         console.log(err)
@@ -127,9 +123,7 @@ class Car extends Component {
                     <section className="car__presentation">
                         <h1 className="car__presentation__title">{product.general[0].title}</h1>
                         <div className="car__presentation__gallery">
-
-                            
-                                
+                               
                             <Gallery
                                 index={this.state.index}
                                 onRequestChange={i => this.setState({index: i})}>
@@ -139,10 +133,7 @@ class Car extends Component {
                                 ))}
 
                             </Gallery>
-
-                                
-                            
-                            
+                                   
                         </div>
                         <div className="car__presentation__gallery__controller">
                             {
@@ -211,7 +202,7 @@ class Car extends Component {
                                         nbKilometers={product.general[0].nbKilometers}
                                         gazol={product.general[0].gazol}
                                         transmissionType={product.general[0].transmissionType}
-                                        requestProductDetails={this.requestProductDetails.bind(this)}
+                                        requestProductDetails={this.requestProductDetails}
                                     />
                                     ))
                                 }

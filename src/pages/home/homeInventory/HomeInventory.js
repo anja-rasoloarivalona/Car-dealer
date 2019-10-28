@@ -11,10 +11,8 @@ const homeInventory = props => {
 
 
     const requestProductDetails = data => {
-
-        
-         //   props.setProductRequestedData(data)
-         //   props.history.push(`/car/${prodId}`)
+            props.setProductRequestedData(data)
+            props.history.push(`/car/${data.productId}`)
     }
 
     return (

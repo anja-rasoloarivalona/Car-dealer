@@ -17,12 +17,8 @@ import Loader from './components/loader/Loader'
 
 /*------------PAGES---------------------------*/
 import Home from './pages/home/Home';
-
-
-
-
 import Inventory from './pages/inventory/Inventory';
-import Car from './pages/car/Car';
+import SingleCar from './pages/car/Car';
 import Auth from './pages/auth/Auth';
 
 /*-----------UTILITIES-----------*/
@@ -42,12 +38,11 @@ class App extends Component {
 
     this.setState({ loading: true});
 
-    this.fetchHomeProducts();
+    this.initAppDataHandler();
 
     
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
-
     const userId = localStorage.getItem('woto-userId');
     //const connectionId = localStorage.getItem('woto-connectionId');
 
@@ -75,17 +70,16 @@ class App extends Component {
     this.startConnection(userId, timeStamp)
   }
 
-  componentDidMount(){
+    componentDidMount(){
+      window.addEventListener('scroll', () => {
+        let pos = window.scrollY;
+        this.setState({ pos: pos})
+      })
 
-    window.addEventListener('scroll', () => {
-      let pos = window.scrollY;
-      this.setState({ pos: pos})
-    })
+    }
 
-  }
-
-    fetchHomeProducts = () => {
-      let url = 'http://localhost:8000/user/home-products';
+    initAppDataHandler = () => {
+      let url = 'http://localhost:8000/product/init';
       let method = 'GET';
 
       fetch( url, {
@@ -102,7 +96,6 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-
         this.setState({ 
             carsHomeIntro: resData.publicityProducts, 
             carsHomeInventory: resData.homeInventoryProducts,},
@@ -237,7 +230,7 @@ class App extends Component {
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         <Route path='/inventaire' component={Inventory}/>
-                        <Route path='/car/:prodId' component={Car}/>
+                        <Route path='/car/:prodId' component={SingleCar}/>
                         <Route path='/auth' component={Auth} />
                     </Switch>
                     
