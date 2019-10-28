@@ -6,6 +6,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from '../../../components/timePicker/TimePicker';
 import { fr } from 'date-fns/locale';
 import Button from '../../../components/button/Button';
+import Search from './search/Search'
 registerLocale('fr', fr)
 
 class Cta extends Component {
@@ -35,19 +36,16 @@ class Cta extends Component {
         this.setState({ timeSelected: time})
       }
 
-
-
     render() {
-
         let product = this.props.product;
         const { totalPrice } = this.state
         return (
             <section className="car__cta">
 
+
                         <div className="car__cta__price">
                             {product.general[0].price} MRU
                         </div>
-
                         <div className="car__cta__calculator">
 
                             <div className="car__cta__calculator__item">
@@ -93,6 +91,13 @@ class Cta extends Component {
 
 
                         </div>
+                        
+
+                        
+                        <div className="car__cta__forfait">
+                            <div className="car__cta__appointment__title">Forfait</div>
+                        </div>
+                        
                         <div className="car__cta__appointment">
                             
                             <div className="car__cta__appointment__title">Rendez-vous</div>
@@ -128,17 +133,14 @@ class Cta extends Component {
                                     <Button color='primary'>
                                         Prendre
                                     </Button>
-                                </div>
-                                
-                                
-
-
-                                
+                                </div>                     
                             </div>
                             
 
                         </div>
-                </section>
+
+                        <Search />
+            </section>
         )
     }
 }
