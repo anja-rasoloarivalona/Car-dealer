@@ -48,6 +48,8 @@ class Car extends Component {
 
     componentDidMount(){
       //  this.imageSlideHandler()
+
+      console.log('userId', this.props.userId === null)
       this.fetchProductDetailsHandler()
     }
 
@@ -65,8 +67,15 @@ class Car extends Component {
     }
 
     fetchProductDetailsHandler = data => {
-        let {productId, made, model, price} = this.props;
+        let {productId, made, model, price, userId} = this.props;
         let prodId;
+
+        let userIdFetching;
+        if(userId === null){
+            userIdFetching = 'not connected'
+        } else {
+            userIdFetching = userId
+        }
 
         if(!productId){
             prodId = this.props.match.params.prodId
@@ -78,7 +87,7 @@ class Car extends Component {
             prodId = data.productId
         }
 
-        let url = `http://localhost:8000/product/${prodId}?made=${made}&model=${model}&price=${price}`
+        let url = `http://localhost:8000/product/${prodId}?made=${made}&model=${model}&price=${price}&userId=${userIdFetching}`
     
         fetch( url, {
         headers: {
@@ -226,7 +235,8 @@ const mapStateToProps = state => {
         productId: state.product.productRequestedId,
         made: state.product.madeRequested,
         model: state.product.modelRequested,
-        price: state.product.priceRequested
+        price: state.product.priceRequested,
+        userId: state.auth.userId
     }
 }
 
