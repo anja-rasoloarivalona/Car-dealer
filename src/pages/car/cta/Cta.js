@@ -4,10 +4,9 @@ import IconSvg from '../../../utilities/svg/svg';
 import DatePicker, {registerLocale} from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import TimePicker from '../../../components/timePicker/TimePicker';
-import { fr } from 'date-fns/locale';
 import Button from '../../../components/button/Button';
 import Search from './search/Search'
-registerLocale('fr', fr)
+
 
 class Cta extends Component {
 
@@ -135,13 +134,13 @@ class Cta extends Component {
                                     <div className="car__cta__appointment__detail__key">Date: </div>
                                     <div className="car__cta__appointment__detail__date">
                                         <DatePicker
-                                            locale='fr' 
+                                             
                                             showPopperArrow={false}
                                             selected={this.state.startDate}
                                             onChange={this.handleChange}
                                         />
                                         <div className="car__cta__appointment__detail__date__value">
-                                            {this.state.startDate.toLocaleDateString(fr)}
+                                            {this.state.startDate.toLocaleDateString('fr-FR')}
                                         </div>
                                     </div>
                                     

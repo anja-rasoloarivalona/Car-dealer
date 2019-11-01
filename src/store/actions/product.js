@@ -14,9 +14,16 @@ export const setProductRequestedData = prodData => {
 
 export const setMadeAndModelsData = data => {
 
-    console.log('datata', data)
+    console.log('setting my data')
     return {
         type: actionTypes.SET_MADE_AND_MODELS_DATAS,
         data: data
+    }
+}
+
+export const setMostPopularProducts = products => {
+    return {
+        type: actionTypes.SET_MOST_POPULAR_PRODUCTS,
+        products: products
     }
 }

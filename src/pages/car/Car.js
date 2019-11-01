@@ -236,6 +236,8 @@ const mapStateToProps = state => {
         made: state.product.madeRequested,
         model: state.product.modelRequested,
         price: state.product.priceRequested,
+        mostPopularProducts: state.product.mostPopularProducts,
+
         userId: state.auth.userId
     }
 }

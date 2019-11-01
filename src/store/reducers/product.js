@@ -10,7 +10,8 @@ const initialState = {
 
 
 
-    madeAndModelsData: null
+    madeAndModelsData: null,
+    mostPopularProducts: null
 }
 
 
@@ -26,7 +27,8 @@ const setProductRequestedData = (state, action) => {
 const reducer = ( state = initialState, action) => {
     switch (action.type){
         case actionTypes.SET_PRODUCT_REQUESTED_DATA : return setProductRequestedData(state, action);
-        case actionTypes.SET_MADE_AND_MODELS_DATAS: return updatedObject( state, {madeAndModelsData: action.data })
+        case actionTypes.SET_MADE_AND_MODELS_DATAS: return updatedObject( state, {madeAndModelsData: action.data });
+        case actionTypes.SET_MOST_POPULAR_PRODUCTS: return updatedObject( state, { mostPopularProducts: action.products})
         default: return state
     }
 }

@@ -98,9 +98,10 @@ class App extends Component {
       .then(resData => {
         this.setState({ 
             carsHomeIntro: resData.publicityProducts, 
-            carsHomeInventory: resData.homeInventoryProducts,},
-          () => this.setState({ loading: false}))
-
+            carsHomeInventory: resData.homeInventoryProducts,
+            loading: false
+          })
+        this.props.setMostPopularProducts(resData.mostPopularProducts)
         this.props.setMadeAndModelsData(resData.madeAndModelsData)
       })
       .catch(err => {
@@ -265,7 +266,8 @@ const mapDispatchToProps = dispatch => {
     setLoginStateToTrue: (data) => dispatch(actions.setLoginStateToTrue(data)),
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
-    setMadeAndModelsData : data => dispatch(actions.setMadeAndModelsData(data))
+    setMadeAndModelsData : data => dispatch(actions.setMadeAndModelsData(data)),
+    setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products))
   }
 }
 

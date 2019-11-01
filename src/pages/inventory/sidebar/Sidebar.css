@@ -1,0 +1,138 @@
+.inventory__sidebar {
+    width: 23rem;
+    min-height: 100vh;
+    border-right: 1px solid rgb(226, 226, 226);
+}
+
+.inventory__sidebar__title {
+    background: rgb(226, 226, 226);
+    padding: 2rem 0;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.inventory__sidebar__form {
+    background: yellow;
+    padding: 1rem 1.5rem;
+    
+}
+
+.inventory__sidebar__form__control {
+    background: red;  
+    margin-bottom: 2rem;
+}
+
+.inventory__sidebar__form__control__data {
+    background: violet;
+    padding: 1rem .5rem;
+
+    cursor: pointer;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.inventory__sidebar__selector {
+    background: blue;
+    width: 100%;
+    display: none;
+}
+
+.inventory__sidebar__selector.active {
+    display: block;
+}
+
+
+.inventory__sidebar__selector__list {
+    list-style: none;
+}
+
+.inventory__sidebar__selector__list__option {
+    padding: .5rem 0;
+    padding-left: .5rem;
+    background: white;
+    cursor: pointer;
+    border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.inventory__sidebar__selector__list__option.active {
+    background: var(--color-primary);
+    color: var(--color-white);
+}
+
+.inventory__sidebar__selector__list__option:hover {
+    background: rgb(221, 220, 220);
+}
+
+.inventory__sidebar__selector__list__option.active:hover {
+    background: orange;
+}
+
+.inventory__sidebar__selector__cta {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.inventory__sidebar__madeSelected {
+    background: salmon;  
+    list-style: none;
+    display: block;
+}
+
+.inventory__sidebar__madeSelected.hide {
+    display: none;
+}
+
+.inventory__sidebar__madeSelected__item {
+    padding: .5rem 0;
+    padding-left: .5rem;
+    border-bottom: 1px solid rgb(221, 220, 220);
+}
+
+.inventory__sidebar__madeSelected__item__text {
+    display: flex;
+    align-items: center;
+    
+    justify-content: space-between;
+    padding-right: .5rem;
+    cursor: pointer;
+    margin-bottom: .5rem;
+    
+}
+
+
+
+.inventory__sidebar__madeSelected__item__modelSelector {
+    list-style: none;
+    background: white;   
+}
+
+.inventory__sidebar__madeSelected__item__modelSelector__listItem {
+    padding: .5rem 0;
+    padding-left: .5rem;
+    border-bottom: 1px solid rgb(221, 220, 220);
+    cursor: pointer;
+    position: relative;
+    z-index: 1
+}
+
+.inventory__sidebar__madeSelected__item__modelSelector__listItem.active {
+    background: var(--color-primary);
+}
+
+.inventory__sidebar__madeSelected__item__modelSelector__listItem:hover {
+    background: rgb(221, 220, 220);
+}
+
+.inventory__sidebar__form__cta {
+    background: blue;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inventory .input-range__label-container {
+    display: none;
+}

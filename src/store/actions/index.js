@@ -10,6 +10,7 @@ export {
 
 export {
     setProductRequestedData,
-    setMadeAndModelsData
+    setMadeAndModelsData, 
+    setMostPopularProducts
 } from './product'
 
