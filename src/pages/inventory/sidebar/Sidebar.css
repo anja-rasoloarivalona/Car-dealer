@@ -2,6 +2,8 @@
     width: 23rem;
     min-height: 100vh;
     border-right: 1px solid rgb(226, 226, 226);
+
+    background: rgb(226, 226, 226);
 }
 
 .inventory__sidebar__title {
@@ -12,28 +14,42 @@
 }
 
 .inventory__sidebar__form {
-    background: yellow;
     padding: 1rem 1.5rem;
     
 }
 
 .inventory__sidebar__form__control {
-    background: red;  
     margin-bottom: 2rem;
+    border-radius: 3px;
+    
 }
 
+.inventory__sidebar__form__control.inventory__sidebar__form__control--made {
+    background: white;  
+ }
+
 .inventory__sidebar__form__control__data {
-    background: violet;
+    background: var(--color-primary); 
+    color: var(--color-white);
     padding: 1rem .5rem;
 
     cursor: pointer;
 
     display: flex;
     justify-content: space-between;
+
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+
+.inventory__sidebar__form__control__data.inventory__sidebar__form__control__data--price,
+.inventory__sidebar__form__control__data.inventory__sidebar__form__control__data--year {
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
 }
 
 .inventory__sidebar__selector {
-    background: blue;
+   /* background: blue;*/
     width: 100%;
     display: none;
 }
@@ -45,9 +61,12 @@
 
 .inventory__sidebar__selector__list {
     list-style: none;
+   
 }
 
 .inventory__sidebar__selector__list__option {
+    
+
     padding: .5rem 0;
     padding-left: .5rem;
     background: white;
@@ -56,7 +75,7 @@
 }
 
 .inventory__sidebar__selector__list__option.active {
-    background: var(--color-primary);
+    background: var(--color-grey);
     color: var(--color-white);
 }
 
@@ -65,7 +84,7 @@
 }
 
 .inventory__sidebar__selector__list__option.active:hover {
-    background: orange;
+    background: var(--color-grey);
 }
 
 .inventory__sidebar__selector__cta {
@@ -127,10 +146,10 @@
 }
 
 .inventory__sidebar__form__cta {
-    background: blue;
     display: flex;
     align-items: center;
     justify-content: center;
+    transform: translateY(2rem);
 }
 
 .inventory .input-range__label-container {

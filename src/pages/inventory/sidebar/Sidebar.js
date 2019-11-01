@@ -10,7 +10,7 @@ import 'react-input-range/lib/css/index.css';
 
     state = {
         madeSelected: [],
-        showMadeSelector: false,
+        showMadeSelector: true,
         madeSelectedWhoseModelSelectorIsRequired: [],
 
         searchData: {
@@ -37,9 +37,9 @@ import 'react-input-range/lib/css/index.css';
 
     componentDidMount(){
 
-
         let data = this.props.madeAndModelsData;
 
+        /*** START INIT MIN AND MAX PRICE ***/
         let min = data[Object.keys(data)[0]].price.min;
         let max = data[Object.keys(data)[0]].price.max;
     
@@ -52,12 +52,12 @@ import 'react-input-range/lib/css/index.css';
                     max = data[made].price.max
                 }
             })
-    
         let initPrice = {
                 min: min,
                 max: max
-            }    
-        ////////////////////////////////
+            }   
+        /*** END INIT MIN AND MAX PRICE ***/ 
+        
 
         let parsedQuery = this.props.parsedQuery;             
         if(parsedQuery !== null){
@@ -87,11 +87,6 @@ import 'react-input-range/lib/css/index.css';
                     }   
                 }
 
-                      
-                
-                
-
-
             })
 
             let minYear = parsedQuery.year.split(':')[0];
@@ -110,6 +105,13 @@ import 'react-input-range/lib/css/index.css';
                 max: maxPrice
             }
 
+            let initMadeSelected;
+            if(Object.keys(madeAndModels).length === 0){
+                initMadeSelected = ['all']
+            } else {
+                initMadeSelected = Object.keys(madeAndModels)
+            }
+
             this.setState(prevState => ({
                 ...prevState,
                 searchData: {
@@ -119,11 +121,11 @@ import 'react-input-range/lib/css/index.css';
                     madeAndModels: madeAndModels
                 },
                 priceAllowed: initPrice,
-                madeSelected: Object.keys(madeAndModels),
+                madeSelected: initMadeSelected,
                 madeSelectedWhoseModelSelectorIsRequired:  Object.keys(madeAndModels)
 
                
-            }), () => console.log('from sidebar',this.state.searchData))
+            }), () => console.log('from sidebar',this.state.madeSelected))
             
 
         } else {
@@ -134,8 +136,9 @@ import 'react-input-range/lib/css/index.css';
                     ...prevState.searchData,
                     price: initPrice,
                 },
+                madeSelected: ['all'],
                 priceAllowed: initPrice
-            }))
+            }), () => console.log('sss', this.state.madeSelected))
         }
 
 
@@ -149,24 +152,59 @@ import 'react-input-range/lib/css/index.css';
 
 
     selectMadeHandler = made => {   
-        if(this.state.madeSelected.filter(i => i === made).length === 0){
-            //If the made is not selected yet, we add it
+
+        if(made === 'all'){
+
             this.setState(prevState => ({
                 ...prevState,
-                madeSelected: [...prevState.madeSelected, made],
-                searchData: {...prevState.searchData, 
-                             madeAndModels: {
-                                 ...prevState.searchData.madeAndModels,
-                                 [made] : 'all'
-                                }           
-                            }
+                madeSelected: ['all'],
+                searchData: {
+                    ...prevState.searchData,
+                    madeAndModels: {}
+                }
             }))
+
         } else {
-            //The made is already selected, so we need to remove it
-            let madeSelected = this.state.madeSelected.filter( i => i !== made);
-            delete this.state.searchData.madeAndModels[made]
-            this.setState({ madeSelected})
+            if(this.state.madeSelected.includes('all')){
+                this.setState(prevState => ({
+                    ...prevState,
+                    madeSelected: [made],
+                    searchData: {
+                        ...prevState.searchData,
+                        madeAndModels: {
+                            [made]: 'all'
+                        }
+                    }
+                }))
+    
+            } else {
+                if(this.state.madeSelected.filter(i => i === made).length === 0){
+                    //If the made is not selected yet, we add it
+                    this.setState(prevState => ({
+                        ...prevState,
+                        madeSelected: [...prevState.madeSelected, made],
+                        searchData: {...prevState.searchData, 
+                                     madeAndModels: {
+                                         ...prevState.searchData.madeAndModels,
+                                         [made] : 'all'
+                                        }           
+                                    }
+                                }))
+                } else {
+                    //The made is already selected, so we need to remove it
+                    let madeSelected = this.state.madeSelected.filter( i => i !== made);
+                    delete this.state.searchData.madeAndModels[made]
+                    this.setState({ madeSelected})
+                }
+            }
         }
+
+        
+
+
+        
+
+
     }
 
     selectModelHandler = (made, model) => {
@@ -178,19 +216,12 @@ import 'react-input-range/lib/css/index.css';
             data[made] = [model]
         } else {
             if(!data[made].includes(model)){
-            //There is already one model selected at least for the current made, and it's not the current selected model,  so we add it
-            
-            
-                
-            if(Object.keys(this.props.madeAndModelsData[made].datas).length === ( Object.keys(data[made]).length + 1 )  ) {
-                data[made] = 'all'
-            } else {
-                data[made] = [...data[made], model]
-            }
-            
-            
-
-                
+            //There is already one model selected at least for the current made, and it's not the current selected model,  so we add it                               
+                if(Object.keys(this.props.madeAndModelsData[made].datas).length === ( Object.keys(data[made]).length + 1 )  ) {
+                    data[made] = 'all'
+                } else {
+                    data[made] = [...data[made], model]
+                }                                     
 
             }  else {
             //The current model selected is already in the array, so we need to remove it
@@ -282,6 +313,14 @@ import 'react-input-range/lib/css/index.css';
         }
 
         
+        let madeCounter
+
+        if(madeSelected === 0 || madeSelected.includes('all')){
+            madeCounter = 'Toutes'
+        } else {
+            madeCounter = madeSelected.length
+        }
+        
 
 
         return (
@@ -289,13 +328,17 @@ import 'react-input-range/lib/css/index.css';
           
             <div className="inventory__sidebar">
 
-                    <div className="inventory__sidebar__title">
-                        Filtres
-                    </div>
+                 {
+                     /*
+                        <div className="inventory__sidebar__title">
+                            Filtres
+                        </div>
+                     */
+                 }   
                         
                     <form className="inventory__sidebar__form">
 
-                        <div className="inventory__sidebar__form__control">
+                        <div className="inventory__sidebar__form__control inventory__sidebar__form__control--made">
                             <div className="inventory__sidebar__form__control__data"
                                  onClick={e => this.toggleMadeSelector(e)}>
                                     <div className="inventory__sidebar__form__control__data__key">
@@ -303,7 +346,7 @@ import 'react-input-range/lib/css/index.css';
                                     </div>
                                     <div className="inventory__sidebar__form__control__data__value">
                                         {
-                                            madeSelected.length === 0 ? 'Toutes' : madeSelected.length
+                                            madeCounter
                                         }
                                     </div>
                             </div>
@@ -311,6 +354,13 @@ import 'react-input-range/lib/css/index.css';
                             <div className={`inventory__sidebar__selector
                                             ${this.state.showMadeSelector ? 'active': ''}`}>
                                     <ul className="inventory__sidebar__selector__list">
+
+                                        <li className={`inventory__sidebar__selector__list__option
+                                                        ${this.state.madeSelected.includes('all')? 'active': ''}`}
+                                            onClick={() => this.selectMadeHandler('all')}>
+                                            Toutes
+                                        </li>
+
                                         {
                                         madeKeys.map( made => (
                                                 <li key={made}
@@ -324,9 +374,9 @@ import 'react-input-range/lib/css/index.css';
                                     </ul>
 
                                     <div className="inventory__sidebar__selector__cta">
-                                        <Button color="primary"
+                                        <Button color="grey"
                                                 onClick={e => this.toggleMadeSelector(e)}>
-                                            Ok
+                                            { this.state.madeSelected.includes('all') ? 'OK' : 'Voir models'}
                                         </Button>
                                     </div>
                                     
@@ -338,12 +388,16 @@ import 'react-input-range/lib/css/index.css';
                                             madeSelected.length > 0 && madeSelected.map(made => {
                                                 let counter;
 
-                                                if(searchData.madeAndModels[made] === 'all' || searchData.madeAndModels[made].length === Object.keys(madeAndModelsData[made].datas).length){
-                                                    counter = 'Tous'
+                                                if(made === 'all'){
+                                                    return
                                                 } else {
-                                                    counter = searchData.madeAndModels[made].length 
-                                                } 
-
+                                                    if(searchData.madeAndModels[made] === 'all' || searchData.madeAndModels[made].length === Object.keys(madeAndModelsData[made].datas).length){
+                                                        counter = 'Tous'
+                                                    } else {
+                                                        counter = searchData.madeAndModels[made].length 
+                                                    } 
+                                                }
+                                              
                                                 return (
 
                                                     <li className="inventory__sidebar__madeSelected__item">
@@ -378,7 +432,7 @@ import 'react-input-range/lib/css/index.css';
 
                         <div className="inventory__sidebar__form__control">
 
-                            <div className="inventory__sidebar__form__control__data">
+                            <div className="inventory__sidebar__form__control__data inventory__sidebar__form__control__data--price">
                                     <div className="inventory__sidebar__form__control__data__key">
                                         Prix : 
                                     </div>
@@ -397,7 +451,7 @@ import 'react-input-range/lib/css/index.css';
 
                         <div className="inventory__sidebar__form__control">
 
-                            <div className="inventory__sidebar__form__control__data">
+                            <div className="inventory__sidebar__form__control__data inventory__sidebar__form__control__data--year">
                                     <div className="inventory__sidebar__form__control__data__key">
                                         Année : 
                                     </div>
@@ -417,7 +471,7 @@ import 'react-input-range/lib/css/index.css';
                         <div className="inventory__sidebar__form__cta">
                             <Button color="primary"
                                     onClick={e => this.searchHandler(e)}>
-                                test
+                                Recherche
                             </Button> 
                         </div>
                                                  

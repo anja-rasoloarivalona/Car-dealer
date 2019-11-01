@@ -240,7 +240,7 @@ class Search extends Component {
                         onChange={value => this.changePriceHandler(value)}/>
 
                     <div className="car__cta__search__form__submit">
-                        <Button color="primary">
+                        <Button color="grey">
                             Recherche
                         </Button>
                     </div>
