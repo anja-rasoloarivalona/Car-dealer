@@ -17,16 +17,14 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 class Car extends Component {
 
     state = {
-        index: 0,
-        
+        index: 0,       
         product: null,
         relatedProducts: [],
-
         initiatlIndex: 0,
         loading: true,
+        partRequested: 'overview',
 
-
-        partRequested: 'overview'
+        favorite: false
     }
 
    
@@ -48,8 +46,6 @@ class Car extends Component {
 
     componentDidMount(){
       //  this.imageSlideHandler()
-
-      console.log('userId', this.props.userId === null)
       this.fetchProductDetailsHandler()
     }
 
@@ -103,12 +99,60 @@ class Car extends Component {
         return res.json()
       })
       .then(resData => {
+          console.log('caaars', resData);
+
           window.scrollTo(0, 0)
-          this.setState({ product: resData.product, relatedProducts: resData.relatedProducts,loading: false})
+          this.setState({ 
+              product: resData.product, 
+              relatedProducts: resData.relatedProducts,
+              favorite: resData.favorite,
+              loading: false})
       })
       .catch(err => {
         console.log(err)
       })
+    }
+
+    favoriteHandler = () => {
+        let productId = this.props.productId
+        let prodId;
+        if(!productId){
+            prodId = this.props.match.params.prodId
+        } else {
+            prodId = productId
+        }
+
+        let url = 'http://localhost:8000/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
+       
+        if(this.state.favorite){
+            url = 'http://localhost:8000/user/remove-favorite/' + this.props.userId + `?prodId=${prodId}`;
+        }
+        
+        let method = 'POST'
+
+        fetch(url, {
+            headers: {
+                'Content-type': 'application/json'
+              },
+            method: method
+        })
+        .then( res => {
+            if(res.status !== 200 && res.status !== 201){
+                throw new Error('Error handling favorites product')
+              }
+      
+              return res.json()
+        })
+        .then(resData => {
+            this.setState(prevState => ({
+                ...prevState,
+                favorite: !prevState.favorite
+            }))
+            console.log('Favvvorit', resData)
+        })
+        .catch( err => {
+            console.log(err)
+        })
     }
 
     requestProductDetails = data => {
@@ -130,7 +174,21 @@ class Car extends Component {
                 <div className="car">
                 
                     <section className="car__presentation">
-                        <h1 className="car__presentation__title">{product.general[0].title}</h1>
+                        <div className="car__presentation__titleContainer">
+                            <h1 className="car__presentation__title">{product.general[0].title}</h1>
+                           
+                           
+                           {
+                               this.props.userId && (
+                                    <div className={`car__presentation__favoriteButton
+                                                    ${this.state.favorite ? 'active': ''}`}
+                                        onClick={this.favoriteHandler}>
+                                          {this.state.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}   
+                                            </div>
+                               )
+                           } 
+                        </div>
+                        
                         <div className="car__presentation__gallery">
                                
                             <Gallery
