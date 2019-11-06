@@ -248,9 +248,20 @@ import 'react-input-range/lib/css/index.css';
 
     toggleMadeSelector = e => {
         e.preventDefault();
-        this.setState(prevState => ({
-            showMadeSelector:!prevState.showMadeSelector
-        }))
+
+
+        if(!this.state.madeSelected.includes('all')){
+            this.setState(prevState => ({
+                showMadeSelector:!prevState.showMadeSelector,
+                madeSelectedWhoseModelSelectorIsRequired: prevState.madeSelected
+            }))
+        } else {
+            this.setState(prevState => ({
+                showMadeSelector:!prevState.showMadeSelector,
+            }))
+        }
+
+        
     }
 
     toggleModelSelector = made => {

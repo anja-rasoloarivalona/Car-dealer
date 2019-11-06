@@ -17,7 +17,8 @@ class Inventory extends Component {
         products: null,
         loading: true,
 
-        parsedQuery: null
+        parsedQuery: null,
+        sort: 'prix croissant'
     }
 
     componentDidMount(){     
@@ -25,21 +26,26 @@ class Inventory extends Component {
 
         if(Object.keys(parsedQuery).length !== 0){
             this.setState({ parsedQuery}, () => console.log('parss',this.state.parsedQuery))
-        }
-        
-
-
+        }     
         this.fetchProductsHandler(parsedQuery);
     }
 
-    fetchProductsHandler = (query) => {
+    fetchProductsHandler = (query, sort) => {
         let url =  new URL('http://localhost:8000/product');
 
         let params = {
-            made: query.made,
-            price: query.price,
-            year: query.year
+            sortBy: sort
         }
+
+        if(query){
+            params = {
+                ...params,
+                made: query.made,
+                price: query.price,
+                year: query.year,
+            }
+        }
+
         url.search = new URLSearchParams(params).toString()
   
         fetch( url, {
@@ -98,6 +104,11 @@ class Inventory extends Component {
        
     }
 
+    selectSortHandler = sort => {
+        this.setState( { sort })
+        this.fetchProductsHandler(this.state.parsedQuery, sort)
+    }
+
 
 
 
@@ -119,26 +130,44 @@ class Inventory extends Component {
                     <Sidebar search={e => this.searchHandler(e)}
                             parsedQuery={this.state.parsedQuery}/>
 
-                    <ul className="inventory__list">
-                        {
-                            products && products.map(product => (
-                                    <ProductCard 
-                                            key= {product._id}
-                                            _id = {product._id}
-                                            mainImgUrl={product.general[0].mainImgUrl}
-                                            made={product.general[0].made}
-                                            model={product.general[0].model}
-                                            year={product.general[0].year}
-                                            price={product.general[0].price}
-                                            nbKilometers={product.general[0].nbKilometers}
-                                            gazol={product.general[0].gazol}
-                                            transmissionType={product.general[0].transmissionType}
-                                            requestProductDetails={this.requestProductDetails.bind(this)}
-                                        />
-                                            )
-                            )
-                        }
-                    </ul>
+                    <section className="inventory__container">
+
+                        <div className="inventory__controller">
+
+                            <div className="inventory__controller__sort">
+                                <div className="inventory__controller__sort__key">Trier par</div>
+
+                                <select className="inventory__controller__sort__selector"
+                                        onChange={e => this.selectSortHandler(e.target.value)}>
+                                    <option value="prix croissant">prix croissant</option>
+                                    <option value="prix décroissant">prix décroissant</option>
+                                    <option value="popularité">popularité</option>
+                                    <option value="date">date</option>
+                                </select>
+                            </div>
+                        </div>
+                        <ul className="inventory__list">
+                            {
+                                products && products.map(product => (
+                                        <ProductCard 
+                                                key= {product._id}
+                                                _id = {product._id}
+                                                mainImgUrl={product.general[0].mainImgUrl}
+                                                made={product.general[0].made}
+                                                model={product.general[0].model}
+                                                year={product.general[0].year}
+                                                price={product.general[0].price}
+                                                nbKilometers={product.general[0].nbKilometers}
+                                                gazol={product.general[0].gazol}
+                                                transmissionType={product.general[0].transmissionType}
+                                                requestProductDetails={this.requestProductDetails.bind(this)}
+                                            />
+                                                )
+                                )
+                            }
+                        </ul>
+                    </section>
+                    
                 </div>
             )
         }
