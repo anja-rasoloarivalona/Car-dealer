@@ -20,6 +20,8 @@ import Home from './pages/home/Home';
 import Inventory from './pages/inventory/Inventory';
 import SingleCar from './pages/car/Car';
 import Auth from './pages/auth/Auth';
+import Account from './pages/account/Account';
+
 
 /*-----------UTILITIES-----------*/
 import { timeStampGenerator } from './utilities/timeStampGenerator';
@@ -64,9 +66,10 @@ class App extends Component {
     }
 
     this.props.setLoginStateToTrue(loginData);
+    this.initUserFavoriteProducts(loginData.userId)
+
     
     let timeStamp = timeStampGenerator();
-
     this.startConnection(userId, timeStamp)
   }
 
@@ -193,6 +196,30 @@ class App extends Component {
       })
   }
 
+  initUserFavoriteProducts = userId => {
+    let url = 'http://localhost:8000/user/favorites/' + userId;
+
+    fetch( url, {
+      headers: {
+        'Content-type': 'application/json'
+      }
+    })
+    .then( res => {
+      if(res.status !== 200 && res.status !== 201){
+        throw new Error('Error fetching products')
+      }
+
+      return res.json()
+    })
+    .then(resData => {
+     this.props.setUserFavoriteProducts(resData.favorites)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+  }
+
 
     
 
@@ -233,6 +260,7 @@ class App extends Component {
                         <Route path='/inventaire' component={Inventory}/>
                         <Route path='/car/:prodId' component={SingleCar}/>
                         <Route path='/auth' component={Auth} />
+                        <Route path='/mon-compte' component={Account} />
                     </Switch>
                     
                     <Footer />      
@@ -267,7 +295,9 @@ const mapDispatchToProps = dispatch => {
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
     setMadeAndModelsData : data => dispatch(actions.setMadeAndModelsData(data)),
-    setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products))
+    setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products)),
+
+    setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products))
   }
 }
 

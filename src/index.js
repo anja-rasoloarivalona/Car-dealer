@@ -6,15 +6,19 @@ import * as serviceWorker from './serviceWorker';
 
 import { Provider } from 'react-redux';
 import { createStore , applyMiddleware, compose, combineReducers} from 'redux';
+
 import authReducer from './store/reducers/auth';
 import productReducer from './store/reducers/product';
+import userReducer from './store/reducers/user';
+
 import thunk from 'redux-thunk';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; 
 
 const rootReducer = combineReducers({
     auth: authReducer,
-    product: productReducer
+    product: productReducer,
+    user: userReducer
 })
 
 const store = createStore(

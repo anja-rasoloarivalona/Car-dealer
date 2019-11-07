@@ -14,3 +14,9 @@ export {
     setMostPopularProducts
 } from './product'
 
+
+export {
+    setUserFavoriteProducts,
+    addUserFavoriteProduct,
+    removeUserFavoriteProduct
+} from './user'

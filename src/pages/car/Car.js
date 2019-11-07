@@ -114,6 +114,10 @@ class Car extends Component {
     }
 
     favoriteHandler = () => {
+
+
+
+
         let productId = this.props.productId
         let prodId;
         if(!productId){
@@ -122,10 +126,15 @@ class Car extends Component {
             prodId = productId
         }
 
-        let url = 'http://localhost:8000/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
+        let url;
        
         if(this.state.favorite){
+            //the current product is already in the favorite list
             url = 'http://localhost:8000/user/remove-favorite/' + this.props.userId + `?prodId=${prodId}`;
+            this.props.removeUserFavoriteProduct(this.state.product)
+        } else {
+            url = 'http://localhost:8000/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
+            this.props.addUserFavoriteProduct(this.state.product)
         }
         
         let method = 'POST'
@@ -302,7 +311,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        setProductRequestedData : data =>  dispatch(actions.setProductRequestedData(data))
+        setProductRequestedData : data =>  dispatch(actions.setProductRequestedData(data)),
+        addUserFavoriteProduct: product => dispatch(actions.addUserFavoriteProduct(product)),
+        removeUserFavoriteProduct: product => dispatch(actions.removeUserFavoriteProduct(product))
     }
 }
 
