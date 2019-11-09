@@ -39,9 +39,6 @@ const navbar = props => {
                                     <NavLink to="/mon-compte" className="navbar__list__item">
                                         Profil
                                     </NavLink>
-                                    <NavLink to="/car" className="navbar__list__item">
-                                        CAR
-                                    </NavLink>
                                 </ul>
 
                                 <div className="navbar__cta">
