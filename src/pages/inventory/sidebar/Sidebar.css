@@ -94,23 +94,23 @@
 }
 
 
-.inventory__sidebar__madeSelected {
+.inventory__sidebar__brandSelected {
     background: var(--color-grey);  
     list-style: none;
     display: block;
 }
 
-.inventory__sidebar__madeSelected.hide {
+.inventory__sidebar__brandSelected.hide {
     display: none;
 }
 
-.inventory__sidebar__madeSelected__item {
+.inventory__sidebar__brandSelected__item {
     padding: .5rem 0;
     padding-left: .5rem;
     border-bottom: 1px solid rgb(221, 220, 220);
 }
 
-.inventory__sidebar__madeSelected__item__text {
+.inventory__sidebar__brandSelected__item__text {
     display: flex;
     align-items: center;
     
@@ -123,12 +123,12 @@
 
 
 
-.inventory__sidebar__madeSelected__item__modelSelector {
+.inventory__sidebar__brandSelected__item__modelSelector {
     list-style: none;
     background: white;   
 }
 
-.inventory__sidebar__madeSelected__item__modelSelector__listItem {
+.inventory__sidebar__brandSelected__item__modelSelector__listItem {
     padding: .5rem 0;
     padding-left: .5rem;
     border-bottom: 1px solid rgb(221, 220, 220);
@@ -137,11 +137,11 @@
     z-index: 1
 }
 
-.inventory__sidebar__madeSelected__item__modelSelector__listItem.active {
+.inventory__sidebar__brandSelected__item__modelSelector__listItem.active {
     background: var(--color-primary);
 }
 
-.inventory__sidebar__madeSelected__item__modelSelector__listItem:hover {
+.inventory__sidebar__brandSelected__item__modelSelector__listItem:hover {
     background: rgb(221, 220, 220);
 }
 

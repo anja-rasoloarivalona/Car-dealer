@@ -25,14 +25,14 @@ const homeInventory = props => {
                <ProductCard 
                     key= {product._id}
                     _id = {product._id}
-                    mainImgUrl={product.general[0].mainImgUrl}
-                    made={product.general[0].made}
-                    model={product.general[0].model}
-                    year={product.general[0].year}
-                    price={product.general[0].price}
-                    nbKilometers={product.general[0].nbKilometers}
-                    gazol={product.general[0].gazol}
-                    transmissionType={product.general[0].transmissionType}
+                    mainImgUrl={product.general.mainImgUrl}
+                    brand={product.general.brand}
+                    model={product.general.model}
+                    year={product.general.year}
+                    price={product.general.price}
+                    nbKilometers={product.general.nbKilometers}
+                    gazol={product.general.gazol}
+                    transmissionType={product.general.transmissionType}
                     requestProductDetails={requestProductDetails}
                 />
                     )

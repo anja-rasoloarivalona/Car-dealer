@@ -23,6 +23,7 @@ import Auth from './pages/auth/Auth';
 import Account from './pages/account/Account';
 
 
+
 /*-----------UTILITIES-----------*/
 import { timeStampGenerator } from './utilities/timeStampGenerator';
 
@@ -105,7 +106,7 @@ class App extends Component {
             loading: false
           })
         this.props.setMostPopularProducts(resData.mostPopularProducts)
-        this.props.setMadeAndModelsData(resData.madeAndModelsData)
+        this.props.setBrandAndModelsData(resData.brandAndModelsData)
       })
       .catch(err => {
         console.log(err)
@@ -294,7 +295,7 @@ const mapDispatchToProps = dispatch => {
     setLoginStateToTrue: (data) => dispatch(actions.setLoginStateToTrue(data)),
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
-    setMadeAndModelsData : data => dispatch(actions.setMadeAndModelsData(data)),
+    setBrandAndModelsData : data => dispatch(actions.setBrandAndModelsData(data)),
     setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products)),
 
     setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products))

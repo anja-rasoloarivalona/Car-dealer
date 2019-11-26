@@ -92,7 +92,7 @@ class Home extends Component {
                 <div className="home__intro__list__controller">
                     {
                         carsHomeIntro.map( (product, index) => (
-                            <img key={product.general[0].mainImgUrl}src={product.general[0].mainImgUrl} alt="home image" 
+                            <img key={product.general.mainImgUrl}src={product.general.mainImgUrl} alt="home image" 
                             className={`home__intro__list__controller__item
                             ${this.state.index === index ? 'active': ''}`}/>
                         ))
@@ -111,7 +111,7 @@ class Home extends Component {
                             >
 
 
-                            <img  src={product.general[0].mainImgUrl} className="home__intro__background__image" alt='home intro'/>
+                            <img  src={product.general.mainImgUrl} className="home__intro__background__image" alt='home intro'/>
 
                             <div className="home__intro__product-container"
                                 onMouseEnter={this.clearInterval}
@@ -119,12 +119,12 @@ class Home extends Component {
 
                                 <div className="home__intro__product">
                                     <div className="home__intro__product__detail">
-                                        <span>{product.general[0].made}</span> 
-                                        <span>{product.general[0].model}</span>
-                                        <span>{product.general[0].year}</span>
+                                        <span>{product.general.brand}</span> 
+                                        <span>{product.general.model}</span>
+                                        <span>{product.general.year}</span>
                                     </div>
                                     <div className="home__intro__product__price">
-                                        <span>{product.general[0].price}</span>
+                                        <span>{product.general.price}</span>
                                         <span>MRU</span>
                                     </div>
                                 </div>

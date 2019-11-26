@@ -40,7 +40,7 @@ class Inventory extends Component {
         if(query){
             params = {
                 ...params,
-                made: query.made,
+                brand: query.brand,
                 price: query.price,
                 year: query.year,
             }
@@ -75,27 +75,27 @@ class Inventory extends Component {
 
     searchHandler = (data) => {
 
-        let madeQuery = 'all';
+        let brandQuery = 'all';
         let priceQuery = `${data.price.min}:${data.price.max}`
         let yearQuery = `${data.year.min}:${data.year.max}`
 
-        let madeAndModels = data.madeAndModels;
-        let madeAndModelsKey = Object.keys(madeAndModels)
+        let brandAndModels = data.brandAndModels;
+        let brandAndModelsKey = Object.keys(brandAndModels)
 
-        if(madeAndModelsKey.length !== 0){
-            madeQuery = '';
-            madeAndModelsKey.forEach(made => {
-                let query = `${made}:${madeAndModels[made]}`
-                madeQuery = madeQuery  + query + '_'
+        if(brandAndModelsKey.length !== 0){
+            brandQuery = '';
+            brandAndModelsKey.forEach(brand => {
+                let query = `${brand}:${brandAndModels[brand]}`
+                brandQuery = brandQuery  + query + '_'
             })
         }
         this.props.history.push({
             pathname: './inventaire',
-            search: `?made=${madeQuery}&price=${priceQuery}&year=${yearQuery}`
+            search: `?brand=${brandQuery}&price=${priceQuery}&year=${yearQuery}`
         })
 
         let query = {
-            made: madeQuery,
+            brand: brandQuery,
             price: priceQuery,
             year: yearQuery
         }
@@ -152,14 +152,14 @@ class Inventory extends Component {
                                         <ProductCard 
                                                 key= {product._id}
                                                 _id = {product._id}
-                                                mainImgUrl={product.general[0].mainImgUrl}
-                                                made={product.general[0].made}
-                                                model={product.general[0].model}
-                                                year={product.general[0].year}
-                                                price={product.general[0].price}
-                                                nbKilometers={product.general[0].nbKilometers}
-                                                gazol={product.general[0].gazol}
-                                                transmissionType={product.general[0].transmissionType}
+                                                mainImgUrl={product.general.mainImgUrl}
+                                                brand={product.general.brand}
+                                                model={product.general.model}
+                                                year={product.general.year}
+                                                price={product.general.price}
+                                                nbKilometers={product.general.nbKilometers}
+                                                gazol={product.general.gazol}
+                                                transmissionType={product.general.transmissionType}
                                                 requestProductDetails={this.requestProductDetails.bind(this)}
                                             />
                                                 )
@@ -178,7 +178,7 @@ class Inventory extends Component {
 
 const mapStateToProps = state => {
     return {
-        madeAndModelsData: state.product.madeAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData
     }
 }
 

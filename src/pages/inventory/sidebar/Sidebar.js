@@ -9,9 +9,9 @@ import 'react-input-range/lib/css/index.css';
  class Sidebar extends Component {
 
     state = {
-        madeSelected: [],
-        showMadeSelector: true,
-        madeSelectedWhoseModelSelectorIsRequired: [],
+        brandSelected: [],
+        showBrandSelector: true,
+        brandSelectedWhoseModelSelectorIsRequired: [],
 
         searchData: {
             price: {
@@ -23,7 +23,7 @@ import 'react-input-range/lib/css/index.css';
                 max: 2019
             },
 
-            madeAndModels: {}
+            brandAndModels: {}
         }, //contains the final output
         
         priceAllowed: {},
@@ -37,19 +37,19 @@ import 'react-input-range/lib/css/index.css';
 
     componentDidMount(){
 
-        let data = this.props.madeAndModelsData;
+        let data = this.props.brandAndModelsData;
 
         /*** START INIT MIN AND MAX PRICE ***/
         let min = data[Object.keys(data)[0]].price.min;
         let max = data[Object.keys(data)[0]].price.max;
     
-            Object.keys(data).map( made => {
-                if(data[made].price.min < min){
-                    min = data[made].price.min
+            Object.keys(data).map( brand => {
+                if(data[brand].price.min < min){
+                    min = data[brand].price.min
                 }
     
-                if(data[made].price.max > max){
-                    max = data[made].price.max
+                if(data[brand].price.max > max){
+                    max = data[brand].price.max
                 }
             })
         let initPrice = {
@@ -62,14 +62,14 @@ import 'react-input-range/lib/css/index.css';
         let parsedQuery = this.props.parsedQuery;             
         if(parsedQuery !== null){
             
-            let mades = parsedQuery.made.split('_');
-            let madeAndModels = {};
+            let brands = parsedQuery.brand.split('_');
+            let brandAndModels = {};
 
-            mades.forEach(made => {
+            brands.forEach(brand => {
   
-                let madeName = made.split(':')[0]                
-                if(made.split(':')[1] !== undefined){
-                    let models =  made.split(':')[1] 
+                let brandName = brand.split(':')[0]                
+                if(brand.split(':')[1] !== undefined){
+                    let models =  brand.split(':')[1] 
                     let modelsData = models.split(',')        
                     let currentModelsDataSearch;
     
@@ -79,10 +79,10 @@ import 'react-input-range/lib/css/index.css';
                         
                         currentModelsDataSearch = modelsData
                     }
-                    if(madeName !== ''){
-                        madeAndModels = {
-                            ...madeAndModels,
-                            [madeName] : currentModelsDataSearch
+                    if(brandName !== ''){
+                        brandAndModels = {
+                            ...brandAndModels,
+                            [brandName] : currentModelsDataSearch
                         }
                     }   
                 }
@@ -105,11 +105,11 @@ import 'react-input-range/lib/css/index.css';
                 max: maxPrice
             }
 
-            let initMadeSelected;
-            if(Object.keys(madeAndModels).length === 0){
-                initMadeSelected = ['all']
+            let initBrandSelected;
+            if(Object.keys(brandAndModels).length === 0){
+                initBrandSelected = ['all']
             } else {
-                initMadeSelected = Object.keys(madeAndModels)
+                initBrandSelected = Object.keys(brandAndModels)
             }
 
             this.setState(prevState => ({
@@ -118,14 +118,14 @@ import 'react-input-range/lib/css/index.css';
                     ...prevState.searchData,
                     price: searchDataPrice, 
                     year: searchDataYear,
-                    madeAndModels: madeAndModels
+                    brandAndModels: brandAndModels
                 },
                 priceAllowed: initPrice,
-                madeSelected: initMadeSelected,
-                madeSelectedWhoseModelSelectorIsRequired:  Object.keys(madeAndModels)
+                brandSelected: initBrandSelected,
+                brandSelectedWhoseModelSelectorIsRequired:  Object.keys(brandAndModels)
 
                
-            }), () => console.log('from sidebar',this.state.madeSelected))
+            }), () => console.log('from sidebar',this.state.brandSelected))
             
 
         } else {
@@ -136,9 +136,9 @@ import 'react-input-range/lib/css/index.css';
                     ...prevState.searchData,
                     price: initPrice,
                 },
-                madeSelected: ['all'],
+                brandSelected: ['all'],
                 priceAllowed: initPrice
-            }), () => console.log('sss', this.state.madeSelected))
+            }), () => console.log('sss', this.state.brandSelected))
         }
 
 
@@ -151,50 +151,50 @@ import 'react-input-range/lib/css/index.css';
 
 
 
-    selectMadeHandler = made => {   
+    selectBrandHandler = brand => {   
 
-        if(made === 'all'){
+        if(brand === 'all'){
 
             this.setState(prevState => ({
                 ...prevState,
-                madeSelected: ['all'],
+                brandSelected: ['all'],
                 searchData: {
                     ...prevState.searchData,
-                    madeAndModels: {}
+                    brandAndModels: {}
                 }
             }))
 
         } else {
-            if(this.state.madeSelected.includes('all')){
+            if(this.state.brandSelected.includes('all')){
                 this.setState(prevState => ({
                     ...prevState,
-                    madeSelected: [made],
+                    brandSelected: [brand],
                     searchData: {
                         ...prevState.searchData,
-                        madeAndModels: {
-                            [made]: 'all'
+                        brandAndModels: {
+                            [brand]: 'all'
                         }
                     }
                 }))
     
             } else {
-                if(this.state.madeSelected.filter(i => i === made).length === 0){
-                    //If the made is not selected yet, we add it
+                if(this.state.brandSelected.filter(i => i === brand).length === 0){
+                    //If the brand is not selected yet, we add it
                     this.setState(prevState => ({
                         ...prevState,
-                        madeSelected: [...prevState.madeSelected, made],
+                        brandSelected: [...prevState.brandSelected, brand],
                         searchData: {...prevState.searchData, 
-                                     madeAndModels: {
-                                         ...prevState.searchData.madeAndModels,
-                                         [made] : 'all'
+                                     brandAndModels: {
+                                         ...prevState.searchData.brandAndModels,
+                                         [brand] : 'all'
                                         }           
                                     }
                                 }))
                 } else {
-                    //The made is already selected, so we need to remove it
-                    let madeSelected = this.state.madeSelected.filter( i => i !== made);
-                    delete this.state.searchData.madeAndModels[made]
-                    this.setState({ madeSelected})
+                    //The brand is already selected, so we need to remove it
+                    let brandSelected = this.state.brandSelected.filter( i => i !== brand);
+                    delete this.state.searchData.brandAndModels[brand]
+                    this.setState({ brandSelected})
                 }
             }
         }
@@ -207,30 +207,30 @@ import 'react-input-range/lib/css/index.css';
 
     }
 
-    selectModelHandler = (made, model) => {
-        //By default, all the models are selected when selecting a made
-        let data = this.state.searchData.madeAndModels
+    selectModelHandler = (brand, model) => {
+        //By default, all the models are selected when selecting a brand
+        let data = this.state.searchData.brandAndModels
 
-        if(data[made] === 'all'){
+        if(data[brand] === 'all'){
             //Instead of having "all" models, we store the selected model only in the array
-            data[made] = [model]
+            data[brand] = [model]
         } else {
-            if(!data[made].includes(model)){
-            //There is already one model selected at least for the current made, and it's not the current selected model,  so we add it                               
-                if(Object.keys(this.props.madeAndModelsData[made].datas).length === ( Object.keys(data[made]).length + 1 )  ) {
-                    data[made] = 'all'
+            if(!data[brand].includes(model)){
+            //There is already one model selected at least for the current brand, and it's not the current selected model,  so we add it                               
+                if(Object.keys(this.props.brandAndModelsData[brand].datas).length === ( Object.keys(data[brand]).length + 1 )  ) {
+                    data[brand] = 'all'
                 } else {
-                    data[made] = [...data[made], model]
+                    data[brand] = [...data[brand], model]
                 }                                     
 
             }  else {
             //The current model selected is already in the array, so we need to remove it
-            data[made] = data[made].filter(i => i !== model);
-                if(data[made].length === 0){
-                //After removing the model, we check if it was the last one. If that's the case, we also remove the made from the selected made array and searchData Object
-                let madeSelected = this.state.madeSelected.filter( i => i !== made);
-                delete this.state.searchData.madeAndModels[made]  
-                this.setState({ madeSelected})
+            data[brand] = data[brand].filter(i => i !== model);
+                if(data[brand].length === 0){
+                //After removing the model, we check if it was the last one. If that's the case, we also remove the brand from the selected brand array and searchData Object
+                let brandSelected = this.state.brandSelected.filter( i => i !== brand);
+                delete this.state.searchData.brandAndModels[brand]  
+                this.setState({ brandSelected})
                 }
             }           
         }
@@ -240,41 +240,41 @@ import 'react-input-range/lib/css/index.css';
             ...prevState,
             searchData: {
                 ...prevState.searchData,
-                madeAndModels: data
+                brandAndModels: data
             }
         }))
 
     }
 
-    toggleMadeSelector = e => {
+    toggleBrandSelector = e => {
         e.preventDefault();
 
 
-        if(!this.state.madeSelected.includes('all')){
+        if(!this.state.brandSelected.includes('all')){
             this.setState(prevState => ({
-                showMadeSelector:!prevState.showMadeSelector,
-                madeSelectedWhoseModelSelectorIsRequired: prevState.madeSelected
+                showBrandSelector:!prevState.showBrandSelector,
+                brandSelectedWhoseModelSelectorIsRequired: prevState.brandSelected
             }))
         } else {
             this.setState(prevState => ({
-                showMadeSelector:!prevState.showMadeSelector,
+                showBrandSelector:!prevState.showBrandSelector,
             }))
         }
 
         
     }
 
-    toggleModelSelector = made => {
-        let requiredModelSelector = this.state.madeSelectedWhoseModelSelectorIsRequired;
-        if(requiredModelSelector.includes(made)){
+    toggleModelSelector = brand => {
+        let requiredModelSelector = this.state.brandSelectedWhoseModelSelectorIsRequired;
+        if(requiredModelSelector.includes(brand)){
             //The selector is already displayed, so we remove it
-            let data = requiredModelSelector.filter(i => i !== made)
-            this.setState({ madeSelectedWhoseModelSelectorIsRequired: data})
+            let data = requiredModelSelector.filter(i => i !== brand)
+            this.setState({ brandSelectedWhoseModelSelectorIsRequired: data})
         } else {
             //We display the selector by adding it
             this.setState(prevState => ({
                 ...prevState,
-                madeSelectedWhoseModelSelectorIsRequired: [...prevState.madeSelectedWhoseModelSelectorIsRequired, made]
+                brandSelectedWhoseModelSelectorIsRequired: [...prevState.brandSelectedWhoseModelSelectorIsRequired, brand]
             }))
         }
     }
@@ -305,31 +305,31 @@ import 'react-input-range/lib/css/index.css';
     }
 
     render() {
-        const {madeSelected, searchData, madeSelectedWhoseModelSelectorIsRequired, showMadeSelector} = this.state 
+        const {brandSelected, searchData, brandSelectedWhoseModelSelectorIsRequired, showBrandSelector} = this.state 
         
-        let madeAndModelsData = this.props.madeAndModelsData
-        let madeKeys; 
-        if(madeAndModelsData){
-            madeKeys = Object.keys(madeAndModelsData)
+        let brandAndModelsData = this.props.brandAndModelsData
+        let brandKeys; 
+        if(brandAndModelsData){
+            brandKeys = Object.keys(brandAndModelsData)
         }
 
         let modelsData= {};
-        if(madeSelectedWhoseModelSelectorIsRequired.length > 0){
-            madeSelectedWhoseModelSelectorIsRequired.forEach(made => {
+        if(brandSelectedWhoseModelSelectorIsRequired.length > 0){
+            brandSelectedWhoseModelSelectorIsRequired.forEach(brand => {
                 modelsData = {
                     ...modelsData,
-                    [made]: Object.keys(madeAndModelsData[made].datas)
+                    [brand]: Object.keys(brandAndModelsData[brand].datas)
                 }
             })
         }
 
         
-        let madeCounter
+        let brandCounter
 
-        if(madeSelected === 0 || madeSelected.includes('all')){
-            madeCounter = 'Toutes'
+        if(brandSelected === 0 || brandSelected.includes('all')){
+            brandCounter = 'Toutes'
         } else {
-            madeCounter = madeSelected.length
+            brandCounter = brandSelected.length
         }
         
 
@@ -351,34 +351,34 @@ import 'react-input-range/lib/css/index.css';
 
                         <div className="inventory__sidebar__form__control inventory__sidebar__form__control--made">
                             <div className="inventory__sidebar__form__control__data"
-                                 onClick={e => this.toggleMadeSelector(e)}>
+                                 onClick={e => this.toggleBrandSelector(e)}>
                                     <div className="inventory__sidebar__form__control__data__key">
                                         Marques
                                     </div>
                                     <div className="inventory__sidebar__form__control__data__value">
                                         {
-                                            madeCounter
+                                            brandCounter
                                         }
                                     </div>
                             </div>
                                 
                             <div className={`inventory__sidebar__selector
-                                            ${this.state.showMadeSelector ? 'active': ''}`}>
+                                            ${this.state.showBrandSelector ? 'active': ''}`}>
                                     <ul className="inventory__sidebar__selector__list">
 
                                         <li className={`inventory__sidebar__selector__list__option
-                                                        ${this.state.madeSelected.includes('all')? 'active': ''}`}
-                                            onClick={() => this.selectMadeHandler('all')}>
+                                                        ${this.state.brandSelected.includes('all')? 'active': ''}`}
+                                            onClick={() => this.selectBrandHandler('all')}>
                                             Toutes
                                         </li>
 
                                         {
-                                        madeKeys.map( made => (
-                                                <li key={made}
-                                                    onClick={() => this.selectMadeHandler(made)}
+                                        brandKeys.map( brand => (
+                                                <li key={brand}
+                                                    onClick={() => this.selectBrandHandler(brand)}
                                                     className={`inventory__sidebar__selector__list__option
-                                                                ${this.state.madeSelected.includes(made) ? 'active': ''}`}>
-                                                    {made}
+                                                                ${this.state.brandSelected.includes(brand) ? 'active': ''}`}>
+                                                    {brand}
                                                 </li>
                                             ))
                                         }
@@ -386,48 +386,48 @@ import 'react-input-range/lib/css/index.css';
 
                                     <div className="inventory__sidebar__selector__cta">
                                         <Button color="grey"
-                                                onClick={e => this.toggleMadeSelector(e)}>
-                                            { this.state.madeSelected.includes('all') ? 'OK' : 'Voir models'}
+                                                onClick={e => this.toggleBrandSelector(e)}>
+                                            { this.state.brandSelected.includes('all') ? 'OK' : 'Voir models'}
                                         </Button>
                                     </div>
                                     
                             </div>
 
-                                <ul className={`inventory__sidebar__madeSelected
-                                                ${showMadeSelector ? 'hide' : ''}`}>
+                                <ul className={`inventory__sidebar__brandSelected
+                                                ${showBrandSelector ? 'hide' : ''}`}>
                                         {
-                                            madeSelected.length > 0 && madeSelected.map(made => {
+                                            brandSelected.length > 0 && brandSelected.map(brand => {
                                                 let counter;
 
-                                                if(made === 'all'){
+                                                if(brand === 'all'){
                                                     return
                                                 } else {
-                                                    if(searchData.madeAndModels[made] === 'all' || searchData.madeAndModels[made].length === Object.keys(madeAndModelsData[made].datas).length){
+                                                    if(searchData.brandAndModels[brand] === 'all' || searchData.brandAndModels[brand].length === Object.keys(brandAndModelsData[brand].datas).length){
                                                         counter = 'Tous'
                                                     } else {
-                                                        counter = searchData.madeAndModels[made].length 
+                                                        counter = searchData.brandAndModels[brand].length 
                                                     } 
                                                 }
                                               
                                                 return (
 
-                                                    <li className="inventory__sidebar__madeSelected__item">
-                                                        <div className="inventory__sidebar__madeSelected__item__text"
-                                                             onClick={() => this.toggleModelSelector(made)}>
+                                                    <li className="inventory__sidebar__brandSelected__item">
+                                                        <div className="inventory__sidebar__brandSelected__item__text"
+                                                             onClick={() => this.toggleModelSelector(brand)}>
                                                             <span>
-                                                                {made}
+                                                                {brand}
                                                             </span> 
                                                             <span>
                                                                 {counter}
                                                             </span>
                                                         </div>            
-                                                        <ul className="inventory__sidebar__madeSelected__item__modelSelector">
+                                                        <ul className="inventory__sidebar__brandSelected__item__modelSelector">
                                                             {
-                                                                modelsData && madeSelectedWhoseModelSelectorIsRequired.includes(made) && modelsData[made].map(model => (
+                                                                modelsData && brandSelectedWhoseModelSelectorIsRequired.includes(brand) && modelsData[brand].map(model => (
                                                                     <li key={model}
-                                                                        className={`inventory__sidebar__madeSelected__item__modelSelector__listItem
-                                                                                   ${searchData.madeAndModels[made].includes(model) ? 'active' : ''}`}
-                                                                        onClick={() => this.selectModelHandler(made, model)}>
+                                                                        className={`inventory__sidebar__brandSelected__item__modelSelector__listItem
+                                                                                   ${searchData.brandAndModels[brand].includes(model) ? 'active' : ''}`}
+                                                                        onClick={() => this.selectModelHandler(brand, model)}>
                                                                         {model}
                                                                     </li>
                                                                 ))
@@ -495,7 +495,7 @@ import 'react-input-range/lib/css/index.css';
 
 const mapStateToProps = state => {
     return {
-        madeAndModelsData: state.product.madeAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData
     }
 }
 

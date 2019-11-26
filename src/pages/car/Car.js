@@ -63,7 +63,7 @@ class Car extends Component {
     }
 
     fetchProductDetailsHandler = data => {
-        let {productId, made, model, price, userId} = this.props;
+        let {productId, brand, model, price, userId} = this.props;
         let prodId;
 
         let userIdFetching;
@@ -83,7 +83,7 @@ class Car extends Component {
             prodId = data.productId
         }
 
-        let url = `http://localhost:8000/product/${prodId}?made=${made}&model=${model}&price=${price}&userId=${userIdFetching}`
+        let url = `http://localhost:8000/product/${prodId}?brand=${brand}&model=${model}&price=${price}&userId=${userIdFetching}`
     
         fetch( url, {
         headers: {
@@ -184,7 +184,7 @@ class Car extends Component {
                 
                     <section className="car__presentation">
                         <div className="car__presentation__titleContainer">
-                            <h1 className="car__presentation__title">{product.general[0].title}</h1>
+                            <h1 className="car__presentation__title">{product.general.title}</h1>
                            
                            
                            {
@@ -300,7 +300,7 @@ class Car extends Component {
 const mapStateToProps = state => {
     return {
         productId: state.product.productRequestedId,
-        made: state.product.madeRequested,
+        brand: state.product.brandRequested,
         model: state.product.modelRequested,
         price: state.product.priceRequested,
         mostPopularProducts: state.product.mostPopularProducts,

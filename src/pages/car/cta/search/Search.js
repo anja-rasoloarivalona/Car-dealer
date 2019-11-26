@@ -8,23 +8,23 @@ import Button from '../../../../components/button/Button';
 class Search extends Component {
 
     state = {
-        made: 'Toyota',
+        brand: 'Toyota',
         model: 'Tous',
 
-        models: this.props.madeAndModelsData.Toyota.datas,
+        models: this.props.brandAndModelsData.Toyota.datas,
 
         price: {
-            min: this.props.madeAndModelsData.Toyota.price.min,
-            max: this.props.madeAndModelsData.Toyota.price.max
+            min: this.props.brandAndModelsData.Toyota.price.min,
+            max: this.props.brandAndModelsData.Toyota.price.max
         },
 
         priceAllowed: {
-            min: this.props.madeAndModelsData.Toyota.price.min,
-            max: this.props.madeAndModelsData.Toyota.price.max,
+            min: this.props.brandAndModelsData.Toyota.price.min,
+            max: this.props.brandAndModelsData.Toyota.price.max,
         },
 
 
-        showMadeSelector: false,
+        showBrandSelector: false,
         showModelSelector: false
     }
 
@@ -38,7 +38,7 @@ class Search extends Component {
     }
 
     handleClick = e => {         
-        if(this.madeSelectorOuter && this.madeSelectorOuter.contains(e.target)){
+        if(this.brandSelectorOuter && this.brandSelectorOuter.contains(e.target)){
             return
         }
 
@@ -50,14 +50,15 @@ class Search extends Component {
     }
 
     handleClickOutside = () => {
-        this.setState({ showMadeSelector: false, showModelSelector: false})
+        this.setState({ showBrandSelector: false, showModelSelector: false})
     }
 
     toggleSelector = selector => {
-        if(selector === 'made'){
+        if(selector === 'brand'){
 
+            console.log('toggle brnad', selector)
             this.setState( prevState => ({
-                showMadeSelector: !prevState.showMadeSelector,
+                showBrandSelector: !prevState.showBrandSelector,
                 showModelSelector: false,          
             }))
         }
@@ -65,7 +66,7 @@ class Search extends Component {
         if(selector === 'model'){
             this.setState( prevState => ({
                 showModelSelector: !prevState.showModelSelector,
-                showMadeSelector: false,
+                showMBrandSelector: false,
                 
             }))
         }
@@ -76,10 +77,10 @@ class Search extends Component {
         this.setState({ price: value})
     }
 
-    selectMadeHandler = made => {
+    selectBrandHandler = brand => {
 
-        let min = this.props.madeAndModelsData[made].price.min;
-        let max = this.props.madeAndModelsData[made].price.max;
+        let min = this.props.brandAndModelsData[brand].price.min;
+        let max = this.props.brandAndModelsData[brand].price.max;
 
         let newPriceData = {
             min: min,
@@ -87,10 +88,10 @@ class Search extends Component {
         }
 
         this.setState({ 
-                made: made, 
+                brand: brand, 
                 model:  'Tous',
-                showMadeSelector: false,  
-                models: this.props.madeAndModelsData[made].datas,
+                showBrandSelector: false,  
+                models: this.props.brandAndModelsData[brand].datas,
                 priceAllowed: newPriceData,
                 price: newPriceData
             })
@@ -103,16 +104,16 @@ class Search extends Component {
 
         if(model === 'Tous'){
 
-            let requestedMade = this.state.made;
-            let requestedMadePrices = this.props.madeAndModelsData[requestedMade].price;
+            let requestedBrand = this.state.brand;
+            let requestedBrandPrices = this.props.brandAndModelsData[requestedBrand].price;
 
             newPriceData = {
-                min: requestedMadePrices.min,
-                max: requestedMadePrices.max
+                min: requestedBrandPrices.min,
+                max: requestedBrandPrices.max
             }
 
         } else {
-            let requestedModel = this.props.madeAndModelsData[this.state.made].datas[model];
+            let requestedModel = this.props.brandAndModelsData[this.state.brand].datas[model];
 
             newPriceData = {
                 min: requestedModel.min,
@@ -136,9 +137,9 @@ class Search extends Component {
     
     render() {
 
-        let data = this.props.madeAndModelsData
+        let data = this.props.brandAndModelsData
 
-        let madeKeys = Object.keys(data);
+        let brandKeys = Object.keys(data);
 
         let modelKeys = Object.keys(this.state.models)
      
@@ -151,24 +152,24 @@ class Search extends Component {
                 <form  className="car__cta__search__form">
 
                     <div  className="car__cta__search__form__item"
-                          ref={outer => this.madeSelectorOuter = outer}>
+                          ref={outer => this.brandSelectorOuter = outer}>
 
-                        <div className="car__cta__search__form__item__key">Made</div>
+                        <div className="car__cta__search__form__item__key">Brand</div>
 
                         <div className="car__cta__search__form__item__value"
-                            onClick={() => this.toggleSelector('made')}>
-                                {this.state.made}
+                            onClick={() => this.toggleSelector('brand')}>
+                                {this.state.brand}
                         </div>
 
                         <ul className={`car__cta__search__form__selector
-                                     ${this.state.showMadeSelector ? 'active' : ''}`}>
+                                     ${this.state.showBrandSelector ? 'active' : ''}`}>
                             
                             
 
                             {
-                                madeKeys.map(i => (
+                                brandKeys.map(i => (
                                     <li key={i} className="car__cta__search__form__selector__option"
-                                        onClick={() => this.selectMadeHandler(i)}>
+                                        onClick={() => this.selectBrandHandler(i)}>
                                         {i}
                                     </li>
                                 ))
@@ -253,7 +254,7 @@ class Search extends Component {
 
 const mapStateToProps = state => {
     return {
-        madeAndModelsData: state.product.madeAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData
     }
 }
 

@@ -5,18 +5,18 @@ export const setProductRequestedData = prodData => {
     return {
         type: actionTypes.SET_PRODUCT_REQUESTED_DATA,
         productId: prodData.productId,
-        productMade: prodData.productMade,
+        productBrand: prodData.productBrand,
         productModel: prodData.productModel,
         productPrice: prodData.productPrice
     }
 }
 
 
-export const setMadeAndModelsData = data => {
+export const setBrandAndModelsData = data => {
 
     console.log('setting my data')
     return {
-        type: actionTypes.SET_MADE_AND_MODELS_DATAS,
+        type: actionTypes.SET_BRAND_AND_MODELS_DATAS,
         data: data
     }
 }

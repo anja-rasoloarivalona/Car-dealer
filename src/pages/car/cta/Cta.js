@@ -11,9 +11,9 @@ import Search from './search/Search'
 class Cta extends Component {
 
     state = {
-        productPrice: this.props.product.general[0].price,
+        productPrice: this.props.product.general.price,
         forfaitPrice: 1000,
-        totalPrice: this.props.product.general[0].price + 1000,
+        totalPrice: this.props.product.general.price + 1000,
 
         startDate: new Date(),   
 
@@ -43,7 +43,7 @@ class Cta extends Component {
 
 
                         <div className="car__cta__price">
-                            {product.general[0].price} MRU
+                            {product.general.price} MRU
                         </div>
                         <div className="car__cta__calculator">
 
@@ -52,7 +52,7 @@ class Cta extends Component {
                                     Our price
                                 </div>
                                 <div className="car__cta__calculator__item__value">
-                                    {product.general[0].price}
+                                    {product.general.price}
                                 </div>
                             </div>
 
