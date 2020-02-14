@@ -156,7 +156,7 @@ class Inventory extends Component {
 
     requestProductDetails = data => {
         this.props.setProductRequestedData(data)
-        this.props.history.push(`/car/${data.productId}`)
+        this.props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`)
     }
     selectBrandHandler = brand => {   
         let query = {
@@ -251,7 +251,7 @@ class Inventory extends Component {
                                                 nbKilometers={product.general.nbKilometers}
                                                 gazol={product.general.gazol}
                                                 transmissionType={product.general.transmissionType}
-                                                requestProductDetails={this.requestProductDetails.bind(this)}
+                                                requestProductDetails={() => this.requestProductDetails(product)}
                                             />
                                                 )
                                 )

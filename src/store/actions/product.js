@@ -1,13 +1,10 @@
 import * as actionTypes from './actionsTypes';
 
 
-export const setProductRequestedData = prodData => {
+export const setProductRequestedData = data => {
     return {
         type: actionTypes.SET_PRODUCT_REQUESTED_DATA,
-        productId: prodData.productId,
-        productBrand: prodData.productBrand,
-        productModel: prodData.productModel,
-        productPrice: prodData.productPrice
+        data: data
     }
 }
 

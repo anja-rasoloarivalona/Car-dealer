@@ -9,8 +9,7 @@ import Features from './features/Features';
 import Cta from './cta/Cta'
 import Loader from '../../components/loader/Loader';
 import ProductCard from '../../components/ProductCard/ProductCard';
-import IconSvg from '../../utilities/svg/svg';
-
+import queryString from 'querystring';
 
 class Car extends Component {
 
@@ -51,9 +50,20 @@ class Car extends Component {
     }
 
     fetchProductDetailsHandler = data => {
-        let {productId, brand, model, price, userId} = this.props;
-        let prodId;
-
+        const {productRequested, userId} = this.props;
+        let brand, model, price;
+        if(productRequested){
+            brand = productRequested.general.brand;
+            model = productRequested.general.model;
+            price = productRequested.general.price
+        } else {
+            const search = this.props.location.search;
+            const params = new URLSearchParams(search);
+            brand =  params.get('brand');
+            model =  params.get('model');
+            price =  params.get('price')           
+        }
+        
         let userIdFetching;
         if(userId === null){
             userIdFetching = 'not connected'
@@ -61,17 +71,25 @@ class Car extends Component {
             userIdFetching = userId
         }
 
-        if(!productId){
+        let prodId;
+        if(!productRequested){
             prodId = this.props.match.params.prodId
         } else {
-            prodId = productId
+            prodId = productRequested._id
         }
 
+        // Fetching another product in the same page;
         if(data){
-            prodId = data.productId
+            prodId = data._id
+            brand = data.general.brand;
+            model = data.general.model;
+            price = data.general.price
         }
 
-        let url = `http://localhost:8000/product/${prodId}?brand=${brand}&model=${model}&price=${price}&userId=${userIdFetching}`
+
+        let url = `http://localhost:8000/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&price=${price}`
+
+        // ?brand=${brand}&model=${model}&price=${price}&userId=${userIdFetching}
     
         fetch( url, {
         headers: {
@@ -273,15 +291,15 @@ class Car extends Component {
                                         <ProductCard 
                                         key= {product._id}
                                         _id = {product._id}
-                                        mainImgUrl={product.general[0].mainImgUrl}
-                                        made={product.general[0].made}
-                                        model={product.general[0].model}
-                                        year={product.general[0].year}
-                                        price={product.general[0].price}
-                                        nbKilometers={product.general[0].nbKilometers}
-                                        gazol={product.general[0].gazol}
-                                        transmissionType={product.general[0].transmissionType}
-                                        requestProductDetails={this.requestProductDetails}
+                                        mainImgUrl={product.general.mainImgUrl}
+                                        made={product.general.made}
+                                        model={product.general.model}
+                                        year={product.general.year}
+                                        price={product.general.price}
+                                        nbKilometers={product.general.nbKilometers}
+                                        gazol={product.general.gazol}
+                                        transmissionType={product.general.transmissionType}
+                                        requestProductDetails={() => this.requestProductDetails(product)}
                                     />
                                     ))
                                 }
@@ -292,6 +310,25 @@ class Car extends Component {
                                 <h2 className="car__section__title">
                                     Les modèles les plus populaires
                                 </h2>
+                                <ul className="car__related__list">
+                                {
+                                    this.props.mostPopularProducts.map(product => (
+                                        <ProductCard 
+                                        key= {product._id}
+                                        _id = {product._id}
+                                        mainImgUrl={product.general.mainImgUrl}
+                                        made={product.general.made}
+                                        model={product.general.model}
+                                        year={product.general.year}
+                                        price={product.general.price}
+                                        nbKilometers={product.general.nbKilometers}
+                                        gazol={product.general.gazol}
+                                        transmissionType={product.general.transmissionType}
+                                        requestProductDetails={() => this.requestProductDetails(product)}
+                                    />
+                                    ))
+                                }
+                            </ul>
                     </section>
             </div>
             )
@@ -302,12 +339,8 @@ class Car extends Component {
 
 const mapStateToProps = state => {
     return {
-        productId: state.product.productRequestedId,
-        brand: state.product.brandRequested,
-        model: state.product.modelRequested,
-        price: state.product.priceRequested,
+        productRequested: state.product.productRequested,
         mostPopularProducts: state.product.mostPopularProducts,
-
         userId: state.auth.userId
     }
 }
