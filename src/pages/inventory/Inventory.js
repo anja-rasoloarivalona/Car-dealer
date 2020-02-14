@@ -16,38 +16,121 @@ class Inventory extends Component {
     state = {
         products: null,
         loading: true,
+        query: {
+            brand: 'all',
+            model: 'all',
+            year: {
+                value: {
+                    min: 2008,
+                    max: 2020
+                },
+                scope: {
+                    min: 2008,
+                    max: 2020
+                }
+            },
+            price: {
+                value: {
+                    min: null,
+                    max: null
+                },
+                scope: {
+                    min: null,
+                    max: null
+                }
+            },
+            sort: 'increasing price'
 
-        parsedQuery: null,
-        sort: 'prix croissant'
+        }
     }
 
     componentDidMount(){     
+        let data = this.props.brandAndModelsData;
+        console.log('dataa', data)
+
+        /*** START INIT MIN AND MAX PRICE ***/
+        let minPrice = data[Object.keys(data)[0]].price.min;
+        let maxPrice = data[Object.keys(data)[0]].price.max;
+    
+            Object.keys(data).map( brand => {
+                if(data[brand].price.min < minPrice){
+                    minPrice = data[brand].price.min
+                }
+    
+                if(data[brand].price.max > maxPrice){
+                    maxPrice = data[brand].price.max
+                }
+        })  
+        /*** END INIT MIN AND MAX PRICE ***/  
+        
+        
         let parsedQuery = queryString.parse(this.props.location.search);
 
         if(Object.keys(parsedQuery).length !== 0){
-            this.setState({ parsedQuery}, () => console.log('parss',this.state.parsedQuery))
-        }     
-        this.fetchProductsHandler(parsedQuery);
+            console.log('parsed', parsedQuery)
+            this.setState(prevState => ({
+            ...prevState,
+            query: {
+                ...prevState.query,
+                price : {
+                    scope: {
+                        min: minPrice,
+                        max: maxPrice
+                    },  
+                    value: {
+                        min: parseInt(parsedQuery.minPrice),
+                        max: parseInt(parsedQuery.maxPrice)
+                    }
+                },
+                year : {
+                    ...prevState.query.year,
+                    value: {
+                        min: parseInt(parsedQuery.minYear),
+                        max: parseInt(parsedQuery.maxYear)
+                    }
+                },
+                brand: parsedQuery.brand,
+                model: parsedQuery.model,
+                sort: parsedQuery.sort                  
+            },
+        }), () =>  this.fetchProductsHandler())
+        }  else {
+            this.setState(prevState => ({
+                ...prevState,
+                query: {
+                    ...prevState.query,
+                    price : {
+                        value: {
+                            min: minPrice,
+                            max: maxPrice
+                        },
+                        scope: {
+                            min: minPrice,
+                            max: maxPrice
+                        }   
+                    }                 
+                },
+            }), () =>  this.fetchProductsHandler())
+        }
     }
 
-    fetchProductsHandler = (query, sort) => {
+    fetchProductsHandler = () => {
+        const {query} = this.state
         let url =  new URL('http://localhost:8000/product/client');
-
-        let params = {
-            sortBy: sort
-        }
-
+        let params;
         if(query){
             params = {
                 ...params,
                 brand: query.brand,
-                price: query.price,
-                year: query.year,
+                model: query.model,
+                minPrice: query.price.value.min,
+                maxPrice: query.price.value.max,
+                minYear: query.year.value.min,
+                minYear: query.year.value.min,
+                sort: query.sort.split(' ').length > 0 ? `${query.sort.split(' ')[0]}_${query.sort.split(' ')[1]}` : query.sort
             }
+            url.search = new URLSearchParams(params).toString()
         }
-
-        url.search = new URLSearchParams(params).toString()
-  
         fetch( url, {
           headers: {
             'Content-type': 'application/json'
@@ -57,11 +140,14 @@ class Inventory extends Component {
           if(res.status !== 200 && res.status !== 201){
             throw new Error('Error fetching products')
           }
-  
           return res.json()
         })
         .then(resData => {  
-          this.setState({ products: resData.products, loading: false})
+          this.setState({ products: resData.products, loading: false});
+          this.props.history.push({
+              pathname: '/inventaire',
+              search: `sort=${query.sort}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+          })
         })
         .catch(err => {
           console.log(err)
@@ -72,63 +158,83 @@ class Inventory extends Component {
         this.props.setProductRequestedData(data)
         this.props.history.push(`/car/${data.productId}`)
     }
-
-    searchHandler = (data) => {
-
-        let brandQuery = 'all';
-        let priceQuery = `${data.price.min}:${data.price.max}`
-        let yearQuery = `${data.year.min}:${data.year.max}`
-
-        let brandAndModels = data.brandAndModels;
-        let brandAndModelsKey = Object.keys(brandAndModels)
-
-        if(brandAndModelsKey.length !== 0){
-            brandQuery = '';
-            brandAndModelsKey.forEach(brand => {
-                let query = `${brand}:${brandAndModels[brand]}`
-                brandQuery = brandQuery  + query + '_'
-            })
-        }
-        this.props.history.push({
-            pathname: './inventaire',
-            search: `?brand=${brandQuery}&price=${priceQuery}&year=${yearQuery}`
-        })
-
+    selectBrandHandler = brand => {   
         let query = {
-            brand: brandQuery,
-            price: priceQuery,
-            year: yearQuery
-        }
-
-        this.fetchProductsHandler(query)     
-       
+            ...this.state.query,
+                brand: brand
+            }
+        if(brand === 'all'){
+            query = {
+                ...query,
+                model: 'all'
+            }
+        } 
+        this.setState({ query }, () => this.fetchProductsHandler(query))
     }
-
-    selectSortHandler = sort => {
-        this.setState( { sort })
-        this.fetchProductsHandler(this.state.parsedQuery, sort)
+    selectModelHandler = model => {
+        this.setState( prevState => ({
+            ...prevState,
+            query: {
+                ...prevState.query,
+                model: model
+            }
+        }), () => this.fetchProductsHandler())
     }
-
-
-
-
-
-
+    sortHandler = sort => {
+        this.setState(prevState => ({
+            ...prevState,
+            query : {
+                ...prevState.query,
+                sort: sort
+            }         
+        }), () => this.fetchProductsHandler())
+    }
+    changePriceHandler = value => {
+        this.setState( prevState => ({
+            ...prevState,
+            query: {
+                ...prevState.query,
+                price: {
+                    ...prevState.query.price,
+                    value: value
+                }
+            }
+        }))
+    }
+    changeYearHandler = value => {
+        this.setState(prevState => ({
+            ...prevState,
+            query: {
+                ...prevState.query,
+                year: {
+                    ...prevState.query.year,
+                    value: value
+                }
+            }
+        }))
+    }
+    changeComplete = () => {
+        this.fetchProductsHandler()
+    }
 
     render() {
-
-        const {products, loading} = this.state;
-
-        
-
+        const {products, loading, query} = this.state;
         let inventory = <Loader />
 
         if(!loading){
             inventory = (
                 <div className="inventory">
 
-                    <Controller search={e => this.searchHandler(e)}
-                            parsedQuery={this.state.parsedQuery}/>
+                    <Controller
+                        query={query}
+                        selectBrandHandler={this.selectBrandHandler}
+                        selectModelHandler={this.selectModelHandler}
+                        sortHandler={this.sortHandler}
+                        changePriceHandler={this.changePriceHandler}
+                        changeYearHandler={this.changeYearHandler}
+                        changeComplete={this.changeComplete}
+                        data={this.props.brandAndModelsData}
+                    />
 
                     <section className="inventory__container">
                         <ul className="inventory__list">
@@ -166,6 +272,7 @@ const mapStateToProps = state => {
         brandAndModelsData: state.product.brandAndModelsData
     }
 }
+
 
 const mapDispatchToProps = dispatch => {
     return {

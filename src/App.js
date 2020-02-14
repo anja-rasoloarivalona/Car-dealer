@@ -66,8 +66,6 @@ class App extends Component {
 
     this.props.setLoginStateToTrue(loginData);
     this.initUserFavoriteProducts(loginData.userId)
-
-    
     let timeStamp = timeStampGenerator();
     this.startConnection(userId, timeStamp)
   }
@@ -90,13 +88,13 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-        this.setState({ 
-            carsHomeIntro: resData.publicityProducts, 
-            carsHomeInventory: resData.homeInventoryProducts,
-            loading: false
-          })
         this.props.setMostPopularProducts(resData.mostPopularProducts)
         this.props.setBrandAndModelsData(resData.brandAndModelsData)
+        this.setState({ 
+          carsHomeIntro: resData.publicityProducts, 
+          carsHomeInventory: resData.homeInventoryProducts,
+          loading: false
+        })
       })
       .catch(err => {
         console.log(err)
@@ -221,19 +219,15 @@ class App extends Component {
     let app;
 
     let chat = null
-
     if(this.props.auth && this.props.token && this.props.userId){
       chat = <Chat />
     }
 
-    if(this.state.loading === true){
+    if(this.state.loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
     } else {
       app = (
-
-        
-
         <Spring
           from={{marginTop: 1000}}
           to = {{ marginTop: 0}}
@@ -247,9 +241,7 @@ class App extends Component {
                 <div className='app'>
                     <Navtop />
                     <Navbar logoutHandler={this.logoutHandler}/>
-                   
                     {chat}
-
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         <Route path='/inventaire' component={Inventory}/>
@@ -280,7 +272,8 @@ const mapStateToProps = state => {
     auth: state.auth.auth,
     token: state.auth.token,
     userId: state.auth.userId,
-    connectionId: state.auth.connectionId
+    connectionId: state.auth.connectionId,
+    brandAndModelsData: state.product.brandAndModelsData
   }
 }
 
