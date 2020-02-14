@@ -4,7 +4,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import {connect} from 'react-redux'
 import * as actions from '../../store/actions';
 import Loader from '../../components/loader/Loader';
-import Sidebar from './sidebar/Sidebar';
+import Controller from './Controller/Controller';
 import queryString from 'query-string';
 
 
@@ -31,7 +31,7 @@ class Inventory extends Component {
     }
 
     fetchProductsHandler = (query, sort) => {
-        let url =  new URL('http://localhost:8000/product');
+        let url =  new URL('http://localhost:8000/product/client');
 
         let params = {
             sortBy: sort
@@ -127,25 +127,10 @@ class Inventory extends Component {
             inventory = (
                 <div className="inventory">
 
-                    <Sidebar search={e => this.searchHandler(e)}
+                    <Controller search={e => this.searchHandler(e)}
                             parsedQuery={this.state.parsedQuery}/>
 
                     <section className="inventory__container">
-
-                        <div className="inventory__controller">
-
-                            <div className="inventory__controller__sort">
-                                <div className="inventory__controller__sort__key">Trier par</div>
-
-                                <select className="inventory__controller__sort__selector"
-                                        onChange={e => this.selectSortHandler(e.target.value)}>
-                                    <option value="prix croissant">prix croissant</option>
-                                    <option value="prix décroissant">prix décroissant</option>
-                                    <option value="popularité">popularité</option>
-                                    <option value="date">date</option>
-                                </select>
-                            </div>
-                        </div>
                         <ul className="inventory__list">
                             {
                                 products && products.map(product => (

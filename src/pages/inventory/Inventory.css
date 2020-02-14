@@ -1,38 +1,13 @@
 .inventory {
     grid-column: 1 / -1;
     min-height: 100vh;
-
-
     display: flex;
-}
+    flex-direction: column;
 
+}
 
 .inventory__container { 
     width: 100%;
-}
-
-.inventory__controller {
-    width: 100%;
-    height: 7rem;
-    
-    display: flex;
-    align-items: center;
-    padding-left: 4rem;
-}
-
-.inventory__controller__sort {
-    display: flex;
-    align-items: center;
-}
-
-.inventory__controller__sort__key {
-    margin-right: 1rem;
-}
-
-.inventory__controller__sort__selector {
-    padding: .5rem 0;
-    width: 14rem;
-    padding-left: 2rem;
 }
 
 .inventory__list {

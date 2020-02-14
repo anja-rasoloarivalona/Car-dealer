@@ -7,28 +7,18 @@ import HomeService from './homeService/HomeService';
 import Button from '../../components/button/Button';
 
 
-
-
-
-
 class Home extends Component {
 
     state = {
         carsHomeIntro : this.props.carsHomeIntro,
         index: 0,
         initialIndex: 0,
-
         showIntroList: false,
-
         partRequested: 'inventory'
     }
 
     componentDidMount(){
-      this.imageSlideHandler()
-
-      console.log(this.props.history);
-
-      
+      this.imageSlideHandler()   
     }
 
     componentWillUnmount(){

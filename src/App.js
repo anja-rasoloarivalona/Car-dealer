@@ -33,11 +33,9 @@ class App extends Component {
     carsHomeIntro : [],
     carsHomeInventory : [],
     loading: false,
-
-    pos: 0,
   }
 
-  componentWillMount(){
+  componentDidMount(){
 
     this.setState({ loading: true});
 
@@ -73,14 +71,6 @@ class App extends Component {
     let timeStamp = timeStampGenerator();
     this.startConnection(userId, timeStamp)
   }
-
-    componentDidMount(){
-      window.addEventListener('scroll', () => {
-        let pos = window.scrollY;
-        this.setState({ pos: pos})
-      })
-
-    }
 
     initAppDataHandler = () => {
       let url = 'http://localhost:8000/product/init';
@@ -242,17 +232,21 @@ class App extends Component {
     } else {
       app = (
 
+        
+
         <Spring
           from={{marginTop: 1000}}
           to = {{ marginTop: 0}}
-          config={{delay: 500}}>
+          config={{delay: 500}}
+          >
           {
             props => (
-              <div style={props}>
+              <div
+               style={props}
+              >
                 <div className='app'>
                     <Navtop />
-                    <Navbar logoutHandler={this.logoutHandler}
-                            pos={this.state.pos}/>
+                    <Navbar logoutHandler={this.logoutHandler}/>
                    
                     {chat}
 

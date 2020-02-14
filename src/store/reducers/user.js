@@ -3,7 +3,7 @@ import { updatedObject } from '../utility'
 
 
 const initialState = {
-    favorites: null
+    favorites: []
 }
 
 
