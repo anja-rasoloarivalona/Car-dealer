@@ -1,18 +1,16 @@
 import React, { Component } from 'react'
 import './Car.css';
 import { Gallery, GalleryImage } from "react-gesture-gallery";
-
 import { connect } from 'react-redux'
 import * as actions from '../../store/actions'
-
-
 import Overview from './overview/Overview';
 import Technical from './technical/Technical';
 import Features from './features/Features';
 import Cta from './cta/Cta'
-
 import Loader from '../../components/loader/Loader';
 import ProductCard from '../../components/ProductCard/ProductCard';
+import IconSvg from '../../utilities/svg/svg';
+
 
 class Car extends Component {
 
@@ -23,12 +21,8 @@ class Car extends Component {
         initiatlIndex: 0,
         loading: true,
         partRequested: 'overview',
-
-        favorite: false
+        favorite: false,
     }
-
-   
-
 
     imageSlideHandler = () => {
     let {index, images, initiatlIndex} =  this.state;
@@ -43,19 +37,13 @@ class Car extends Component {
                 }
             }, 2500)
     }
-
     componentDidMount(){
       //  this.imageSlideHandler()
       this.fetchProductDetailsHandler()
     }
-
- 
-
     componentWillUnmount(){
         clearInterval(this.inter)
     }
-    
-
     changeGalleryImgIndex = url => {
         const { images} = this.state;
         let index = images.indexOf(`${url}`);
@@ -112,12 +100,7 @@ class Car extends Component {
         console.log(err)
       })
     }
-
     favoriteHandler = () => {
-
-
-
-
         let productId = this.props.productId
         let prodId;
         if(!productId){
@@ -163,14 +146,16 @@ class Car extends Component {
             console.log(err)
         })
     }
-
     requestProductDetails = data => {
         this.props.setProductRequestedData(data)
         this.fetchProductDetailsHandler(data)
     }
 
-    render() {
+    showFullGalleryHandler = () => {
+        this.props.hideScrollBarHandler()
+    }
 
+    render() {
         let product = this.state.product
         let products = this.state.relatedProducts
 
@@ -184,44 +169,62 @@ class Car extends Component {
                 
                     <section className="car__presentation">
                         <div className="car__presentation__titleContainer">
-                            <h1 className="car__presentation__title">{product.general.title}</h1>
-                           
-                           
-                           {
-                               this.props.userId && (
+                            <h1 className="car__presentation__title">{product.general.title}</h1>                        
+                           {this.props.userId && (
                                     <div className={`car__presentation__favoriteButton
                                                     ${this.state.favorite ? 'active': ''}`}
                                         onClick={this.favoriteHandler}>
                                           {this.state.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}   
                                             </div>
-                               )
-                           } 
-                        </div>
+                               )} 
+                        </div>      
+
                         
-                        <div className="car__presentation__gallery">
-                               
+                        <div className={`car__presentation__gallery`}>                          
                             <Gallery
                                 index={this.state.index}
                                 onRequestChange={i => this.setState({index: i})}>
 
                                 {product.imageUrls.map(img => (
-                                <GalleryImage objectFit="cover" key={img} src={img} />
+                                <GalleryImage objectFit="cover" key={img} src={img} 
+                                              onClick={this.props.hideScrollBarHandler}
+                                />
                                 ))}
-
-                            </Gallery>
-                                   
+                            </Gallery>                                 
                         </div>
-                        <div className="car__presentation__gallery__controller">
-                            {
+                        
+                        {this.props.hideScrollBar && (
+                            <div className="car__presentation__gallery--fullContainer">
+                                <div className="car__presentation__gallery--fullContainer__closeBtn"
+                                    onClick={this.props.showScrollBarHandler}>
+                                    <span>Close</span>
+                                </div>
+                                <div className="car__presentation__gallery--full">
+                                    <Gallery
+                                        index={this.state.index}
+                                        onRequestChange={i => this.setState({index: i})}>
+                                        {product.imageUrls.map(img => (
+                                        <GalleryImage objectFit="contain" key={img} src={img} 
+                                        />
+                                        ))}
+                                    </Gallery>
+                                </div>
+                            </div>
                             
-                                product.imageUrls.map(i => (
+                        )}
+                        
+
+
+
+
+                        <div className="car__presentation__gallery__controller">
+                            {product.imageUrls.map(i => (
                                     <img src={i} alt="car" key={i} className="car__presentation__gallery__controller__img"
                                         onClick={ () => this.changeGalleryImgIndex(i)}/>
-                                ))
-                            
-                        }
-
+                                ))}
                         </div>
+
+
                         
                         <ul className="car__presentation__nav">
                             <li className={`car__presentation__nav__item

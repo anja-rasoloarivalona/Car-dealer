@@ -1,28 +1,24 @@
 .car {
-    grid-column: 2 / 4;
+    grid-column: 2 / 4;   /* 80vw*/
     display: grid;
     grid-template-columns: 3fr 1fr;
     grid-template-rows: max-content;
     grid-auto-rows: max-content;
     width: 100%;
     column-gap: 2rem;
-
 }
-
 
 .car__presentation {
     grid-row: 1 / 2;
-    grid-column: 1 / 2;
+    grid-column: 1 / 2; /*60vw*/
     margin-bottom: 3rem;
 }
-
 
 .car__presentation__titleContainer {
     padding: 2rem 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
 }
 
 .car__presentation__title {
@@ -44,18 +40,66 @@
     color: var(--color-white);
 }
 
-
-
 .car__presentation__gallery {
-    width: 100%;
+    width: 100%; /*60vw*/
     height: 40rem;
-    
+    transition: all .3s ease-in;
+}
+
+.car__presentation__gallery--fullContainer {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    z-index: 19;
+    background: var(--color-dark);
+    top: 0;
+    left: 0;
+}
+
+.car__presentation__gallery--full {
+    width: 90vw;
+    height: 100vh;
+    background: var(--color-dark);
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 20;
 }
 
 .GalleryImage img {
     margin: none;
     width: 100%;
+}
+
+.car__presentation__gallery--full .GalleryImage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.car__presentation__gallery--full .GalleryImage img {
+    height: 90% !important;
  
+}
+
+.car__presentation__gallery--fullContainer__closeBtn {
+    width: 12rem;
+    height: 4rem;
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    z-index: 21;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 1rem;
+    font-size: 1.2rem;
+    color: var(--color-grey);
+    border: 1px solid var(--color-grey);
+    background: var(--color-dark);
+    
 }
 
 .Gallery__NavigationArrow button:focus {
@@ -64,22 +108,19 @@
 
 .car__presentation__gallery__controller {
     width: 100%;
-
     display: grid;
-    grid-template-columns: repeat(auto-fit, 14.5rem);
+    grid-template-columns: repeat(auto-fit, 11vw);
     grid-template-rows: repeat(auto-fit, 7.5rem);
     grid-auto-rows: 7.5rem;
-   
-    column-gap: 1rem;
-    row-gap: 1rem;
-
+    column-gap: 1vw;
+    row-gap: 1vw;
     justify-content: center;
     padding: 1rem 0;
     margin-bottom: 3rem;
 }
 
 .car__presentation__gallery__controller__img {
-    width: 14.5rem;
+    width: 11vw;
     height: 7.5rem;
     object-fit: cover;
     cursor: pointer;
@@ -89,13 +130,10 @@
     width: 100%;
     background: var(--color-dark);
     height: 5rem;
-
     display: flex;
     align-items: center;
     padding-left: 1rem;
     list-style: none;
-
-  
 }
 
 .car__presentation__nav__item {
@@ -153,7 +191,6 @@
     grid-template-columns: repeat(auto-fit, 25rem);
     grid-template-rows: repeat(auto-fit, 25rem);
     grid-auto-rows: 25rem;
-   
     column-gap: 1.5rem;
     row-gap: 3rem;
     padding: 2rem 0;

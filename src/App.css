@@ -40,14 +40,22 @@ body {
 }
 
 .app {
-
   display: grid;
   grid-template-columns: 1fr repeat(2, 40vw) 1fr;
   grid-template-rows: max-content;
   grid-auto-rows: max-content;
-
-
   transition: all .3s ease-in;
   transition-delay: 1s;
+  height: 100%;
+  overflow: hidden;
 }
+
+
+body.hideScrollBar::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
+}
+
+
+
 

@@ -6,7 +6,6 @@ import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
 import { Spring } from 'react-spring/renderprops'
 
-
 /*------------COMPONENTS---------------------*/
 import Navtop from './components/navigation/navtop/Navtop';
 import Navbar from './components/navigation/navbar/Navbar';
@@ -22,8 +21,6 @@ import SingleCar from './pages/car/Car';
 import Auth from './pages/auth/Auth';
 import Account from './pages/account/Account';
 
-
-
 /*-----------UTILITIES-----------*/
 import { timeStampGenerator } from './utilities/timeStampGenerator';
 
@@ -33,15 +30,12 @@ class App extends Component {
     carsHomeIntro : [],
     carsHomeInventory : [],
     loading: false,
+    hideScrollBar: false
   }
 
   componentDidMount(){
-
     this.setState({ loading: true});
-
     this.initAppDataHandler();
-
-    
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
     const userId = localStorage.getItem('woto-userId');
@@ -56,24 +50,21 @@ class App extends Component {
       this.props.setLoginStateToFalse()
       return 
     }
-
     let loginData = {
         isAuth: true,
         token: token,
         userId: userId,
        // connectionId: connectionId
     }
-
     this.props.setLoginStateToTrue(loginData);
     this.initUserFavoriteProducts(loginData.userId)
     let timeStamp = timeStampGenerator();
     this.startConnection(userId, timeStamp)
   }
 
-    initAppDataHandler = () => {
+  initAppDataHandler = () => {
       let url = 'http://localhost:8000/product/init';
       let method = 'GET';
-
       fetch( url, {
         method: method,
         headers: {
@@ -84,7 +75,6 @@ class App extends Component {
         if(res.status !== 200 && res.status !== 201){
           throw new Error('Error fetching products')
         }
-
         return res.json()
       })
       .then(resData => {
@@ -98,11 +88,10 @@ class App extends Component {
       })
       .catch(err => {
         console.log(err)
-      })
-      
-    }
+      })     
+  }
 
-    startConnection = (userId, timeStamp) => {
+  startConnection = (userId, timeStamp) => {
         fetch('http://localhost:8000/auth/start-connection',{
           method: 'POST',
           headers: {
@@ -133,9 +122,9 @@ class App extends Component {
         .catch(err => {
           console.log(err)
         })
-    }
+  }
 
-    logoutHandler = () => {
+  logoutHandler = () => {
 
       this.props.setLoginStateToFalse();
 
@@ -146,9 +135,9 @@ class App extends Component {
 
       this.endConnection(userId, connectionId, timeStamp, true);
 
-    }
+  }
 
-    endConnection = (userId, connectionId, timeStamp, logout) => {
+  endConnection = (userId, connectionId, timeStamp, logout) => {
       fetch('http://localhost:8000/auth/end-connection',{
         method: 'POST',
         headers: {
@@ -209,12 +198,16 @@ class App extends Component {
 
   }
 
-
-    
-
+  showScrollBarHandler = () => {
+    this.setState({ hideScrollBar: false}, () => document.body.className = "")
+  }
+  hideScrollBarHandler = () => {
+    this.setState({ hideScrollBar: true}, () => document.body.className="hideScrollBar")
+  }
 
 
   render() {
+    const { loading , hideScrollBar} = this.state
 
     let app;
 
@@ -223,7 +216,7 @@ class App extends Component {
       chat = <Chat />
     }
 
-    if(this.state.loading === true || !this.props.brandAndModelsData){
+    if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
     } else {
@@ -231,21 +224,17 @@ class App extends Component {
         <Spring
           from={{marginTop: 1000}}
           to = {{ marginTop: 0}}
-          config={{delay: 500}}
-          >
-          {
-            props => (
-              <div
-               style={props}
-              >
-                <div className='app'>
+          config={{delay: 500}}>
+          {props => (
+              <div style={props}>
+                <div className={`app`}>
                     <Navtop />
                     <Navbar logoutHandler={this.logoutHandler}/>
                     {chat}
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         <Route path='/inventaire' component={Inventory}/>
-                        <Route path='/car/:prodId' component={SingleCar}/>
+                        <Route path='/car/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
                         <Route path='/auth' component={Auth} />
                         <Route path='/mon-compte' component={Account} />
                     </Switch>
@@ -255,13 +244,9 @@ class App extends Component {
               </div>
             )
           }
-          
-
-
         </Spring>
       )
-    }
-    
+    }   
     return app
   }
 }
@@ -284,7 +269,6 @@ const mapDispatchToProps = dispatch => {
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
     setBrandAndModelsData : data => dispatch(actions.setBrandAndModelsData(data)),
     setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products)),
-
     setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products))
   }
 }
