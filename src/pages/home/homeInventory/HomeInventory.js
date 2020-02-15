@@ -1,43 +1,13 @@
 import React from 'react';
 import './HomeInventory.css';
 import Button from '../../../components/button/Button';
-import ProductCard from '../../../components/ProductCard/ProductCard'
-import * as actions from '../../../store/actions'
-import { connect } from 'react-redux';
+import ProductsList from '../../../components/ProductsList/ProductsList';
 
 const homeInventory = props => {
-
-    let cars = props.carsHomeInventory;
-
-
-    const requestProductDetails = data => {
-            props.setProductRequestedData(data)
-            props.history.push(`/car/${data._id}`)
-    }
-
+    let productsList = props.carsHomeInventory;
     return (
         <div className="home-inventory">
-            <ul className="home-inventory__list">
-
-            {cars.map(product => (
-               <ProductCard 
-                    id={product._id}
-                    mainImg={product.general.mainImgUrl}
-                    title={product.general.title}
-                    brand={product.general.brand}
-                    model={product.general.model}
-                    year={product.general.year}
-                    price={product.general.price}
-                    nbKilometers={product.general.nbKilometers}
-                    gazol={product.general.gazol}
-                    transmissionType={product.general.transmissionType}
-                    requestProductDetails={() => requestProductDetails(product)}
-                />
-                    )
-                )
-            }
-            </ul>
-
+            <ProductsList productsList={productsList}/>
             <Button color="primary"
                     onClick={() => props.history.push('/inventaire')}>
                 Voir plus
@@ -46,11 +16,4 @@ const homeInventory = props => {
         </div>
     )
 }
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setProductRequestedData: data => dispatch(actions.setProductRequestedData(data))
-    }
-}
-
-export const HomeInventoryMemo = connect(null, mapDispatchToProps)(React.memo(homeInventory));
+export const HomeInventoryMemo = React.memo(homeInventory);

@@ -8,8 +8,7 @@ import Technical from './technical/Technical';
 import Features from './features/Features';
 import Cta from './cta/Cta'
 import Loader from '../../components/loader/Loader';
-import ProductCard from '../../components/ProductCard/ProductCard';
-import queryString from 'querystring';
+import ProductsList from '../../components/ProductsList/ProductsList';
 
 class Car extends Component {
 
@@ -51,19 +50,6 @@ class Car extends Component {
 
     fetchProductDetailsHandler = data => {
         const {productRequested, userId} = this.props;
-        let brand, model, price;
-        if(productRequested){
-            brand = productRequested.general.brand;
-            model = productRequested.general.model;
-            price = productRequested.general.price
-        } else {
-            const search = this.props.location.search;
-            const params = new URLSearchParams(search);
-            brand =  params.get('brand');
-            model =  params.get('model');
-            price =  params.get('price')           
-        }
-        
         let userIdFetching;
         if(userId === null){
             userIdFetching = 'not connected'
@@ -71,42 +57,44 @@ class Car extends Component {
             userIdFetching = userId
         }
 
-        let prodId;
-        if(!productRequested){
-            prodId = this.props.match.params.prodId
-        } else {
+        let brand, model, price, prodId;
+        if(productRequested){
+            //If a requested product has been initialized in redux
+            brand = productRequested.general.brand;
+            model = productRequested.general.model;
+            price = productRequested.general.price;
             prodId = productRequested._id
+        } else {
+            //If not, we use the URL search params (example : when page did mount after reloading)
+            const search = this.props.location.search;
+            const params = new URLSearchParams(search);
+            brand =  params.get('brand');
+            model =  params.get('model');
+            price =  params.get('price')  ;
+            prodId = this.props.match.params.prodId         
         }
 
-        // Fetching another product in the same page;
-        if(data){
+         // Fetching another product in the same page;
+         if(data){
             prodId = data._id
             brand = data.general.brand;
             model = data.general.model;
             price = data.general.price
         }
-
-
-        let url = `http://localhost:8000/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&price=${price}`
-
-        // ?brand=${brand}&model=${model}&price=${price}&userId=${userIdFetching}
-    
+      
+        let url = `http://localhost:8000/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&price=${price}`    
         fetch( url, {
         headers: {
           'Content-type': 'application/json'
         },
       })
       .then( res => {
-
         if(res.status !== 200 && res.status !== 201){
           throw new Error('Error fetching products')
         }
-
         return res.json()
       })
       .then(resData => {
-          console.log('caaars', resData);
-
           window.scrollTo(0, 0)
           this.setState({ 
               product: resData.product, 
@@ -126,9 +114,7 @@ class Car extends Component {
         } else {
             prodId = productId
         }
-
-        let url;
-       
+        let url;     
         if(this.state.favorite){
             //the current product is already in the favorite list
             url = 'http://localhost:8000/user/remove-favorite/' + this.props.userId + `?prodId=${prodId}`;
@@ -136,10 +122,8 @@ class Car extends Component {
         } else {
             url = 'http://localhost:8000/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
             this.props.addUserFavoriteProduct(this.state.product)
-        }
-        
+        }       
         let method = 'POST'
-
         fetch(url, {
             headers: {
                 'Content-type': 'application/json'
@@ -150,7 +134,6 @@ class Car extends Component {
             if(res.status !== 200 && res.status !== 201){
                 throw new Error('Error handling favorites product')
               }
-      
               return res.json()
         })
         .then(resData => {
@@ -158,14 +141,14 @@ class Car extends Component {
                 ...prevState,
                 favorite: !prevState.favorite
             }))
-            console.log('Favvvorit', resData)
         })
         .catch( err => {
             console.log(err)
         })
     }
+
+    
     requestProductDetails = data => {
-        this.props.setProductRequestedData(data)
         this.fetchProductDetailsHandler(data)
     }
 
@@ -176,15 +159,13 @@ class Car extends Component {
     render() {
         let product = this.state.product
         let products = this.state.relatedProducts
-
         let prod;
 
         if(this.state.loading){
                 prod = <Loader />
         } else {
             prod = (
-                <div className="car">
-                
+                <div className="car">         
                     <section className="car__presentation">
                         <div className="car__presentation__titleContainer">
                             <h1 className="car__presentation__title">{product.general.title}</h1>                        
@@ -195,9 +176,7 @@ class Car extends Component {
                                           {this.state.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}   
                                             </div>
                                )} 
-                        </div>      
-
-                        
+                        </div>                           
                         <div className={`car__presentation__gallery`}>                          
                             <Gallery
                                 index={this.state.index}
@@ -209,8 +188,7 @@ class Car extends Component {
                                 />
                                 ))}
                             </Gallery>                                 
-                        </div>
-                        
+                        </div>                       
                         {this.props.hideScrollBar && (
                             <div className="car__presentation__gallery--fullContainer">
                                 <div className="car__presentation__gallery--fullContainer__closeBtn"
@@ -227,23 +205,15 @@ class Car extends Component {
                                         ))}
                                     </Gallery>
                                 </div>
-                            </div>
-                            
-                        )}
-                        
-
-
-
-
+                            </div>                   
+                        )}     
                         <div className="car__presentation__gallery__controller">
                             {product.imageUrls.map(i => (
                                     <img src={i} alt="car" key={i} className="car__presentation__gallery__controller__img"
                                         onClick={ () => this.changeGalleryImgIndex(i)}/>
-                                ))}
+                            ))}
                         </div>
-
-
-                        
+                  
                         <ul className="car__presentation__nav">
                             <li className={`car__presentation__nav__item
                                         ${this.state.partRequested === 'overview' ? 'active': ''}`}
@@ -263,20 +233,13 @@ class Car extends Component {
                         </ul>
 
 
-                        {
-                            this.state.partRequested === 'overview' && <Overview />
-                        }
+                        {this.state.partRequested === 'overview' && <Overview />}
 
-                        {
-                            this.state.partRequested === 'technical' && <Technical product={this.state.product}/>
-                        }
+                        {this.state.partRequested === 'technical' && <Technical product={this.state.product}/>}
 
-                        {
-                            this.state.partRequested === 'features' && <Features />
-                        }
+                        {this.state.partRequested === 'features' && <Features />}
 
-                
-  
+        
                     </section>
                     
                     <Cta product={product}/>
@@ -285,52 +248,20 @@ class Car extends Component {
                         <h2 className="car__section__title">
                             Les clients ayant consulté ce modèle ont également regardé
                         </h2>
-                            <ul className="car__product__list">
-                                {
-                                    products.map(product => (
-                                        <ProductCard 
-                                            key={product._id}
-                                            id={product._id}
-                                            mainImg={product.general.mainImgUrl}
-                                            title={product.general.title}
-                                            brand={product.general.brand}
-                                            model={product.general.model}
-                                            year={product.general.year}
-                                            price={product.general.price}
-                                            nbKilometers={product.general.nbKilometers}
-                                            gazol={product.general.gazol}
-                                            transmissionType={product.general.transmissionType}
-                                        requestProductDetails={() => this.requestProductDetails(product)}
-                                    />
-                                    ))
-                                }
-                            </ul>
+                        <ProductsList 
+                            productsList={products}
+                            fetchProductDetailsHandler={this.fetchProductDetailsHandler}
+                        />
                     </section>
 
                     <section className="car__mostPopular">
-                                <h2 className="car__section__title">
-                                    Les modèles les plus populaires
-                                </h2>
-                                <ul className="car__product__list">
-                                {
-                                    this.props.mostPopularProducts.map(product => (
-                                        <ProductCard 
-                                            key={product._id}
-                                            id={product._id}
-                                            mainImg={product.general.mainImgUrl}
-                                            title={product.general.title}
-                                            brand={product.general.brand}
-                                            model={product.general.model}
-                                            year={product.general.year}
-                                            price={product.general.price}
-                                            nbKilometers={product.general.nbKilometers}
-                                            gazol={product.general.gazol}
-                                            transmissionType={product.general.transmissionType}
-                                            requestProductDetails={() => this.requestProductDetails(product)}
-                                    />
-                                    ))
-                                }
-                            </ul>
+                        <h2 className="car__section__title">
+                            Les modèles les plus populaires
+                        </h2>
+                        <ProductsList 
+                            productsList={this.props.mostPopularProducts}
+                            fetchProductDetailsHandler={this.fetchProductDetailsHandler}
+                        />
                     </section>
             </div>
             )

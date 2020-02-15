@@ -80,33 +80,25 @@ class Home extends Component {
             <div className={`home__intro__list
                     ${this.state.showIntroList ? 'active' : ''}`}>
                 <div className="home__intro__list__controller">
-                    {
-                        carsHomeIntro.map( (product, index) => (
+                    {carsHomeIntro.map( (product, index) => (
                             <img key={product.general.mainImgUrl}src={product.general.mainImgUrl} alt="home image" 
                             className={`home__intro__list__controller__item
                             ${this.state.index === index ? 'active': ''}`}/>
-                        ))
-                    }
+                    ))}
                 </div>
             </div>
 
             <section className="home__intro">
-
-                {
-                    carsHomeIntro.map((product, index) => (
+                {carsHomeIntro.map((product, index) => (
                         <div className={`home__intro__background 
                                         ${this.state.index === index ? 'active' : ''}
                                         ${index === 0 ? 'keyframe' : ''}`}
-                              key={index}
-                            >
-
-
+                        key={index}
+                        >
                             <img  src={product.general.mainImgUrl} className="home__intro__background__image" alt='home intro'/>
-
                             <div className="home__intro__product-container"
                                 onMouseEnter={this.clearInterval}
                                 onMouseLeave={this.replayInterval}>
-
                                 <div className="home__intro__product">
                                     <div className="home__intro__product__detail">
                                         <span>{product.general.brand}</span> 
@@ -117,8 +109,7 @@ class Home extends Component {
                                         <span>{product.general.price}</span>
                                         <span>MRU</span>
                                     </div>
-                                </div>
-                                 
+                                </div>                              
                                  <Button color="primary">
                                      Voir
                                  </Button>
@@ -132,7 +123,6 @@ class Home extends Component {
             </section>
 
             <section className="home__router">
-
                 <div className="home__router__nav">
                     <h1><span>WELCOME TO&nbsp;</span><span>WOTO MOTORS</span></h1>
                     <nav className="home__router__nav__list">
@@ -155,22 +145,15 @@ class Home extends Component {
                         <div>Available 99 cars</div>
                     </div>
                 </div>
-
             </section>
 
-            {
-                this.state.partRequested === 'inventory' && (
+            {this.state.partRequested === 'inventory' && (
                     <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory} history={this.props.history}/>
-                )
-            }
+            )}
 
-            {
-                this.state.partRequested === 'search' && (
+            {this.state.partRequested === 'search' && (
                     <HomeSearch />
-                )
-            }
-
-      
+            )}
 
             <HomeService />
             

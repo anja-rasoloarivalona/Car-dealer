@@ -1,15 +1,10 @@
 import React, { Component } from 'react'
 import './Inventory.css';
-import ProductCard from '../../components/ProductCard/ProductCard';
 import {connect} from 'react-redux'
-import * as actions from '../../store/actions';
 import Loader from '../../components/loader/Loader';
 import Controller from './Controller/Controller';
 import queryString from 'query-string';
-
-
-
-
+import ProductsList from '../../components/ProductsList/ProductsList';
 
 class Inventory extends Component {
 
@@ -62,10 +57,8 @@ class Inventory extends Component {
                 }
         })  
         /*** END INIT MIN AND MAX PRICE ***/  
-        
-        
+               
         let parsedQuery = queryString.parse(this.props.location.search);
-
         if(Object.keys(parsedQuery).length !== 0){
             console.log('parsed', parsedQuery)
             this.setState(prevState => ({
@@ -113,7 +106,6 @@ class Inventory extends Component {
             }), () =>  this.fetchProductsHandler())
         }
     }
-
     fetchProductsHandler = () => {
         const {query} = this.state
         let url =  new URL('http://localhost:8000/product/client');
@@ -152,11 +144,6 @@ class Inventory extends Component {
         .catch(err => {
           console.log(err)
         })
-    }
-
-    requestProductDetails = data => {
-        this.props.setProductRequestedData(data)
-        this.props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`)
     }
     selectBrandHandler = brand => {   
         let query = {
@@ -220,11 +207,9 @@ class Inventory extends Component {
     render() {
         const {products, loading, query} = this.state;
         let inventory = <Loader />
-
         if(!loading){
             inventory = (
                 <div className="inventory">
-
                     <Controller
                         query={query}
                         selectBrandHandler={this.selectBrandHandler}
@@ -235,30 +220,8 @@ class Inventory extends Component {
                         changeComplete={this.changeComplete}
                         data={this.props.brandAndModelsData}
                     />
-
                     <section className="inventory__container">
-                        <ul className="inventory__list">
-                        {products && products.map(product => (
-                            <li className="inventory__list__item"
-                                key={product._id}>             
-                                        <ProductCard                                               
-                                                id={product._id}
-                                                mainImg={product.general.mainImgUrl}
-                                                title={product.general.title}
-                                                brand={product.general.brand}
-                                                model={product.general.model}
-                                                year={product.general.year}
-                                                price={product.general.price}
-                                                nbKilometers={product.general.nbKilometers}
-                                                gazol={product.general.gazol}
-                                                transmissionType={product.general.transmissionType}
-                                                requestProductDetails={() => this.requestProductDetails(product)}
-                                            />
-                            </li>
-                            ))}
-                            
-                            
-                        </ul>
+                        {products && <ProductsList productsList={products}/>}
                     </section>
                     
                 </div>
@@ -275,12 +238,4 @@ const mapStateToProps = state => {
     }
 }
 
-
-const mapDispatchToProps = dispatch => {
-    return {
-        setProductRequestedData: data => dispatch(actions.setProductRequestedData(data))
-    }
-}
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Inventory)
+export default connect(mapStateToProps)(Inventory)
