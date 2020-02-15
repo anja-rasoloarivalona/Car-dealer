@@ -285,20 +285,21 @@ class Car extends Component {
                         <h2 className="car__section__title">
                             Les clients ayant consulté ce modèle ont également regardé
                         </h2>
-                            <ul className="car__related__list">
+                            <ul className="car__product__list">
                                 {
                                     products.map(product => (
                                         <ProductCard 
-                                        key= {product._id}
-                                        _id = {product._id}
-                                        mainImgUrl={product.general.mainImgUrl}
-                                        made={product.general.made}
-                                        model={product.general.model}
-                                        year={product.general.year}
-                                        price={product.general.price}
-                                        nbKilometers={product.general.nbKilometers}
-                                        gazol={product.general.gazol}
-                                        transmissionType={product.general.transmissionType}
+                                            key={product._id}
+                                            id={product._id}
+                                            mainImg={product.general.mainImgUrl}
+                                            title={product.general.title}
+                                            brand={product.general.brand}
+                                            model={product.general.model}
+                                            year={product.general.year}
+                                            price={product.general.price}
+                                            nbKilometers={product.general.nbKilometers}
+                                            gazol={product.general.gazol}
+                                            transmissionType={product.general.transmissionType}
                                         requestProductDetails={() => this.requestProductDetails(product)}
                                     />
                                     ))
@@ -310,21 +311,22 @@ class Car extends Component {
                                 <h2 className="car__section__title">
                                     Les modèles les plus populaires
                                 </h2>
-                                <ul className="car__related__list">
+                                <ul className="car__product__list">
                                 {
                                     this.props.mostPopularProducts.map(product => (
                                         <ProductCard 
-                                        key= {product._id}
-                                        _id = {product._id}
-                                        mainImgUrl={product.general.mainImgUrl}
-                                        made={product.general.made}
-                                        model={product.general.model}
-                                        year={product.general.year}
-                                        price={product.general.price}
-                                        nbKilometers={product.general.nbKilometers}
-                                        gazol={product.general.gazol}
-                                        transmissionType={product.general.transmissionType}
-                                        requestProductDetails={() => this.requestProductDetails(product)}
+                                            key={product._id}
+                                            id={product._id}
+                                            mainImg={product.general.mainImgUrl}
+                                            title={product.general.title}
+                                            brand={product.general.brand}
+                                            model={product.general.model}
+                                            year={product.general.year}
+                                            price={product.general.price}
+                                            nbKilometers={product.general.nbKilometers}
+                                            gazol={product.general.gazol}
+                                            transmissionType={product.general.transmissionType}
+                                            requestProductDetails={() => this.requestProductDetails(product)}
                                     />
                                     ))
                                 }

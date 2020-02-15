@@ -3,44 +3,39 @@ import './ProductCard.css';
 import IconSvg from '../../utilities/svg/svg';
 
 const ProductCard = props  => {
-
-    let productData = {
-        productId: props._id,
-        productMade: props.made,
-        productModel: props.model,
-        productPrice: props.price
-    }
-
     return (
-        <article className="product-card"
-                 onClick={() => props.requestProductDetails(productData)}>
-                    <img src={props.mainImgUrl} className="product-card__img" alt="car"/>
-                    
-                    <div className="product-card__details">
-                        <div className="product-card__details__model">
-                            <span>{props.made}&nbsp;{props.model}</span>
-                            <span>{props.year}</span>
-                        </div>
-                        <div className="product-card__details__price">
-                            {props.price} &nbsp; MRU
-                        </div>
-                    </div>
+        <article className="product" >
+            {props.children}
+            <div className="product__imgContainer" onClick={props.requestProductDetails}>
+                <div className="product__imgContainer__hoverLayer"></div>
+                <img src={props.mainImg} alt="main img" className="product__img"/>
+                    <IconSvg icon="search"/>
+            </div>   
+            <div className="product__details">
+                <div className="product__details__model">
+                   <span>{props.title}</span>
+                    <span>{props.year}</span>
+                </div>
+                <div className="product__details__price">
+                    {props.price.toLocaleString()} MRU
+                </div>           
+            </div>
 
-                    <ul className="product-card__details__specList">
-                        <li className="product-card__details__specList__item">
-                            <span>{props.nbKilometers}</span>
-                            <IconSvg icon="road"/>    
-                        </li>
-                        <li className="product-card__details__specList__item">
-                            <span>{props.gazol}</span>
-                            <IconSvg icon="gas-station"/>
-                        </li>
-                        <li className="product-card__details__specList__item">
-                            <span>{props.transmissionType}</span>
-                            <IconSvg icon="gear"/>
-                        </li>
-                    </ul>
-                </article>
+            <ul className="product__specList">
+                <li className="product__specList__item">
+                    <span>{props.nbKilometers}</span>
+                    <IconSvg icon="road"/>
+                </li>
+                <li className="product__specList__item">
+                    <span>{props.gazol}</span>
+                    <IconSvg icon="gas-station"/>
+                </li>
+                <li className="product__specList__item">
+                    <span>{props.transmissionType}</span>
+                    <IconSvg icon="gear"/>
+                </li>
+            </ul>
+        </article>
     )
 }
 

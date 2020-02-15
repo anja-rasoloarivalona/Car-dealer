@@ -11,6 +11,13 @@
 
   --color-secondary: #04776e;
   --color-grey: #989084;
+  --color-grey-dark: #afafaf;
+  --color-grey-light: #ECE8E3;
+
+
+  --font-size-xs: 1rem;
+  --font-size-md: 1.2rem;
+  --font-size-xl: 1.4rem;
 }
 
 *,

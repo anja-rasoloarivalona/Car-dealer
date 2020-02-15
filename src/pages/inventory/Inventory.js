@@ -238,12 +238,13 @@ class Inventory extends Component {
 
                     <section className="inventory__container">
                         <ul className="inventory__list">
-                            {
-                                products && products.map(product => (
-                                        <ProductCard 
-                                                key= {product._id}
-                                                _id = {product._id}
-                                                mainImgUrl={product.general.mainImgUrl}
+                        {products && products.map(product => (
+                            <li className="inventory__list__item"
+                                key={product._id}>             
+                                        <ProductCard                                               
+                                                id={product._id}
+                                                mainImg={product.general.mainImgUrl}
+                                                title={product.general.title}
                                                 brand={product.general.brand}
                                                 model={product.general.model}
                                                 year={product.general.year}
@@ -253,9 +254,10 @@ class Inventory extends Component {
                                                 transmissionType={product.general.transmissionType}
                                                 requestProductDetails={() => this.requestProductDetails(product)}
                                             />
-                                                )
-                                )
-                            }
+                            </li>
+                            ))}
+                            
+                            
                         </ul>
                     </section>
                     

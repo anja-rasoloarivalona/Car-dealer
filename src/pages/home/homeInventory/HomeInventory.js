@@ -12,20 +12,18 @@ const homeInventory = props => {
 
     const requestProductDetails = data => {
             props.setProductRequestedData(data)
-            props.history.push(`/car/${data.productId}`)
+            props.history.push(`/car/${data._id}`)
     }
 
     return (
         <div className="home-inventory">
             <ul className="home-inventory__list">
 
-            {
-                cars.map(product => (
-
+            {cars.map(product => (
                <ProductCard 
-                    key= {product._id}
-                    _id = {product._id}
-                    mainImgUrl={product.general.mainImgUrl}
+                    id={product._id}
+                    mainImg={product.general.mainImgUrl}
+                    title={product.general.title}
                     brand={product.general.brand}
                     model={product.general.model}
                     year={product.general.year}
@@ -33,7 +31,7 @@ const homeInventory = props => {
                     nbKilometers={product.general.nbKilometers}
                     gazol={product.general.gazol}
                     transmissionType={product.general.transmissionType}
-                    requestProductDetails={requestProductDetails}
+                    requestProductDetails={() => requestProductDetails(product)}
                 />
                     )
                 )
