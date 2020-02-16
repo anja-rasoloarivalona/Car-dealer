@@ -8,8 +8,10 @@ import {withRouter} from 'react-router-dom'
 const ProductsList = props => {
     const requestProductDetails = data => {
         props.setProductRequestedData(data);
-        props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`);
-        props.fetchProductDetailsHandler(data)
+        props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`); 
+        if(props.fetchProductDetailsHandler){
+            props.fetchProductDetailsHandler(data)
+        }     
     }
     let productsList = props.productsList;
     return (

@@ -6,7 +6,6 @@ import * as actions from '../../store/actions'
 import Overview from './overview/Overview';
 import Technical from './technical/Technical';
 import Features from './features/Features';
-import Cta from './cta/Cta'
 import Loader from '../../components/loader/Loader';
 import ProductsList from '../../components/ProductsList/ProductsList';
 
@@ -165,88 +164,145 @@ class Car extends Component {
                 prod = <Loader />
         } else {
             prod = (
-                <div className="car">         
-                    <section className="car__presentation">
-                        <div className="car__presentation__titleContainer">
-                            <h1 className="car__presentation__title">{product.general.title}</h1>                        
-                           {this.props.userId && (
-                                    <div className={`car__presentation__favoriteButton
-                                                    ${this.state.favorite ? 'active': ''}`}
-                                        onClick={this.favoriteHandler}>
-                                          {this.state.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}   
-                                            </div>
-                               )} 
-                        </div>                           
-                        <div className={`car__presentation__gallery`}>                          
-                            <Gallery
-                                index={this.state.index}
-                                onRequestChange={i => this.setState({index: i})}>
+                <div className="single-car">         
 
-                                {product.imageUrls.map(img => (
-                                <GalleryImage objectFit="cover" key={img} src={img} 
-                                              onClick={this.props.hideScrollBarHandler}
-                                />
+                    <div className="single-car__header">
+
+                        <div className="single-car__header__main">
+
+                            <div className="single-car__header__main__titleContainer">
+                                <h1 className="single-car__header__main__title">{product.general.title} {product.general.year}</h1>                        
+                                {this.props.userId && (
+                                    <div className={`single-car__header__main__favoriteButton ${this.state.favorite ? 'active': ''}`}
+                                        onClick={this.favoriteHandler}
+                                    >
+                                        {this.state.favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}   
+                                    </div>
+                                )} 
+                            </div>     
+
+                            <div className={`single-car__header__main__gallery`}>                          
+                                <Gallery
+                                    index={this.state.index}
+                                    onRequestChange={i => this.setState({index: i})}>
+
+                                    {product.imageUrls.map(img => (
+                                    <GalleryImage objectFit="cover" key={img} src={img} 
+                                                onClick={this.props.hideScrollBarHandler}
+                                    />
+                                    ))}
+                                </Gallery>                                 
+                            </div>                       
+                            {this.props.hideScrollBar && (
+                                <div className="single-car__header__main__gallery--fullContainer">
+                                    <div className="single-car__header__main__gallery--fullContainer__closeBtn"
+                                        onClick={this.props.showScrollBarHandler}>
+                                        <span>Close</span>
+                                    </div>
+                                    <div className="single-car__header__main__gallery--full">
+                                        <Gallery
+                                            index={this.state.index}
+                                            onRequestChange={i => this.setState({index: i})}>
+                                            {product.imageUrls.map(img => (
+                                            <GalleryImage objectFit="contain" key={img} src={img} 
+                                            />
+                                            ))}
+                                        </Gallery>
+                                    </div>
+                                </div>                   
+                            )}     
+                            <div className="single-car__header__main__gallery__controller">
+                                {product.imageUrls.map(i => (
+                                        <img src={i} alt="car" key={i} className="single-car__header__main__gallery__controller__img"
+                                            onClick={ () => this.changeGalleryImgIndex(i)}/>
                                 ))}
-                            </Gallery>                                 
-                        </div>                       
-                        {this.props.hideScrollBar && (
-                            <div className="car__presentation__gallery--fullContainer">
-                                <div className="car__presentation__gallery--fullContainer__closeBtn"
-                                    onClick={this.props.showScrollBarHandler}>
-                                    <span>Close</span>
-                                </div>
-                                <div className="car__presentation__gallery--full">
-                                    <Gallery
-                                        index={this.state.index}
-                                        onRequestChange={i => this.setState({index: i})}>
-                                        {product.imageUrls.map(img => (
-                                        <GalleryImage objectFit="contain" key={img} src={img} 
-                                        />
-                                        ))}
-                                    </Gallery>
-                                </div>
-                            </div>                   
-                        )}     
-                        <div className="car__presentation__gallery__controller">
-                            {product.imageUrls.map(i => (
-                                    <img src={i} alt="car" key={i} className="car__presentation__gallery__controller__img"
-                                        onClick={ () => this.changeGalleryImgIndex(i)}/>
-                            ))}
+                            </div>
                         </div>
-                  
-                        <ul className="car__presentation__nav">
-                            <li className={`car__presentation__nav__item
+                        <div className="single-car__header__info">
+                            <div className="single-car__header__info__priceContainer">
+                                <div className="single-car__header__info__price">{product.general.price.toLocaleString()} MRU</div>
+                            </div>
+                            <ul className="single-car__header__info__list">
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">reference</div>
+                                        <div className="single-car__header__info__list__item__value">{product.supplier.reference}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">brand</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.brand}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">model</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.model}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">year</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.year}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">kilometer</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.nbKilometers} km</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">YOR</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.yearOfRelease}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">fuel</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.gazol}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">gear box</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.transmissionType}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">serial number</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.serialNumber}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">views</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.viewCounter ? product.general.viewCounter : '-' }</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">followers</div>
+                                        <div className="single-car__header__info__list__item__value">{product.followersCounter ? product.followersCounter : '-'}</div>
+                                    </li>
+                            </ul>
+                        </div>
+
+                    </div>
+
+
+                    <section className="single-car__details">                 
+                        <ul className="single-car__details__nav">
+                            <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'overview' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'overview'})}>
                                 Overview
                             </li>
-                            <li className={`car__presentation__nav__item
+                            <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'technical' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'technical'})}>
                                 Technical
                             </li>
-                            <li className={`car__presentation__nav__item
+                            <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'features' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'features'})}>
                                 Features
                             </li>
                         </ul>
+                        {this.state.partRequested === 'overview' && <Overview product={product}/>}
 
+                        {this.state.partRequested === 'technical' && <Technical product={product}/>}
 
-                        {this.state.partRequested === 'overview' && <Overview />}
-
-                        {this.state.partRequested === 'technical' && <Technical product={this.state.product}/>}
-
-                        {this.state.partRequested === 'features' && <Features />}
+                        {this.state.partRequested === 'features' && <Features product={product} />}
 
         
                     </section>
-                    
-                    <Cta product={product}/>
 
-                    <section className="car__related">
-                        <h2 className="car__section__title">
-                            Les clients ayant consulté ce modèle ont également regardé
+                    <section className="single-car__related">
+                        <h2 className="single-car__section__title">
+                            Similar vehicles
                         </h2>
                         <ProductsList 
                             productsList={products}
@@ -254,9 +310,9 @@ class Car extends Component {
                         />
                     </section>
 
-                    <section className="car__mostPopular">
-                        <h2 className="car__section__title">
-                            Les modèles les plus populaires
+                    <section className="single-car__mostPopular">
+                        <h2 className="single-car__section__title">
+                            Most popular
                         </h2>
                         <ProductsList 
                             productsList={this.props.mostPopularProducts}
