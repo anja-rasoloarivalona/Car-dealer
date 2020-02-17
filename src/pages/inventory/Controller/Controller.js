@@ -29,7 +29,7 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
   
                         <DropDownList 
                             value={query.model === 'all' ? 'all models' : query.model}
-                            list={ query.brand !== 'all' ? [{text: 'all models', value: 'all'},...Object.keys(data[query.brand].datas)] : ['all models']}
+                            list={ query.brand !== 'all' ? [{text: 'all models', value: 'all'}, ...data[query.brand]] : ['all models']}
                             selectItemHandler={this.props.selectModelHandler}
                         />
               
@@ -85,7 +85,8 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
 
 const mapStateToProps = state => {
     return {
-        brandAndModelsData: state.product.brandAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData,
+        price: state.product.price
     }
 }
 

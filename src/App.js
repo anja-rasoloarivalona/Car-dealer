@@ -78,8 +78,7 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-        this.props.setMostPopularProducts(resData.mostPopularProducts)
-        this.props.setBrandAndModelsData(resData.brandAndModelsData)
+        this.props.initAppData(resData)
         this.setState({ 
           carsHomeIntro: resData.publicityProducts, 
           carsHomeInventory: resData.homeInventoryProducts,
@@ -113,8 +112,6 @@ class App extends Component {
           return res.json()
         })
         .then( resData => {
-      //    console.log('start connection token valid', resData)
-
           let socket = openSocket('http://localhost:8000', {query: `data=${userId} ${resData.connectionId}`});
           socket.connect();
           this.props.setConnectionId(resData.connectionId)
@@ -125,16 +122,11 @@ class App extends Component {
   }
 
   logoutHandler = () => {
-
       this.props.setLoginStateToFalse();
-
       let timeStamp = timeStampGenerator()
-
       const userId = localStorage.getItem('woto-userId');
       const connectionId = this.props.connectionId;
-
       this.endConnection(userId, connectionId, timeStamp, true);
-
   }
 
   endConnection = (userId, connectionId, timeStamp, logout) => {
@@ -153,7 +145,6 @@ class App extends Component {
         if(res.status === 401){
           throw new Error('UserId not valid')
         }
-
         if(res.status !== 200 && res.status !== 201){
           throw new Error('Could not update last connection')
         }
@@ -176,7 +167,6 @@ class App extends Component {
 
   initUserFavoriteProducts = userId => {
     let url = 'http://localhost:8000/user/favorites/' + userId;
-
     fetch( url, {
       headers: {
         'Content-type': 'application/json'
@@ -186,7 +176,6 @@ class App extends Component {
       if(res.status !== 200 && res.status !== 201){
         throw new Error('Error fetching products')
       }
-
       return res.json()
     })
     .then(resData => {
@@ -267,8 +256,7 @@ const mapDispatchToProps = dispatch => {
     setLoginStateToTrue: (data) => dispatch(actions.setLoginStateToTrue(data)),
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
-    setBrandAndModelsData : data => dispatch(actions.setBrandAndModelsData(data)),
-    setMostPopularProducts: products => dispatch(actions.setMostPopularProducts(products)),
+    initAppData: data => dispatch(actions.initAppData(data)),
     setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products))
   }
 }

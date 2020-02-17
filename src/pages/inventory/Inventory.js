@@ -41,21 +41,12 @@ class Inventory extends Component {
 
     componentDidMount(){     
         let data = this.props.brandAndModelsData;
+        
         console.log('dataa', data)
 
         /*** START INIT MIN AND MAX PRICE ***/
-        let minPrice = data[Object.keys(data)[0]].price.min;
-        let maxPrice = data[Object.keys(data)[0]].price.max;
-    
-            Object.keys(data).map( brand => {
-                if(data[brand].price.min < minPrice){
-                    minPrice = data[brand].price.min
-                }
-    
-                if(data[brand].price.max > maxPrice){
-                    maxPrice = data[brand].price.max
-                }
-        })  
+        let minPrice = this.props.price.min;
+        let maxPrice = this.props.price.max
         /*** END INIT MIN AND MAX PRICE ***/  
                
         let parsedQuery = queryString.parse(this.props.location.search);
@@ -234,7 +225,8 @@ class Inventory extends Component {
 
 const mapStateToProps = state => {
     return {
-        brandAndModelsData: state.product.brandAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData,
+        price: state.product.price
     }
 }
 

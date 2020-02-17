@@ -8,19 +8,10 @@ export const setProductRequestedData = data => {
     }
 }
 
-
-export const setBrandAndModelsData = data => {
-
-    console.log('setting my data')
+export const initAppData = data => {
     return {
-        type: actionTypes.SET_BRAND_AND_MODELS_DATAS,
+        type: actionTypes.INIT_APP_DATA,
         data: data
     }
 }
 
-export const setMostPopularProducts = products => {
-    return {
-        type: actionTypes.SET_MOST_POPULAR_PRODUCTS,
-        products: products
-    }
-}

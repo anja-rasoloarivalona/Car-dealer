@@ -36,22 +36,10 @@ class HomeSearch extends Component {
     }
 
     componentDidMount(){
-        let data = this.props.brandAndModelsData;
-
         /*** START INIT MIN AND MAX PRICE ***/
-        let minPrice = data[Object.keys(data)[0]].price.min;
-        let maxPrice = data[Object.keys(data)[0]].price.max;
+        let minPrice = this.props.price.min
+        let maxPrice = this.props.price.max
     
-            Object.keys(data).map( brand => {
-                if(data[brand].price.min < minPrice){
-                    minPrice = data[brand].price.min
-                }
-    
-                if(data[brand].price.max > maxPrice){
-                    maxPrice = data[brand].price.max
-                }
-        }) 
-
         this.setState(prevState => ({
             ...prevState,
             query: {
@@ -161,7 +149,8 @@ class HomeSearch extends Component {
 
 const mapStateToProps = state => {
     return {
-        brandAndModelsData: state.product.brandAndModelsData
+        brandAndModelsData: state.product.brandAndModelsData,
+        price: state.product.price
     }
 }
 export default connect(mapStateToProps)(withRouter(HomeSearch)) ;
