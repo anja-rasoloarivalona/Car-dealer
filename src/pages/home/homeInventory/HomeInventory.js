@@ -9,7 +9,7 @@ const homeInventory = props => {
         <div className="home-inventory">
             <ProductsList productsList={productsList}/>
             <Button color="primary"
-                    onClick={() => props.history.push('/inventaire')}>
+                    onClick={() => props.history.push('/inventory')}>
                 Voir plus
             </Button>
         

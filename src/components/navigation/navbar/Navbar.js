@@ -15,10 +15,10 @@ const navbar = props => {
         <nav className={`navbarContainer`}>
             <ul className="navbar__list">
                 <NavLink to="/" exact className="navbar__list__item">
-                    Accueil
+                    Home
                                     </NavLink>
-                <NavLink to="/inventaire" className="navbar__list__item">
-                    Inventaire
+                <NavLink to="/inventory" className="navbar__list__item">
+                    Inventory
                                     </NavLink>
                 <NavLink to="/services" className="navbar__list__item">
                     Services
@@ -26,7 +26,7 @@ const navbar = props => {
                 <NavLink to="/contact" className="navbar__list__item">
                     Contact
                                     </NavLink>
-                <NavLink to="/mon-compte" className="navbar__list__item">
+                <NavLink to="/my-account" className="navbar__list__item">
                     Profil
                                     </NavLink>
             </ul>
@@ -36,7 +36,7 @@ const navbar = props => {
                     !props.isAuth && ((
                         <Button color='primary' link='/auth'
                             customClass='auth__cta'>
-                            Se connecter
+                            Login
                                             </Button>
                     ))
                 }

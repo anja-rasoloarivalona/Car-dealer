@@ -223,10 +223,10 @@ class App extends Component {
                     {chat}
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
-                        <Route path='/inventaire' component={Inventory}/>
-                        <Route path='/car/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
+                        <Route path='/inventory' component={Inventory}/>
+                        <Route path='/product/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
                         <Route path='/auth' component={Auth} />
-                        <Route path='/mon-compte' component={Account} />
+                        <Route path='/my-account' component={Account} />
                         <Route path='/services' component={Services} />
                     </Switch>
                     

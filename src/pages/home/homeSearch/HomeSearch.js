@@ -111,7 +111,7 @@ class HomeSearch extends Component {
    searchHandler = () => {
     const { query } = this.state;
     this.props.history.push({
-        pathname: '/inventaire',
+        pathname: '/inventory',
         search: `sort=${query.sort}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
     })
    }

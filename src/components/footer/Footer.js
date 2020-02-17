@@ -1,69 +1,140 @@
-import React from 'react';
+import React, { Component } from 'react'
 import './Footer.css';
 import IconSvg from '../../utilities/svg/svg';
-
-
+import DropDownList from '../DropDownList/DropDownList';
+import * as actions from '../../store/actions'
+import {connect} from 'react-redux'
 import test from '../../assets/img/intro1.jpeg';
 
-const footer = () => {
-    return (
-        <footer className="footer">
-            <ul className="footer__list">
-                <li className="footer__list__item">
-                    <h3 className="footer__title">WOTO MOTORS</h3>
-                    <p>
-                        In tellus integer feugiat scelerisque varius morbi enim nunc faucibus. Bibendum enim facilisis gravida neque convallis a cras semper auctor. Mi sit amet mauris commodo quis imperdiet massa tincidunt nunc. 
-                    </p>
 
-                </li>
-                <li className="footer__list__item">
-                    <h3 className="footer__title">Gallery</h3>
-                    <div className="footer__gallery">
-                        <img src={test} className="footer__gallery__img" alt="cars" />
-                        <img src={test} className="footer__gallery__img" alt="cars" />
-                        <img src={test} className="footer__gallery__img" alt="cars" />
+class Footer extends Component {
+
+    state = {
+        susbscribed: false,
+        subscribeInput: ''
+    }
+    changeInputHandler = value => {
+        this.setState({ subscribeInput: value })
+    }
+
+    subscribeHandler = () => {
+        this.setState({
+            susbscribed: true,
+            subscribeInput: ''
+        })
+    }
+    render() {
+
+        const {susbscribed, subscribeInput} = this.state
+        return (
+            <footer className="footer">
+            <ul className="footer__list">
+
+                <li className="footer__list__group">
+                    <div className="footer__list__item">
+                        <h3 className="footer__title">Gallery</h3>
+                        <div className="footer__gallery">
+                            <img src={test} className="footer__gallery__img" alt="cars" />
+                            <img src={test} className="footer__gallery__img" alt="cars" />
+                            <img src={test} className="footer__gallery__img" alt="cars" />
+                        </div>
+                    </div>
+                    <div className="footer__list__item">
+                        <h3 className="footer__title">Site map</h3>
+                        <ul className="footer__list__item__list">
+                            <li className="footer__list__item__list__item">
+                               <a href="/">Home</a>
+                            </li>
+                            <li className="footer__list__item__list__item">
+                                <a href="/inventory">Inventory</a>
+                            </li>
+                            <li className="footer__list__item__list__item">
+                                <a href="/services">Services</a>
+                            </li>
+                        </ul>
                     </div>
                 </li>
-                <li className="footer__list__item footer__list__item__siteMap">
-                    <h3 className="footer__title">Site map</h3>
-                    <ul className="footer__siteMap__list">
-                        <li className="footer__siteMap__list__item">Accueil</li>
-                        <li className="footer__siteMap__list__item">Inventaire</li>
-                        <li className="footer__siteMap__list__item">À propos</li>
-                        <li className="footer__siteMap__list__item">Contact</li>
-                    </ul>
-                </li>
 
-                <li className="footer__list__item">
-                    <h3 className="footer__title">Subscribe</h3>
-                    <input className="footer__input"/>
-                    <p>Get latest updates and offers</p>
-                </li>
-                <li className="footer__list__item">
-                    <h3 className="footer__title">Social Network</h3>
-                    <ul className="footer__socialNetwork__list">
+
+
+                <li className="footer__list__group">
+                    <div className="footer__list__item">
+                        <h3 className="footer__title">Subscribe</h3>
+
+                        <div className="footer__inputContainer">
+                            <input className="footer__input"
+                                value={subscribeInput}
+                                type="email"
+                                placeholder="email"
+                                onChange={e => this.changeInputHandler(e.target.value)}
+                            />
+                            <IconSvg icon="send"
+                                onClick={this.subscribeHandler}
+                            />
+                        </div>
+                        
+                        {susbscribed && (
+                            <p>You've been subscribed. Thank you for joining us</p>
+                        )}
+                         {!susbscribed && (
+                            <p>Get latest updates and offers</p>
+                        )}
+
+                       
+                    </div>
+                    <div className="footer__list__item">
+                        <h3 className="footer__title">Parameters</h3>
+                        <ul className="footer__list__item__list">
+                            <li className="footer__list__item__list__item">
+                                <DropDownList 
+                                    value={this.props.lang}
+                                    list={['english', 'spanish', 'french']}
+                                    selectItemHandler={this.props.setLang}
+                                />
+                            </li>
+                            <li className="footer__list__item__list__item">
+                                <DropDownList 
+                                    value={this.props.currency}
+                                    list={['CAD', 'USD', 'MRU']}
+                                    selectItemHandler={this.props.setCurrency}
+                                />
+                            </li>
+                            
+                     </ul>
+                    </div>     
+                </li>    
+            </ul>
+
+
+            <div className="footer__copyRight">
+                <span>&copy; Anja Rasoloarivalona - 2019</span>
+                <ul className="footer__socialNetwork__list">
                         <IconSvg icon="facebook"/>
                         <IconSvg icon="instagram"/>
                         <IconSvg icon="twitter"/>
                         <IconSvg icon="google-plus"/>
                     </ul>
-                </li>
-                <li className="footer__list__item footer__list__item__support">
-                    <h3 className="footer__title">Support</h3>
-                     <ul className="footer__support__list">
-                        <li className="footer__support__list__item">Service d'assistance</li>
-                        <li className="footer__support__list__item">FAQ</li>
-                     </ul>
-                </li>
-
-            </ul>
-            <div className="footer__copyRight">
-                &copy; Anja Rasoloarivalona - 2019
             </div>
         </footer>
-    )
+        )
+    }
 }
 
-export default footer;
+
+const mapStateToProps = state => {
+    return {
+        lang: state.parameters.lang,
+        currency: state.parameters.currency
+    }
+}
+
+const mapDispacthToProps = dispatch => {
+    return {
+        setLang: lang => dispatch(actions.setLang(lang)),
+        setCurrency: currency => dispatch(actions.setCurrency(currency))
+    }
+}
+
+export default connect(mapStateToProps, mapDispacthToProps)(Footer);
 
 

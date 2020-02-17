@@ -123,7 +123,7 @@ class Inventory extends Component {
         .then(resData => {  
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
-              pathname: '/inventaire',
+              pathname: '/inventory',
               search: `sort=${query.sort}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
           })
         })
