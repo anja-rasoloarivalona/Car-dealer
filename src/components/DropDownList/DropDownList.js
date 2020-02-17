@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './DropDownList.css';
+import IconSvg from '../../utilities/svg/svg'
 
 
 class DropDownList extends Component {
@@ -45,6 +46,7 @@ class DropDownList extends Component {
                  onClick={this.toggleList}>
                     <div className="drop-down-list__value">
                         {this.props.value}
+                        <IconSvg icon="arrow_down"/>
                     </div>
                     <ul className={`drop-down-list__list`}>
                         {list.map(item => 

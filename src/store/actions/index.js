@@ -19,3 +19,9 @@ export {
     addUserFavoriteProduct,
     removeUserFavoriteProduct
 } from './user'
+
+
+export {
+    setCurrency,
+    setLang
+} from './parameters'

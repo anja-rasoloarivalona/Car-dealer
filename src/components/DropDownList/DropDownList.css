@@ -85,3 +85,19 @@
 .drop-down-list__list__item:not(:last-child){
     border-bottom: 1px solid rgb(226, 226, 226);
 }
+
+.drop-down-list__value svg {
+    width: .8rem;
+    height: .8rem;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    right: 1rem;
+    fill: var(--color-primary);
+    transition: all .3s ease-in
+}
+
+.drop-down-list.show .drop-down-list__value svg {
+    transform: rotate(-180deg);
+}
