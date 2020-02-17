@@ -5,6 +5,11 @@ import ProductsList from '../../../components/ProductsList/ProductsList';
 
 const homeInventory = props => {
     let productsList = props.carsHomeInventory;
+    let homeInventoryLimit = props.homeInventoryLimit;
+
+    if(homeInventoryLimit < productsList.length){
+        productsList = productsList.slice(0, homeInventoryLimit)
+    }
     return (
         <div className="home-inventory">
             <ProductsList productsList={productsList}/>

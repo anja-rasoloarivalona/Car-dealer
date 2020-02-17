@@ -158,7 +158,8 @@ import openSocket from 'socket.io-client';
                                     onChange={this.inputChangeHandler}
                                     placeholder='email'
                                     border
-                                    required={true}/>
+                                    required={true}
+                                    autoComplete = 'new-password'/>
 
                             <Input  type='password'
                                     control='input'

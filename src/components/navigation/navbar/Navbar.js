@@ -23,12 +23,12 @@ const navbar = props => {
                 <NavLink to="/services" className="navbar__list__item">
                     Services
                                     </NavLink>
-                <NavLink to="/contact" className="navbar__list__item">
+                {/* <NavLink to="/contact" className="navbar__list__item">
                     Contact
-                                    </NavLink>
-                <NavLink to="/my-account" className="navbar__list__item">
+                                    </NavLink> */}
+                {/* <NavLink to="/my-account" className="navbar__list__item">
                     Profil
-                                    </NavLink>
+                </NavLink> */}
             </ul>
 
             <div className="navbar__cta">

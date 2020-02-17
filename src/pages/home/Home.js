@@ -18,10 +18,20 @@ class Home extends Component {
         index: 0,
         initialIndex: 0,
         showIntroList: false,
-        partRequested: 'inventory'
+        partRequested: 'inventory',
+
+        homeInventoryLimit: 9
     }
 
     componentDidMount(){
+        let windowWidth = window.innerWidth;
+        if(windowWidth > 1337){
+            this.setState({ homeInventoryLimit: 8})
+        }
+
+
+
+        
       this.imageSlideHandler()   
     }
 
@@ -163,7 +173,7 @@ class Home extends Component {
             </section>
 
             {this.state.partRequested === 'inventory' && (
-                    <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory} history={this.props.history}/>
+                    <HomeInventoryMemo carsHomeInventory={this.props.carsHomeInventory} history={this.props.history} homeInventoryLimit={this.state.homeInventoryLimit}/>
             )}
 
             {this.state.partRequested === 'search' && (

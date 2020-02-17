@@ -31,7 +31,7 @@ class Footer extends Component {
             <ul className="footer__list">
 
                 <li className="footer__list__group">
-                    <div className="footer__list__item">
+                    <div className="footer__list__item__gallery">
                         <h3 className="footer__title">Gallery</h3>
                         <div className="footer__gallery">
                             <img src={test} className="footer__gallery__img" alt="cars" />
