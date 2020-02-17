@@ -1,6 +1,6 @@
 .home-service {
     grid-column: 1 / -1;
-    grid-row: 5 / 6;
+    grid-row: 4 / 5;
     display: flex;
     align-items: center;
     justify-content: center;

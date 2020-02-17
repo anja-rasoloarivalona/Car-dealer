@@ -4,6 +4,7 @@ import IconSvg from '../../utilities/svg/svg';
 import {HomeInventoryMemo} from './homeInventory/HomeInventory';
 import HomeSearch from './homeSearch/HomeSearch';
 import HomeService from './homeService/HomeService';
+import HomeContact from './HomeContact/HomeContact'
 import Button from '../../components/button/Button';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
@@ -145,9 +146,13 @@ class Home extends Component {
                             onClick={() => this.setState({ partRequested: 'search'})}>
                                 Search
                         </li>
-                        <li className={`home__router__nav__list__item ${this.state.partRequested === 'contact' ? 'active': ''}`}
+                        {/* <li className={`home__router__nav__list__item ${this.state.partRequested === 'contact' ? 'active': ''}`}
                             onClick={() => this.setState({ partRequested: 'contact'})}>
                                 Contact
+                        </li> */}
+                        <li className={`home__router__nav__list__item ${this.state.partRequested === 'services' ? 'active': ''}`}
+                            onClick={() => this.setState({ partRequested: 'services'})}>
+                                Services
                         </li>
                     </nav>
                     <div className="home__router__nav__count">
@@ -165,8 +170,20 @@ class Home extends Component {
                     <HomeSearch />
             )}
 
-            <HomeService />
 
+            {this.state.partRequested === 'services' && (
+                    <HomeService />
+            )}
+
+            {/* {this.state.partRequested === 'contact' && (
+                    <HomeContact />
+            )} */}
+
+            {/* <HomeService /> */}
+
+
+            <HomeContact />
+            
             <div className="home__mostPopSedan">
                 <h1 className="home__mostPopSedan__title">
                     Most popular sedan
