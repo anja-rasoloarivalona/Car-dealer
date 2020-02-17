@@ -5,6 +5,8 @@ import {HomeInventoryMemo} from './homeInventory/HomeInventory';
 import HomeSearch from './homeSearch/HomeSearch';
 import HomeService from './homeService/HomeService';
 import Button from '../../components/button/Button';
+import * as actions from '../../store/actions';
+import { connect } from 'react-redux'
 
 
 class Home extends Component {
@@ -28,9 +30,7 @@ class Home extends Component {
     imageSlideHandler = () => {
         let {index, carsHomeIntro} =  this.state;
         this.inter = setInterval(() => {
-                    if(index === carsHomeIntro.length){
-                        console.log('clearing');
-                        
+                    if(index === carsHomeIntro.length){                 
                         this.setState({index: 0}, () => {
                             clearInterval(this.inter);
                             this.imageSlideHandler();
@@ -61,6 +61,14 @@ class Home extends Component {
         }))
     }
 
+    requestProductDetails = data => {
+        this.props.setProductRequestedData(data);
+        this.props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`); 
+        if(this.props.fetchProductDetailsHandler){
+            this.props.fetchProductDetailsHandler(data)
+        }     
+    }
+
     render() {
 
         const {carsHomeIntro} = this.state;
@@ -68,7 +76,7 @@ class Home extends Component {
         return (
             <div className="home">
             
-            <div className={`home__intro__list-toggler
+            {/* <div className={`home__intro__list-toggler
                         ${this.state.showIntroList ? 'active': ''}`}
                  onClick={this.showIntroListToggler}>
 
@@ -86,7 +94,7 @@ class Home extends Component {
                             ${this.state.index === index ? 'active': ''}`}/>
                     ))}
                 </div>
-            </div>
+            </div> */}
 
             <section className="home__intro">
                 {carsHomeIntro.map((product, index) => (
@@ -110,7 +118,8 @@ class Home extends Component {
                                         <span>MRU</span>
                                     </div>
                                 </div>                              
-                                 <Button color="primary">
+                                 <Button color="primary"
+                                  onClick={() => this.requestProductDetails(product)}>
                                      Voir
                                  </Button>
                                  
@@ -163,6 +172,10 @@ class Home extends Component {
 }
 
 
+const mapDispatchToProps = dispatch => {
+    return {
+        setProductRequestedData: data => dispatch(actions.setProductRequestedData(data)) 
+    }
+}
 
-
-export default Home;
+export default connect(null, mapDispatchToProps)(Home);
