@@ -40,10 +40,6 @@ class Inventory extends Component {
     }
 
     componentDidMount(){     
-        let data = this.props.brandAndModelsData;
-        
-        console.log('dataa', data)
-
         /*** START INIT MIN AND MAX PRICE ***/
         let minPrice = this.props.price.min;
         let maxPrice = this.props.price.max
@@ -51,7 +47,6 @@ class Inventory extends Component {
                
         let parsedQuery = queryString.parse(this.props.location.search);
         if(Object.keys(parsedQuery).length !== 0){
-            console.log('parsed', parsedQuery)
             this.setState(prevState => ({
             ...prevState,
             query: {

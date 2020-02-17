@@ -314,6 +314,10 @@
     margin-right: 1rem;
 }
 
+.home__mostPopSedan {
+    grid-column: 2 / 4;
+    grid-row: 6 / 7; 
+}
 
 
 

@@ -6,7 +6,8 @@ import HomeSearch from './homeSearch/HomeSearch';
 import HomeService from './homeService/HomeService';
 import Button from '../../components/button/Button';
 import * as actions from '../../store/actions';
-import { connect } from 'react-redux'
+import { connect } from 'react-redux';
+import ProductList from '../../components/ProductsList/ProductsList'
 
 
 class Home extends Component {
@@ -165,12 +166,24 @@ class Home extends Component {
             )}
 
             <HomeService />
-            
+
+            <div className="home__mostPopSedan">
+                <h1 className="home__mostPopSedan__title">
+                    Most popular sedan
+                </h1>
+                <ProductList productsList={this.props.mostPopularSedan}/>
             </div>
+            
+        </div>
         )
     }
 }
 
+const mapStateToProps = state => {
+    return {
+        mostPopularSedan: state.product.mostPopularSedan
+    }
+}
 
 const mapDispatchToProps = dispatch => {
     return {
@@ -178,4 +191,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

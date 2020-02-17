@@ -6,19 +6,9 @@ const initialState = {
     brandAndModelsData: null,
     mostPopularProducts: null,
     price: null,
-
-
+    mostPopularSedan: null,
     productRequested: null,
     
-}
-
-const setMinAndMaxPrice = (state, action) => {
-    return updatedObject(state, {
-        price: {
-            min: action.data.min,
-            max: action.data.max
-        }
-    })
 }
 
 const initAppData = (state, action) => {
