@@ -1,8 +1,13 @@
 .home-search{
-
-    grid-column: 2 / 4;
+    grid-column: 1 / -1;
     grid-row: 4 / 5;
+    background: var(--color-grey);
+    padding: 6rem 0;
+}
 
-    background: red;
-    height: 50vh;
+
+.home-search__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
 }

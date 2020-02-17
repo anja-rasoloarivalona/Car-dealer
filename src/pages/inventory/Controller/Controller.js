@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import './Controller.css';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions';
-import Button from '../../../components/button/Button';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import DropDownList from '../../../components/DropDownList/DropDownList'
@@ -35,12 +33,14 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
                             selectItemHandler={this.props.selectModelHandler}
                         />
               
-     
-                        <DropDownList 
+                        {query.sort && (
+                            <DropDownList 
                             value={query.sort}
                             list={['increasing price', 'decreasing price', 'latest', 'most popular']}
                             selectItemHandler={this.props.sortHandler}
-                        />
+                            />
+                        )}
+                      
                  
 
                     <div className="inventory__controller__group">
