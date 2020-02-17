@@ -2,8 +2,9 @@ import React from 'react';
 import './HomeService.css';
 import IconSvg from '../../../utilities/svg/svg';
 import Button from '../../../components/button/Button';
+import {withRouter} from 'react-router-dom'
 
-const homeService = () => {
+const homeService = props => {
     return (
         <section className="home-service">
             <h1 className="home-service__title">Nos offres</h1>
@@ -39,11 +40,13 @@ const homeService = () => {
                 </li>
             </ul>
         
-            <Button color="primary">
+            <Button color="primary"
+                    onClick={() => props.history.push("/services")}
+            >
                 LEARN MORE
             </Button>
         </section>
     )
 }
 
-export default homeService;
+export default withRouter(homeService);

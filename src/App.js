@@ -20,6 +20,7 @@ import Inventory from './pages/inventory/Inventory';
 import SingleCar from './pages/car/Car';
 import Auth from './pages/auth/Auth';
 import Account from './pages/account/Account';
+import Services from './pages/Services/Services'
 
 /*-----------UTILITIES-----------*/
 import { timeStampGenerator } from './utilities/timeStampGenerator';
@@ -226,6 +227,7 @@ class App extends Component {
                         <Route path='/car/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
                         <Route path='/auth' component={Auth} />
                         <Route path='/mon-compte' component={Account} />
+                        <Route path='/services' component={Services} />
                     </Switch>
                     
                     <Footer />      
