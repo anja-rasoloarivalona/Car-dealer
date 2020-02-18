@@ -9,7 +9,7 @@ import Button from '../../components/button/Button';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import ProductList from '../../components/ProductsList/ProductsList'
-
+import Amount from '../../components/Amount/Amount'
 
 class Home extends Component {
 
@@ -126,8 +126,11 @@ class Home extends Component {
                                         <span>{product.general.year}</span>
                                     </div>
                                     <div className="home__intro__product__price">
-                                        <span>{product.general.price}</span>
-                                        <span>MRU</span>
+                                        <Amount amount={product.general.price}/>
+                                        {/* <span>{product.general.price}</span>
+                                        <span>MRU</span> */}
+
+
                                     </div>
                                 </div>                              
                                  <Button color="primary"

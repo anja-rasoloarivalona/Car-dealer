@@ -6,7 +6,8 @@ const initialState = {
     auth: false,
     token: null,
     userId: null,
-    connectionId: null
+    connectionId: null,
+    userName: null
 }
 
 
@@ -18,7 +19,8 @@ const loginSucced = (state, action) => {
         auth: true,
         token: action.token,
         userId: action.userId,
-        connectionId: action.connectionId
+        connectionId: action.connectionId,
+        userName : action.userName
     })
 }
 
@@ -27,6 +29,7 @@ const setLoginStateToTrue = (state, action) => {
         auth: action.isAuth,
         token: action.token,
         userId: action.userId,
+        userName : action.userName
     })
 }
 
@@ -35,6 +38,7 @@ const setLoginStateToFalse = state => {
         auth: false,
         token: null,
         userId:  null,
+        userName : null,
         connectionId: null
     })
 }

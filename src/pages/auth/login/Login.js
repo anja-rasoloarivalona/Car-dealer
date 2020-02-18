@@ -91,21 +91,12 @@ import openSocket from 'socket.io-client';
             return res.json()
         })
         .then( resData => {
-
             let socket = openSocket('http://localhost:8000', {query: `data=${resData.userId} ${resData.connectionId}`});
             socket.connect()
-
-                
-
                 this.props.loginSucceeded(resData);
-
                 localStorage.setItem('woto-token', resData.token);
                 localStorage.setItem('woto-userId', resData.userId);
-
-                
-              //  localStorage.setItem('woto-connectionId', resData.connectionId)
-
-
+                localStorage.setItem('woto-userName', resData.userName);
                 const remainingMilliSeconds = 24 * 60 * 60 * 1000 //24hours
                 const expiryDate = new Date( new Date().getTime() + remainingMilliSeconds )
 

@@ -7,7 +7,8 @@ export const loginSucceeded = data => {
         type: actionTypes.LOGIN_SUCCEDED,
         token: data.token,
         userId: data.userId,
-        connectionId: data.connectionId
+        connectionId: data.connectionId,
+        userName: data.userName
 
     }
 }
@@ -24,6 +25,7 @@ export const setLoginStateToTrue = data => {
         isAuth: data.isAuth,
         token: data.token,
         userId: data.userId,
+        userName: data.userName
         
     }
 }

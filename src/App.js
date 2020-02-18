@@ -35,11 +35,31 @@ class App extends Component {
   }
 
   componentDidMount(){
+
+    let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
+    // let url = 'http://api.currencylayer.com/list?access_key=393f7172bfdb3cbdf353b2fd78462005'
+   
+    // fetch(url)
+    // .then(res => {
+    //   return res.json()
+      
+    // })
+    // .then( resData => {
+    //   console.log('curr', resData)
+    // })
+    // .catch(err => {
+    //   console.log(err)
+    // })
+
     this.setState({ loading: true});
     this.initAppDataHandler();
     const token = localStorage.getItem('woto-token');
     const expiryDate = localStorage.getItem('woto-expiryDate');
     const userId = localStorage.getItem('woto-userId');
+    const userName= localStorage.getItem('woto-userName');
+
+    console.log('uufwqf', userName);
+
     //const connectionId = localStorage.getItem('woto-connectionId');
 
     if(!token || !expiryDate){
@@ -55,6 +75,7 @@ class App extends Component {
         isAuth: true,
         token: token,
         userId: userId,
+        userName: userName
        // connectionId: connectionId
     }
     this.props.setLoginStateToTrue(loginData);
@@ -158,6 +179,7 @@ class App extends Component {
             localStorage.removeItem('woto-token');
             localStorage.removeItem('woto-expiryDate');
             localStorage.removeItem('woto-userId');
+            localStorage.removeItem('woto-userName');
           }
           
       })

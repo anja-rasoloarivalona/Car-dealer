@@ -3,7 +3,7 @@ import { updatedObject} from '../utility';
 
 const initialState = {
     lang: 'english',
-    currency: 'MRU'
+    currency: 'CAD'
 }
 
 

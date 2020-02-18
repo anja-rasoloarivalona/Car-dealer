@@ -1,7 +1,7 @@
 .navbarContainer {
     grid-column: 1 / -1;
     grid-row: 2 / 3;
-    height: 5rem;
+    height: 6rem;
     background: var(--color-dark-light);
     display: flex;
     align-items: center;
@@ -17,14 +17,76 @@
     top: 0;
     bottom: 0;
     margin: auto !important;
-
     display: flex;
     align-items: center;
     justify-content: center;
+}
 
+.navbar__cta a {
+    color: var(--color-white);
+    font-size: 1.4rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    padding: .7rem 2rem;
+    border-radius: .5rem;
 
 }
 
+.navbar__cta a:hover {
+    background: var(--color-primary);
+}
+
+.navbar__cta a svg {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 1rem;
+    fill: var(--color-white)
+}
+
+.navbar__cta__avatar {
+    width: 4rem;
+    height: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white);
+    border-radius: 50%;  
+    border: 1px solid var(--color-primary);
+    cursor: pointer;
+    position: relative;
+}
+
+.navbar__cta__avatar span {
+    font-size: 1.4rem;
+    color: var(--color-primary);
+}
+.navbar__cta__avatar__selector {
+    position: absolute;
+    width: 20rem;
+    top: 5rem;
+    right: 0;
+    background: var(--color-white);
+    border-radius: .5rem;
+    border: 1px solid var(--color-primary);
+    display: none;
+    transition: all .3s ease-in;
+}
+
+.navbar__cta__avatar__selector.show {
+    display: block;
+}
+
+.navbar__cta__avatar__selector__item {
+    padding: 1rem 0;
+    padding-left: 1rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.navbar__cta__avatar__selector__item:hover {
+    background: var(--color-grey-light);
+}
 .navbar__list {
     display: flex;
     justify-content: space-between;
