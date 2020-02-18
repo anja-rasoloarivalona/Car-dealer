@@ -31,10 +31,12 @@ class App extends Component {
     carsHomeIntro : [],
     carsHomeInventory : [],
     loading: false,
-    hideScrollBar: false
+    hideScrollBar: false,
+    hideFooter: false
   }
 
   componentDidMount(){
+
 
     let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
     // let url = 'http://api.currencylayer.com/list?access_key=393f7172bfdb3cbdf353b2fd78462005'
@@ -70,6 +72,10 @@ class App extends Component {
       console.log('Token not valid anymore')
       this.props.setLoginStateToFalse()
       return 
+    }
+
+    if(this.props.location.pathname === '/my-account'){
+      this.setState({ hideFooter: true})
     }
     let loginData = {
         isAuth: true,
@@ -111,6 +117,18 @@ class App extends Component {
         console.log(err)
       })     
   }
+
+  componentDidUpdate(prevProps){  
+     if( prevProps.location.pathname !== this.props.location.pathname  && this.props.location.pathname === '/my-account'){
+        this.setState({ hideFooter: true})
+     } else {
+       if(this.state.footer === true){
+         this.setState({ hideFooter: false})
+       }
+     }
+    
+  }
+
 
   startConnection = (userId, timeStamp) => {
         fetch('http://localhost:8000/auth/start-connection',{
@@ -219,7 +237,7 @@ class App extends Component {
 
 
   render() {
-    const { loading , hideScrollBar} = this.state
+    const { loading , hideScrollBar, hideFooter} = this.state
 
     let app;
 
@@ -241,7 +259,7 @@ class App extends Component {
               <div style={props}>
                 <div className={`app`}>
                     <Navtop />
-                    <Navbar logoutHandler={this.logoutHandler}/>
+                    <Navbar/>
                     {chat}
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
@@ -252,7 +270,7 @@ class App extends Component {
                         <Route path='/services' component={Services} />
                     </Switch>
                     
-                    <Footer />      
+                    <Footer hide={hideFooter}/>      
                 </div>
               </div>
             )

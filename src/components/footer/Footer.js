@@ -26,8 +26,9 @@ class Footer extends Component {
     render() {
 
         const {susbscribed, subscribeInput} = this.state
+        const { hide } = this.props
         return (
-            <footer className="footer">
+            <footer className={`footer ${hide ? 'hide' : ''}`}>
             <ul className="footer__list">
 
                 <li className="footer__list__group">
