@@ -1,76 +1,13 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './Navbar.css';
-import Button from '../../button/Button';
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import IconSvg from '../../../utilities/svg/svg';
 import { NavLink} from 'react-router-dom'
 
-class Navbar extends Component {
-
-    state = {
-        showSelector: false,
-        isAuth: null
-    }
-
-    componentDidMount(){
-        this.setState({ isAuth: this.props.isAuth})
-    }
-
-    componentDidUpdate(prevProps){
-        if(prevProps.isAuth !== this.state.isAuth){
-            this.setState({ isAuth: this.props.isAuth})
-        }
-    }
-
-    componentWillMount(){
-        document.addEventListener('mousedown', this.handleClick, false)
-    }
-    
-    componentWillUnmount(){
-         document.removeEventListener('mousedown', this.handleClick, false)
-    }
-
-    logoutHandler = () => {
-        this.setState({ isAuth: false}, () => this.props.logoutHandler() )
-    }
-
-    handleClick = e => {         
-        if(this.target && this.target.contains(e.target)){
-            return
-        } else {
-            if(this.state.showSelector){
-                this.toggleSelector()
-            }
-            
-        }     
-    }
-
-
-
-    showSelector = () => {
-        this.setState({ showSelector : true})
-    }
-
-    toggleSelector = () => {
-        this.setState(prevState => ({
-            ...prevState,
-            showSelector: !prevState.showSelector
-        }))
-    }
-
-    render() {
-        let userName = this.props.userName;
-        const { showSelector , isAuth } = this.state
-
-
-        let firstName, lastName
-        if(isAuth){
-             firstName = userName.split(' ')[0]
-             lastName = userName.split(' ')[1]
-        }
-       
-
-    
+const Navbar= props => {
+    let userName = props.userName;
+        let isAuth = props.isAuth
         return (
             <nav className={`navbarContainer`}>
             <ul className="navbar__list">
@@ -95,34 +32,15 @@ class Navbar extends Component {
 
                 {isAuth && (
                     <div className="navbar__cta__avatar"
-                         onClick={this.toggleSelector}
-                    >
-                       <span>{firstName.slice(0, 1)}{lastName.slice(0, 1)}</span> 
-
-                       <div className={`navbar__cta__avatar__selector ${showSelector ? 'show': ''}`}
-                             ref={el => this.target = el}
-                       >
-                            <div className="navbar__cta__avatar__selector__item">
-                                My account
-                            </div>
-                            <div className="navbar__cta__avatar__selector__item"
-                                 onClick={this.logoutHandler}
-                            >
-                                Logout
-                            </div>
-                       </div>
-
-
+                         onClick={() => props.history.push('/my-account')}>
+                       <span>{userName.split(' ')[0].slice(0, 1)}{userName.split(' ')[1].slice(0, 1)}</span> 
                     </div>
 
                 )}
             </div>
         </nav>
         )
-    }
 }
-
-
 
 const mapStateToProps = state => {
     return {
@@ -130,4 +48,4 @@ const mapStateToProps = state => {
         userName: state.auth.userName
     }
 }
-export default connect(mapStateToProps)(Navbar);
+export default connect(mapStateToProps)(withRouter(Navbar));
