@@ -5,6 +5,7 @@ import ProductCard from '../../components/ProductCard/ProductCard';
 import * as actions from '../../store/actions'
 import Messages from './Messages/Messages'
 import IconSvg from '../../utilities/svg/svg'
+import ProductsList from '../../components/ProductsList/ProductsList'
 
 class Account extends Component {
     state = {
@@ -41,7 +42,7 @@ class Account extends Component {
                                             ${currentSection === 'favorites' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('favorites')}>
                                    <IconSvg icon="heart"/>
-                                   <span>Mes favoris</span> 
+                                   <span>Favorites</span> 
                             </li>
                             {/* <li className={`account__sidebar__list__item
                                             ${currentSection === 'appointment' ? 'active' : 'null'}`}
@@ -62,25 +63,13 @@ class Account extends Component {
                 </div>
 
                 <div className="account__currentSection">
-                    {currentSection === 'favorites' && (
-                                <ul className="account__productList">
-                                        {products && products.map(product => (
-                                                        <ProductCard 
-                                                            key= {product._id}
-                                                            _id = {product._id}
-                                                            mainImgUrl={product.general[0].mainImgUrl}
-                                                            made={product.general[0].made}
-                                                            model={product.general[0].model}
-                                                            year={product.general[0].year}
-                                                            price={product.general[0].price}
-                                                            nbKilometers={product.general[0].nbKilometers}
-                                                            gazol={product.general[0].gazol}
-                                                            transmissionType={product.general[0].transmissionType}
-                                                            requestProductDetails={this.requestProductDetails.bind(this)}
-                                                        />
-                                        ))}
-                                </ul>
+
+
+                    {currentSection === 'favorites' && products.length > 0 && ( <ProductsList productsList={products}/>
                     )}
+                    {currentSection === 'favorites' && products.length < 1 && <div className="no-favorite">No favorite products</div>}
+
+
                     {currentSection === 'messages' && <Messages /> }
                     {currentSection === 'appointment' && (
                             <section className="account__section account__appointment">
@@ -101,7 +90,6 @@ class Account extends Component {
 const mapStateToProps = state => {
     return {
         userId: state.auth.userId,
-
         favorites: state.user.favorites
     }
 }

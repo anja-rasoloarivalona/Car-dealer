@@ -76,6 +76,7 @@
 .account__currentSection {
     width: calc(100vw - 20rem);
     height:calc(100vh - 11rem);
+    position: relative;
 }
 
 .account__productList {
@@ -89,6 +90,18 @@
     row-gap: 3rem;
     padding: 2rem 0;
     height: 300vh;
-    background: red;
 }
 
+
+.no-favorite {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+}
