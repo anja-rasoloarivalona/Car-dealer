@@ -58,9 +58,6 @@ class App extends Component {
     const userId = localStorage.getItem('woto-userId');
     const userName= localStorage.getItem('woto-userName');
 
-    console.log('uufwqf', userName);
-
-    //const connectionId = localStorage.getItem('woto-connectionId');
 
     if(!token || !expiryDate){
         console.log('NO TOKEN')

@@ -5,31 +5,58 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import DropDownList from '../../../components/DropDownList/DropDownList'
 
- class Sidebar extends Component {
-
-
-    componentDidMount(){
-        console.log('few', this.props.query)
-    }
+ class Controller extends Component {
 
     render() {
         const {query} = this.props;  
+        let bodyTypeList = this.props.bodyTypeList;
         let data = this.props.brandAndModelsData;
+
+
+        let brandData = Object.keys(data)
+        let bodyTypeBrandData = [];
+        if(query.bodyType !== 'all'){
+            Object.keys(data).forEach(brand => {
+                if(Object.keys(data[brand]).includes(query.bodyType)){
+                    bodyTypeBrandData.push(brand)
+                }
+            })
+            brandData = bodyTypeBrandData
+        }
+
+        let modelData = [];
+        if(query.brand !== 'all'){
+            if(query.bodyType === 'all'){
+                Object.keys(data[query.brand]).forEach(bodyType => {
+                    modelData = [...modelData, ...data[query.brand][bodyType]]
+                })
+            } else { modelData = [...modelData, ...data[query.brand][query.bodyType]]
+            }
+        }
+
+        console.log('model data', modelData)
+
+    
 
         return (
        
             <div className="inventory__controller">
-                   
+
+                        <DropDownList 
+                            value={query.bodyType === 'all' ? 'all body types' : query.bodyType}
+                            list={[ {text: 'all body types', value: 'all'}, ...bodyTypeList]}
+                            selectItemHandler={this.props.selectBodyTypeHandler}
+                        />
+
                         <DropDownList 
                             value={query.brand === 'all' ? 'all brands' : query.brand}
-                            list={[ {text: 'all brands', value: 'all'},...Object.keys(data)]}
+                            list={[ {text: 'all brands', value: 'all'}, ...brandData]}
                             selectItemHandler={this.props.selectBrandHandler}
                         />
-                  
-  
+      
                         <DropDownList 
                             value={query.model === 'all' ? 'all models' : query.model}
-                            list={ query.brand !== 'all' ? [{text: 'all models', value: 'all'}, ...data[query.brand]] : ['all models']}
+                            list={ query.brand !== 'all' ? [{text: 'all models', value: 'all'}, ...modelData] : ['all models']}
                             selectItemHandler={this.props.selectModelHandler}
                         />
               
@@ -86,8 +113,9 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
 const mapStateToProps = state => {
     return {
         brandAndModelsData: state.product.brandAndModelsData,
-        price: state.product.price
+        price: state.product.price,
+        bodyTypeList: state.product.bodyTypeList
     }
 }
 
-export default connect(mapStateToProps)(Sidebar)
+export default connect(mapStateToProps)(Controller)

@@ -8,6 +8,7 @@ const initialState = {
     price: null,
     mostPopularSedan: null,
     productRequested: null,
+    bodyTypeList: null
     
 }
 
@@ -16,7 +17,8 @@ const initAppData = (state, action) => {
         brandAndModelsData: action.data.brandAndModelsData,
         mostPopularProducts: action.data.mostPopularProducts,
         price: action.data.price,
-        mostPopularSedan: action.data.mostPopularSedan
+        mostPopularSedan: action.data.mostPopularSedan,
+        bodyTypeList: action.data.bodyTypeList
     })
 }
 

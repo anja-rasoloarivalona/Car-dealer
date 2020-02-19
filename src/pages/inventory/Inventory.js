@@ -14,6 +14,7 @@ class Inventory extends Component {
         query: {
             brand: 'all',
             model: 'all',
+            bodyType: 'all',
             year: {
                 value: {
                     min: 2008,
@@ -70,7 +71,8 @@ class Inventory extends Component {
                 },
                 brand: parsedQuery.brand,
                 model: parsedQuery.model,
-                sort: parsedQuery.sort                  
+                sort: parsedQuery.sort,
+                bodyType: parsedQuery.bodyType                  
             },
         }), () =>  this.fetchProductsHandler())
         }  else {
@@ -100,6 +102,7 @@ class Inventory extends Component {
             params = {
                 ...params,
                 brand: query.brand,
+                bodyType: query.bodyType,
                 model: query.model,
                 minPrice: query.price.value.min,
                 maxPrice: query.price.value.max,
@@ -124,13 +127,43 @@ class Inventory extends Component {
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
               pathname: '/inventory',
-              search: `sort=${query.sort}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+              search: `sort=${query.sort}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
           })
         })
         .catch(err => {
           console.log(err)
         })
     }
+
+    selectBodyTypeHandler = bodyType => {
+        let data = this.props.brandAndModelsData;
+        let stateQuery = this.state.query
+        let query
+        if(stateQuery.brand !== 'all'){   
+            if(Object.keys(data[stateQuery.brand]).includes(bodyType)){
+                query = {
+                    ...this.state.query,
+                    bodyType: bodyType
+                } 
+            } else {
+                query = {
+                    ...this.state.query,
+                    bodyType: bodyType,
+                    brand: 'all',
+                    model: 'all'
+                } 
+            }
+        } else {
+            query = {
+                ...this.state.query,
+                bodyType: bodyType
+            } 
+        }
+
+        this.setState({ query}, () => this.fetchProductsHandler(query))
+    }
+
+
     selectBrandHandler = brand => {   
         let query = {
             ...this.state.query,
@@ -200,6 +233,7 @@ class Inventory extends Component {
                         query={query}
                         selectBrandHandler={this.selectBrandHandler}
                         selectModelHandler={this.selectModelHandler}
+                        selectBodyTypeHandler={this.selectBodyTypeHandler}
                         sortHandler={this.sortHandler}
                         changePriceHandler={this.changePriceHandler}
                         changeYearHandler={this.changeYearHandler}

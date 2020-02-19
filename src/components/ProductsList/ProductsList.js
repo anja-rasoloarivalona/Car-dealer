@@ -17,7 +17,7 @@ const ProductsList = props => {
     return (
         <ul className="products-list">
             {productsList.map(product => (
-                <li className="products-list__item">
+                <li key={product._id} className="products-list__item">
                     <ProductCard 
                         id={product._id}
                         mainImg={product.general.mainImgUrl}
