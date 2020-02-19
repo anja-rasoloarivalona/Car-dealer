@@ -10,7 +10,8 @@ export {
 
 export {
     setProductRequestedData,
-    initAppData
+    initAppData,
+    setInventoryCurrentPage
 } from './product'
 
 

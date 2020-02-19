@@ -4,7 +4,9 @@ import {connect} from 'react-redux'
 import Loader from '../../components/loader/Loader';
 import Controller from './Controller/Controller';
 import queryString from 'query-string';
+import * as actions from '../../store/actions'
 import ProductsList from '../../components/ProductsList/ProductsList';
+import Paginator from '../../components/Paginator/Paginator'
 
 class Inventory extends Component {
 
@@ -15,6 +17,7 @@ class Inventory extends Component {
             brand: 'all',
             model: 'all',
             bodyType: 'all',
+            page: 1,
             year: {
                 value: {
                     min: 2008,
@@ -37,7 +40,8 @@ class Inventory extends Component {
             },
             sort: 'increasing price'
 
-        }
+        },
+        lastPage: null
     }
 
     componentDidMount(){     
@@ -72,7 +76,8 @@ class Inventory extends Component {
                 brand: parsedQuery.brand,
                 model: parsedQuery.model,
                 sort: parsedQuery.sort,
-                bodyType: parsedQuery.bodyType                  
+                bodyType: parsedQuery.bodyType,
+                page: parsedQuery.page                  
             },
         }), () =>  this.fetchProductsHandler())
         }  else {
@@ -91,6 +96,7 @@ class Inventory extends Component {
                         }   
                     }                 
                 },
+                lastPage: Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)
             }), () =>  this.fetchProductsHandler())
         }
     }
@@ -101,6 +107,7 @@ class Inventory extends Component {
         if(query){
             params = {
                 ...params,
+                page: query.page,
                 brand: query.brand,
                 bodyType: query.bodyType,
                 model: query.model,
@@ -127,7 +134,7 @@ class Inventory extends Component {
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
               pathname: '/inventory',
-              search: `sort=${query.sort}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+              search: `sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
           })
         })
         .catch(err => {
@@ -150,7 +157,8 @@ class Inventory extends Component {
                     ...this.state.query,
                     bodyType: bodyType,
                     brand: 'all',
-                    model: 'all'
+                    model: 'all',
+                    page: 1
                 } 
             }
         } else {
@@ -172,7 +180,8 @@ class Inventory extends Component {
         if(brand === 'all'){
             query = {
                 ...query,
-                model: 'all'
+                model: 'all',
+                page: 1
             }
         } 
         this.setState({ query }, () => this.fetchProductsHandler(query))
@@ -191,7 +200,8 @@ class Inventory extends Component {
             ...prevState,
             query : {
                 ...prevState.query,
-                sort: sort
+                sort: sort,
+                page: 1
             }         
         }), () => this.fetchProductsHandler())
     }
@@ -200,6 +210,7 @@ class Inventory extends Component {
             ...prevState,
             query: {
                 ...prevState.query,
+                page: 1,
                 price: {
                     ...prevState.query.price,
                     value: value
@@ -212,6 +223,7 @@ class Inventory extends Component {
             ...prevState,
             query: {
                 ...prevState.query,
+                page: 1,
                 year: {
                     ...prevState.query.year,
                     value: value
@@ -222,6 +234,44 @@ class Inventory extends Component {
     changeComplete = () => {
         this.fetchProductsHandler()
     }
+
+    paginationHandler = direction => {
+
+        console.log(direction);
+
+        let query = this.state.query  
+        if(direction === 'next' &&  this.props.currentInventoryPage < this.state.lastPage ){ 
+            console.log('nexting');
+
+
+                query = {
+                    ...query,
+                    page: this.props.currentInventoryPage + 1
+                  }
+            this.props.setInventoryCurrentPage(this.props.currentInventoryPage + 1)
+            this.setState({ query }, () => this.fetchProductsHandler())
+        }
+        if(direction === 'previous' && this.props.currentInventoryPage > 1 ){
+          query = {
+            ...query,
+            page: this.props.currentInventoryPage - 1
+          }
+          this.props.setInventoryCurrentPage(this.props.currentInventoryPage - 1)
+          this.setState({ query }, () => this.fetchProductsHandler())
+        }
+
+
+        if(direction !== 'previous' && direction !== 'next'){
+          query = {
+            ...query,
+            page: direction
+          }
+          this.props.setInventoryCurrentPage(direction)
+          this.setState({ query }, () => this.fetchProductsHandler())
+        }
+
+        
+      }
 
     render() {
         const {products, loading, query} = this.state;
@@ -241,7 +291,19 @@ class Inventory extends Component {
                         data={this.props.brandAndModelsData}
                     />
                     <section className="inventory__container">
-                        {products && <ProductsList productsList={products}/>}
+                        {products && (
+                            <Paginator
+                            onRequestPreviousPage={this.paginationHandler.bind(this, 'previous')}
+                            onRequestNextPage={this.paginationHandler.bind(this, 'next')}
+                            lastPage={Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)}
+                            currentPage={this.props.currentInventoryPage}
+                            onRequestPageNumber={this.paginationHandler}
+                            products={products}
+                            >
+                                <ProductsList productsList={products}/>
+                            </Paginator>
+                                          
+                        )}
                     </section>
                     
                 </div>
@@ -255,8 +317,17 @@ class Inventory extends Component {
 const mapStateToProps = state => {
     return {
         brandAndModelsData: state.product.brandAndModelsData,
-        price: state.product.price
+        price: state.product.price,
+        totalProductsCounter: state.product.totalProductsCounter,
+        currentInventoryPage: state.product.currentInventoryPage,
+        itemsPerPage: state.product.itemsPerPage
     }
 }
 
-export default connect(mapStateToProps)(Inventory)
+const mapDispatchToProps = dispatch => {
+    return {
+        setInventoryCurrentPage: data => dispatch(actions.setInventoryCurrentPage(data))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Inventory)

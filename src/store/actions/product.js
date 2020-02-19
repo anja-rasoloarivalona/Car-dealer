@@ -15,3 +15,9 @@ export const initAppData = data => {
     }
 }
 
+export const setInventoryCurrentPage = currentPage => {
+    return {
+        type: actionTypes.SET_INVENTORY_CURRENT_PAGE,
+        currentPage: currentPage
+    }
+}

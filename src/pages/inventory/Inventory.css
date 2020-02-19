@@ -5,7 +5,8 @@
     flex-direction: column;
 }
 .inventory__container { 
-    width: 100%;
+    width: 80%;
+    align-self: center;
 }
 
 
