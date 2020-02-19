@@ -8,10 +8,19 @@
     grid-template-rows: repeat(auto-fit, 4rem);
     grid-auto-rows: 5rem;
 
-    padding: 1rem 0;
+    padding: 3rem 0;
     column-gap: 1rem;
     row-gap: 1rem;
-    background: var(--color-grey);
+    background: var(--color-grey-light);
+}
+
+.inventory__controller .input-range__track--active {
+    background: var(--color-primary) !important;
+}
+
+.inventory__controller .input-range__slider {
+    background: var(--color-primary);
+    border: 1px solid var(--color-primary);
 }
 
 .inventory__controller__group {
@@ -43,3 +52,8 @@
     transform: translateY(-.6rem);
 }
 
+
+.inventory__controller .drop-down-list__value svg {
+    width: 1.5rem;
+    height: 1.5rem;
+}
