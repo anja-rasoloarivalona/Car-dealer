@@ -31,7 +31,7 @@ class Account extends Component {
                   
                 <div className="account__sidebar">
                         <ul className="account__sidebar__list">
-                        <li className={`account__sidebar__list__item
+                            <li className={`account__sidebar__list__item
                                             ${currentSection === 'messages' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('messages')}>
                                    <IconSvg icon="email"/>
@@ -54,7 +54,12 @@ class Account extends Component {
                                     Mes documents
                             </li> */}
                         </ul>
-                  </div>
+                        <div className="account__sidebar__logout"
+                             onClick={this.props.logoutHandler}
+                        >
+                            <span>Logout</span>
+                        </div>
+                </div>
 
                 <div className="account__currentSection">
                     {currentSection === 'favorites' && (

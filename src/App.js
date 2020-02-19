@@ -165,6 +165,7 @@ class App extends Component {
       const userId = localStorage.getItem('woto-userId');
       const connectionId = this.props.connectionId;
       this.endConnection(userId, connectionId, timeStamp, true);
+      this.props.history.push('/')
   }
 
   endConnection = (userId, connectionId, timeStamp, logout) => {
@@ -264,7 +265,7 @@ class App extends Component {
                         <Route path='/inventory' component={Inventory}/>
                         <Route path='/product/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
                         <Route path='/auth' component={Auth} />
-                        <Route path='/my-account' component={Account} />
+                        <Route path='/my-account' render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
                         <Route path='/services' component={Services} />
                     </Switch>
                     
