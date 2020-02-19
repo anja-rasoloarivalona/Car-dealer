@@ -1,26 +1,15 @@
 .account {
     grid-column: 1 / -1;
-    min-height: 100vh;
+    min-height: calc(100vh - 11rem);
+    max-height: calc(100vh - 11rem);
+    overflow-y: hidden;
     display: flex;
-}
-
-.account__productList {
-    width: calc(100vw - 20rem);
-    display: grid;
-    justify-content: center;
-    
-    grid-template-columns: repeat(auto-fit, 25rem);
-    grid-template-rows: repeat(auto-fit, 25rem);
-    grid-auto-rows: 25rem;
-   
-    column-gap: 1.5rem;
-    row-gap: 3rem;
-    padding: 2rem 0;
+    position: relative;
 }
 
 .account__sidebar {
     width: 20rem;
-    min-height: 100vh;
+    height: calc(100vh - 11rem);
     border-right: 1px solid var(--color-grey);
 }
 
@@ -51,15 +40,22 @@
 }
 
 
-.account__section {
+.account__currentSection {
     width: calc(100vw - 20rem);
-    height: 100%;
+    height:calc(100vh - 11rem);
 }
 
-.account__appointment {
-    background: yellow;
+.account__productList {
+    width: calc(100vw - 20rem);
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fit, 25rem);
+    grid-template-rows: repeat(auto-fit, 25rem);
+    grid-auto-rows: 25rem;
+    column-gap: 1.5rem;
+    row-gap: 3rem;
+    padding: 2rem 0;
+    height: 300vh;
+    background: red;
 }
 
-.account__documents {
-    background: salmon;
-}

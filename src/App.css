@@ -30,7 +30,8 @@
 
 html {
   font-size: 62.5%;
-  overflow-x: hidden;
+
+  /* overflow-x: hidden; */
 }
 
 @media (max-width: 600px) {
@@ -42,7 +43,8 @@ html {
 
 body {
   box-sizing: border-box;
-  overflow-x: hidden;
+
+  /* overflow-x: hidden; */
   font-family: 'Open Sans', sans-serif;
 }
 
@@ -53,9 +55,10 @@ body {
   grid-auto-rows: max-content;
   transition: all .3s ease-in;
   transition-delay: 1s;
-  height: 100%;
-  overflow: hidden;
+ 
+  /* overflow-y: hidden; */
 }
+
 
 
 body.hideScrollBar::-webkit-scrollbar {

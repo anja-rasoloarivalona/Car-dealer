@@ -62,7 +62,6 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
 
 
         socket.on('adminSentMessage', data => {    
-
            if(this.props.userId === data.messageData.userId && this.state.showChat === true){
                 this.readNewMessagesHandler();
                 this.addMessages(data.messageData)

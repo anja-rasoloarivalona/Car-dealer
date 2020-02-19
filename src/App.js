@@ -36,8 +36,6 @@ class App extends Component {
   }
 
   componentDidMount(){
-
-
     let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
     // let url = 'http://api.currencylayer.com/list?access_key=393f7172bfdb3cbdf353b2fd78462005'
    
@@ -260,7 +258,7 @@ class App extends Component {
                 <div className={`app`}>
                     <Navtop />
                     <Navbar/>
-                    {chat}
+                    {/* {chat} */}
                     <Switch>
                         <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         <Route path='/inventory' component={Inventory}/>
