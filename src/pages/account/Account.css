@@ -10,7 +10,7 @@
 .account__sidebar {
     width: 20rem;
     height: calc(100vh - 11rem);
-    border-right: 1px solid var(--color-grey);
+    background: var(--color-grey-light);
 }
 
 .account__sidebar__list {
@@ -18,11 +18,21 @@
 }
 
 .account__sidebar__list__item {
-    padding: 1rem 0;
-    padding-left: 1rem;
+    padding: 2rem 0;
+    padding-left: 2rem;
     border-bottom: 1px solid var(--color-grey);
     text-transform: uppercase;  
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: var(--color-grey)
+}
+
+.account__sidebar__list__item svg {
+    width: 2rem;
+    height: 2rem;
+    margin-right: 2rem;
+    fill: var(--color-grey)
 }
 
 .account__sidebar__list__item:hover {
@@ -35,6 +45,9 @@
     border-bottom: 1px solid var(--color-primary);
 }
 
+.account__sidebar__list__item.active svg {
+    fill: var(--color-white)
+}
 .account__sidebar__list__item.active:hover {
     background: var(--color-primary);
 }

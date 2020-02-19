@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import * as actions from '../../store/actions'
 import Messages from './Messages/Messages'
+import IconSvg from '../../utilities/svg/svg'
+
 class Account extends Component {
-
-
     state = {
         loading: true,
         currentSection: 'messages'
@@ -34,14 +34,16 @@ class Account extends Component {
                         <li className={`account__sidebar__list__item
                                             ${currentSection === 'messages' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('messages')}>
-                                    Messages
+                                   <IconSvg icon="email"/>
+                                   <span>Messages</span> 
                             </li>
                             <li className={`account__sidebar__list__item
                                             ${currentSection === 'favorites' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('favorites')}>
-                                    Mes favoris
+                                   <IconSvg icon="heart"/>
+                                   <span>Mes favoris</span> 
                             </li>
-                            <li className={`account__sidebar__list__item
+                            {/* <li className={`account__sidebar__list__item
                                             ${currentSection === 'appointment' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('appointment')}>
                                     Mes rendez-vous
@@ -50,7 +52,7 @@ class Account extends Component {
                                             ${currentSection === 'documents' ? 'active' : 'null'}`}
                                 onClick={() => this.changeCurrentSectionHandler('documents')}>
                                     Mes documents
-                            </li>
+                            </li> */}
                         </ul>
                   </div>
 
