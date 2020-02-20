@@ -11,7 +11,7 @@ const initialState = {
     bodyTypeList: null,
     totalProductsCounter: null,
     currentInventoryPage: 1,
-    itemsPerPage: 6
+    itemsPerPage: 20
 }
 
 const initAppData = (state, action) => {
@@ -31,7 +31,8 @@ const reducer = ( state = initialState, action) => {
     switch (action.type){
         case actionTypes.SET_PRODUCT_REQUESTED_DATA : return updatedObject(state, { productRequested: action.data});
         case actionTypes.INIT_APP_DATA: return initAppData(state, action);
-        case actionTypes.SET_INVENTORY_CURRENT_PAGE: return updatedObject(state, { currentInventoryPage: action.currentPage})
+        case actionTypes.SET_INVENTORY_CURRENT_PAGE: return updatedObject(state, { currentInventoryPage: action.currentPage});
+        case actionTypes.SET_PRICE: return updatedObject(state, {price: action.data})
         default: return state
     }
 }

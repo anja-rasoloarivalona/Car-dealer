@@ -17,3 +17,5 @@ export const SET_LANG = 'SET_LANG';
 export const SET_CURRENCY = 'SET_CURRENCY'
 
 export const SET_INVENTORY_CURRENT_PAGE = 'SET_INVENTORY_CURRENT_PAGE'
+
+export const SET_PRICE = 'SET_PRICE'

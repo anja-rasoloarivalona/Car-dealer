@@ -6,7 +6,8 @@ import Controller from './Controller/Controller';
 import queryString from 'query-string';
 import * as actions from '../../store/actions'
 import ProductsList from '../../components/ProductsList/ProductsList';
-import Paginator from '../../components/Paginator/Paginator'
+import Paginator from '../../components/Paginator/Paginator';
+import { amountFormater } from '../../utilities/amountFormater'
 
 class Inventory extends Component {
 
@@ -36,6 +37,10 @@ class Inventory extends Component {
                 scope: {
                     min: null,
                     max: null
+                },
+                init:{
+                    min: null,
+                    max: null
                 }
             },
             sort: 'increasing price'
@@ -44,12 +49,12 @@ class Inventory extends Component {
         lastPage: null
     }
 
-    componentDidMount(){     
+    componentDidMount(){    
         /*** START INIT MIN AND MAX PRICE ***/
         let minPrice = this.props.price.min;
-        let maxPrice = this.props.price.max
+        let maxPrice = this.props.price.max;
+
         /*** END INIT MIN AND MAX PRICE ***/  
-               
         let parsedQuery = queryString.parse(this.props.location.search);
         if(Object.keys(parsedQuery).length !== 0){
             this.setState(prevState => ({
@@ -57,11 +62,19 @@ class Inventory extends Component {
             query: {
                 ...prevState.query,
                 price : {
-                    scope: {
+                    init: {
                         min: minPrice,
+                        max: maxPrice
+                    },
+                    scope: {
+                        min:  minPrice,
                         max: maxPrice
                     },  
                     value: {
+                        min: parseInt(parsedQuery.minPrice),
+                        max: parseInt(parsedQuery.maxPrice)
+                    },
+                    fullValue: {
                         min: parseInt(parsedQuery.minPrice),
                         max: parseInt(parsedQuery.maxPrice)
                     }
@@ -77,48 +90,73 @@ class Inventory extends Component {
                 model: parsedQuery.model,
                 sort: parsedQuery.sort,
                 bodyType: parsedQuery.bodyType,
-                page: parsedQuery.page                  
+                page: parsedQuery.page,                  
             },
+            lastPage: Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)
         }), () =>  this.fetchProductsHandler())
-        }  else {
+        } else {
             this.setState(prevState => ({
                 ...prevState,
                 query: {
                     ...prevState.query,
-                    price : {
-                        value: {
+                    price: {
+                        init: {
                             min: minPrice,
                             max: maxPrice
                         },
                         scope: {
+                            min:  minPrice,
+                            max: maxPrice 
+                        },  
+                        value: {
                             min: minPrice,
-                            max: maxPrice
-                        }   
-                    }                 
+                            max: maxPrice 
+                        },
+                        fullValue: {
+                            min: minPrice,
+                            max: maxPrice 
+                        },
+                    }
                 },
                 lastPage: Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)
             }), () =>  this.fetchProductsHandler())
-        }
+           
+        }  
     }
+
+
     fetchProductsHandler = () => {
         const {query} = this.state
         let url =  new URL('http://localhost:8000/product/client');
         let params;
-        if(query){
+
+        //current value with the corresponding currency
+        let minPrice = query.price.value.min;
+        let maxPrice = query.price.value.max;
+            //store the value in those variables, we'll use them as a search parameters for the url at the ending of fetching products
+            let minPriceQuery = minPrice;
+            let maxPriceQuery = maxPrice;
+            //Convert the full value to CAD because or DB uses CAD as price currency
+            minPrice = amountFormater(query.price.fullValue.min, this.props.currency, 'CAD', this.props.quotes);
+            maxPrice = amountFormater(query.price.fullValue.max, this.props.currency, 'CAD', this.props.quotes);
+        
+            if(query){
             params = {
                 ...params,
                 page: query.page,
                 brand: query.brand,
                 bodyType: query.bodyType,
                 model: query.model,
-                minPrice: query.price.value.min,
-                maxPrice: query.price.value.max,
+                minPrice: Math.floor(minPrice),
+                maxPrice: Math.ceil(maxPrice),
                 minYear: query.year.value.min,
-                minYear: query.year.value.min,
+                maxYear: query.year.value.max,
                 sort: query.sort.split(' ').length > 0 ? `${query.sort.split(' ')[0]}_${query.sort.split(' ')[1]}` : query.sort
             }
             url.search = new URLSearchParams(params).toString()
         }
+
+
         fetch( url, {
           headers: {
             'Content-type': 'application/json'
@@ -134,13 +172,45 @@ class Inventory extends Component {
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
               pathname: '/inventory',
-              search: `sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+              search: `sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${minPriceQuery}&maxPrice=${maxPriceQuery}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
           })
         })
         .catch(err => {
           console.log(err)
         })
     }
+
+    componentDidUpdate(prevProps){
+        let prevCurrency = prevProps.currency;
+        let nextCurrency = this.props.currency;
+        let stateQuery = this.state.query;   
+       if(prevCurrency !== nextCurrency){
+            let quotes = this.props.quotes;
+            this.setState(prevState => ({
+                ...prevState,
+                query: {
+                    ...prevState.query,
+                    price: {
+                        ...prevState.query.price,
+                        scope: {
+                            min: Math.floor(amountFormater(stateQuery.price.init.min, 'CAD', nextCurrency, quotes) / 1000 ) * 1000,
+                            max: Math.ceil(amountFormater(stateQuery.price.init.max, 'CAD', nextCurrency, quotes) / 1000 ) * 1000 ,
+                        },
+                        value: {
+                            min: Math.floor(amountFormater(stateQuery.price.init.min, 'CAD', nextCurrency, quotes)/ 1000 ) * 1000,
+                            max: Math.ceil(amountFormater(stateQuery.price.init.max, 'CAD', nextCurrency, quotes) / 1000 ) * 1000,
+                        },
+                        fullValue: {
+                            min: amountFormater(stateQuery.price.init.min, 'CAD', nextCurrency, quotes),
+                            max: amountFormater(stateQuery.price.init.max, 'CAD', nextCurrency, quotes)
+                        }
+                    }
+                }
+            }), () => this.fetchProductsHandler())
+
+        }     
+    }
+
 
     selectBodyTypeHandler = bodyType => {
         let data = this.props.brandAndModelsData;
@@ -213,7 +283,8 @@ class Inventory extends Component {
                 page: 1,
                 price: {
                     ...prevState.query.price,
-                    value: value
+                    value: value,
+                    fullValue: value
                 }
             }
         }))
@@ -232,18 +303,13 @@ class Inventory extends Component {
         }))
     }
     changeComplete = () => {
+        console.log('change complete')
         this.fetchProductsHandler()
     }
 
     paginationHandler = direction => {
-
-        console.log(direction);
-
         let query = this.state.query  
         if(direction === 'next' &&  this.props.currentInventoryPage < this.state.lastPage ){ 
-            console.log('nexting');
-
-
                 query = {
                     ...query,
                     page: this.props.currentInventoryPage + 1
@@ -259,8 +325,6 @@ class Inventory extends Component {
           this.props.setInventoryCurrentPage(this.props.currentInventoryPage - 1)
           this.setState({ query }, () => this.fetchProductsHandler())
         }
-
-
         if(direction !== 'previous' && direction !== 'next'){
           query = {
             ...query,
@@ -279,17 +343,21 @@ class Inventory extends Component {
         if(!loading){
             inventory = (
                 <div className="inventory">
-                    <Controller
-                        query={query}
-                        selectBrandHandler={this.selectBrandHandler}
-                        selectModelHandler={this.selectModelHandler}
-                        selectBodyTypeHandler={this.selectBodyTypeHandler}
-                        sortHandler={this.sortHandler}
-                        changePriceHandler={this.changePriceHandler}
-                        changeYearHandler={this.changeYearHandler}
-                        changeComplete={this.changeComplete}
-                        data={this.props.brandAndModelsData}
-                    />
+    
+                        <Controller
+                            currency={this.props.currency}
+                            query={query}
+                            selectBrandHandler={this.selectBrandHandler}
+                            selectModelHandler={this.selectModelHandler}
+                            selectBodyTypeHandler={this.selectBodyTypeHandler}
+                            sortHandler={this.sortHandler}
+                            changePriceHandler={this.changePriceHandler}
+                            changeYearHandler={this.changeYearHandler}
+                            changeComplete={this.changeComplete}
+                            data={this.props.brandAndModelsData}
+                        />
+
+                    
                     <section className="inventory__container">
                         {products && (
                             <Paginator
@@ -299,6 +367,7 @@ class Inventory extends Component {
                             currentPage={this.props.currentInventoryPage}
                             onRequestPageNumber={this.paginationHandler}
                             products={products}
+                            itemsPerPage={this.props.itemsPerPage}
                             >
                                 <ProductsList productsList={products}/>
                             </Paginator>
@@ -320,7 +389,9 @@ const mapStateToProps = state => {
         price: state.product.price,
         totalProductsCounter: state.product.totalProductsCounter,
         currentInventoryPage: state.product.currentInventoryPage,
-        itemsPerPage: state.product.itemsPerPage
+        itemsPerPage: state.product.itemsPerPage,
+        currency: state.parameters.currency,
+        quotes: state.parameters.quotes
     }
 }
 

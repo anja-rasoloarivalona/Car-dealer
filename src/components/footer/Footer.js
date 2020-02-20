@@ -96,7 +96,7 @@ class Footer extends Component {
                             <li className="footer__list__item__list__item">
                                 <DropDownList 
                                     value={this.props.currency}
-                                    list={['CAD', 'USD', 'MRU']}
+                                    list={['CAD', 'USD', 'EUR']}
                                     selectItemHandler={this.props.setCurrency}
                                 />
                             </li>

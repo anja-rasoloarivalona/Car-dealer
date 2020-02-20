@@ -28,6 +28,11 @@ const navtop = props => {
                     list={['english', 'spanish', 'french']}
                     selectItemHandler={props.setLang}
                 />
+                <DropDownList 
+                    value={props.currency}
+                    list={['CAD', 'USD','EUR']}
+                    selectItemHandler={props.setCurrency}
+                />
             </div>
             {/* <div className="navtop__socialMedia">
                 <IconSvg icon="facebook"/>
@@ -40,13 +45,17 @@ const navtop = props => {
 
 const mapStateToProps = state => {
     return {
-        lang: state.parameters.lang
+        lang: state.parameters.lang,
+        currency: state.parameters.currency,
+        price: state.product.price
     }
 }
 
 const mapDispacthToProps = dispatch => {
     return {
-        setLang: lang => dispatch(actions.setLang(lang))
+        setLang: lang => dispatch(actions.setLang(lang)),
+        setCurrency: currency => dispatch(actions.setCurrency(currency)),
+        setPrice: value => dispatch(actions.setPrice(value))
     }
 }
 

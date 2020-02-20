@@ -21,3 +21,10 @@ export const setInventoryCurrentPage = currentPage => {
         currentPage: currentPage
     }
 }
+
+export const setPrice = data => {
+    return {
+        type: actionTypes.SET_PRICE,
+        data: data
+    }
+}

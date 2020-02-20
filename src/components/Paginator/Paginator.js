@@ -26,7 +26,7 @@ class Paginator extends Component {
             <div className="paginator">
                 {this.props.children}
                 {this.props.products && this.props.products.length > 0 && (
-                   <div className="paginator__controls">
+                   <div className={`paginator__controls ${this.props.currentPage === 1 && this.props.products.length < this.props.itemsPerPage ? 'hide':' '}`}>
                         <div className={`paginator__control
                                     ${this.props.currentPage === 1 ? 'disabled': ''}`}
                                 onClick={this.props.onRequestPreviousPage}>

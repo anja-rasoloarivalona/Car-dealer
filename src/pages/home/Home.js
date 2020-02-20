@@ -126,7 +126,7 @@ class Home extends Component {
                                         <span>{product.general.year}</span>
                                     </div>
                                     <div className="home__intro__product__price">
-                                        <Amount amount={product.general.price}/>
+                                        <Amount amount={product.general.price} showCurrency/>
                                         {/* <span>{product.general.price}</span>
                                         <span>MRU</span> */}
 

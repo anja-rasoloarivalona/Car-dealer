@@ -101,6 +101,7 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
+        console.log(resData)
         this.props.initAppData(resData)
         this.setState({ 
           carsHomeIntro: resData.publicityProducts, 

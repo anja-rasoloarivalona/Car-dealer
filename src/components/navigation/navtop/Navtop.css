@@ -51,6 +51,10 @@
     fill: var(--color-primary);
 }
 
+.navtop__cta {
+    display: flex;
+}
+
 .navtop__cta .drop-down-list {
     width: 12rem;
 }

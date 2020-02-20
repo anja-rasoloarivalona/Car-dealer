@@ -9,7 +9,11 @@
     height: 12rem;
     display: flex;
     align-items: center;
-  }
+}
+
+.paginator__controls.hide {
+  display: none;
+}
   
   .paginator__control {
     height: 3.2rem;

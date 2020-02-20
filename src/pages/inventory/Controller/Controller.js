@@ -5,13 +5,24 @@ import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
 import DropDownList from '../../../components/DropDownList/DropDownList'
 
+
  class Controller extends Component {
 
+    componentDidUpdate(prevProps){
+        // if(prevProps.currency !== this.props.currency){
+        //    console.log('formated', this.props.query.price.formatedValue)
+        // }
+    }
     render() {
         const {query} = this.props;  
         let bodyTypeList = this.props.bodyTypeList;
         let data = this.props.brandAndModelsData;
 
+
+        let value = {
+            min: Math.floor(query.price.value.min) ,
+            max: Math.ceil(query.price.value.max) ,
+        }
 
         let brandData = Object.keys(data)
         let bodyTypeBrandData = [];
@@ -33,11 +44,6 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
             } else { modelData = [...modelData, ...data[query.brand][query.bodyType]]
             }
         }
-
-        console.log('model data', modelData)
-
-    
-
         return (
        
             <div className="inventory__controller">
@@ -80,7 +86,8 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
                             </div>
                         </div>
                         <InputRange 
-                            maxValue={query.price.scope.max}
+                            step={1000}
+                            maxValue= {query.price.scope.max}
                             minValue={query.price.scope.min}
                             value={query.price.value}
                             onChange={value => this.props.changePriceHandler(value)}
@@ -97,8 +104,8 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
                             </div>
                         </div>
                         <InputRange 
-                            maxValue={query.year.scope.max}
-                            minValue={query.year.scope.min}
+                            maxValue={query.year.scope.max }
+                            minValue={query.year.scope.min } 
                             value={query.year.value}
                             onChange={value => this.props.changeYearHandler(value)}
                             onChangeComplete={this.props.changeComplete}/>

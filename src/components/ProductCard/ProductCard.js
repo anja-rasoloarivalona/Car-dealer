@@ -1,6 +1,7 @@
 import React from 'react';
 import './ProductCard.css';
 import IconSvg from '../../utilities/svg/svg';
+import Amount from '../Amount/Amount'
 
 const ProductCard = props  => {
     return (
@@ -17,7 +18,8 @@ const ProductCard = props  => {
                     <span>{props.year}</span>
                 </div>
                 <div className="product__details__price">
-                    {props.price.toLocaleString()} MRU
+                    <Amount amount={props.price} showCurrency/>
+                    {/* {props.price.toLocaleString()} MRU */}
                 </div>           
             </div>
 

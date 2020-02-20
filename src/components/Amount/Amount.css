@@ -1,3 +1,7 @@
 .amount {
     display: flex;
 }
+
+.amount__value {
+    margin-right: .5rem;
+}
