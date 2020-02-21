@@ -31,7 +31,7 @@
     align-items: center;
     justify-content: center;
     list-style: none;
-    transform: translateY(-8rem);
+    transform: translateY(-4rem);
 }   
 
 
@@ -70,7 +70,7 @@
     height: 4rem;
     border-radius: .5rem;
     border:none;
-    padding-left: .5rem;
+    padding-left: 1rem;
     width: 20rem;
 }
 
@@ -78,18 +78,6 @@
     outline: none;
 }
 
-
-.footer__gallery {
-display: flex;
-
-}
-
-.footer__gallery__img {
-    width: 17rem;
-    height: 9rem;
-    object-fit: cover;
-    margin-right: 1rem;
-}
 
 
 .footer__inputContainer {

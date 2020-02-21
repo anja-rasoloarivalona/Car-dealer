@@ -42,13 +42,11 @@ class Footer extends Component {
             <ul className="footer__list">
 
                 <li className="footer__list__group">
-                    <div className="footer__list__item__gallery">
-                        <h3 className="footer__title">Gallery</h3>
-                        <div className="footer__gallery">
-                            <img src={test} className="footer__gallery__img" alt="cars" />
-                            <img src={test} className="footer__gallery__img" alt="cars" />
-                            <img src={test} className="footer__gallery__img" alt="cars" />
-                        </div>
+                    <div className="footer__list__item">
+                        <h3 className="footer__title">WOTO Motors</h3>
+                        <p>
+                            Aliquam non lacus nec ligula efficitur malesuada ac sit amet orci. Aliquam volutpat, sapien eu blandit laoreet, sapien quam semper nunc, a mollis turpis lacus vitae nibh. Nullam eleifend varius dolor, quis dapibus sem tempor eget. Nulla sed aliquam nibh. In eu luctus tortor. Vestibulum ullamcorper ex nisl,
+                        </p>
                     </div>
                     <div className="footer__list__item">
                         <h3 className="footer__title">Site map</h3>
