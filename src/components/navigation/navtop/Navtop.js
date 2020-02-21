@@ -3,9 +3,17 @@ import './Navtop.css';
 import IconSvg from '../../../utilities/svg/svg';
 import DropDownList from '../../DropDownList/DropDownList';
 import { connect } from 'react-redux';
-import * as actions from '../../../store/actions'
+import * as actions from '../../../store/actions';
+import { withRouter } from 'react-router-dom'
 
 const navtop = props => {
+    const setCurrencyHandler = currency => {
+        props.history.push({
+            pathname: props.history.pathname,
+            search: `lang=${props.lang}&currency=${currency}`
+        })
+        props.setCurrency(currency)
+    }
     return (
         <div className="navtop">
             <div className="navtop__logo">
@@ -31,7 +39,7 @@ const navtop = props => {
                 <DropDownList 
                     value={props.currency}
                     list={['CAD', 'USD','EUR']}
-                    selectItemHandler={props.setCurrency}
+                    selectItemHandler={setCurrencyHandler}
                 />
             </div>
             {/* <div className="navtop__socialMedia">
@@ -59,4 +67,4 @@ const mapDispacthToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(navtop); 
+export default connect(mapStateToProps, mapDispacthToProps)(withRouter(navtop)); 

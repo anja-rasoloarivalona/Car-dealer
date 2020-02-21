@@ -5,7 +5,7 @@ import DropDownList from '../DropDownList/DropDownList';
 import * as actions from '../../store/actions'
 import {connect} from 'react-redux'
 import test from '../../assets/img/intro1.jpeg';
-
+import {withRouter} from 'react-router-dom'
 
 class Footer extends Component {
 
@@ -22,6 +22,16 @@ class Footer extends Component {
             susbscribed: true,
             subscribeInput: ''
         })
+    }
+
+    setCurrencyHandler = currency => {
+        this.props.history.push({
+            pathname: this.props.history.pathname,
+            search: `lang=${this.props.lang}&currency=${currency}`
+        })
+        this.props.setCurrency(currency)
+        
+        window.scrollTo(0 , 0)
     }
     render() {
 
@@ -97,7 +107,7 @@ class Footer extends Component {
                                 <DropDownList 
                                     value={this.props.currency}
                                     list={['CAD', 'USD', 'EUR']}
-                                    selectItemHandler={this.props.setCurrency}
+                                    selectItemHandler={this.setCurrencyHandler}
                                 />
                             </li>
                             
@@ -136,6 +146,6 @@ const mapDispacthToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispacthToProps)(Footer);
+export default connect(mapStateToProps, mapDispacthToProps)(withRouter(Footer));
 
 

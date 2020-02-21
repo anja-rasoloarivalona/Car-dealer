@@ -1,12 +1,17 @@
 import React, { Component } from 'react'
 import './Services.css'
 import IconSvg from '../../utilities/svg/svg'
+import { connect } from 'react-redux'
 
 
 class Services extends Component {
 
     componentDidMount(){
         window.scrollTo(0 , 0)
+        this.props.history.push({
+            pathname: this.props.history.pathname,
+            search: `lang=${this.props.lang}&currency=${this.props.currency}`
+          })
     }
 
     render() {
@@ -81,4 +86,11 @@ class Services extends Component {
     }
 }
 
-export default  Services
+const mapStateToProps = state => {
+    return {
+        lang: state.parameters.lang,
+        currency: state.parameters.currency
+    }
+}
+
+export default  connect(mapStateToProps)(Services)

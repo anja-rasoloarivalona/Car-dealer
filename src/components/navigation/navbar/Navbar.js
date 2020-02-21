@@ -11,12 +11,12 @@ const Navbar= props => {
         return (
             <nav className={`navbarContainer`}>
             <ul className="navbar__list">
-                <NavLink to="/" exact className="navbar__list__item">
+                <NavLink exact to={`/`} className="navbar__list__item">
                     Home
                                     </NavLink>
-                <NavLink to="/inventory" className="navbar__list__item">
+                <NavLink to={`/inventory`} className="navbar__list__item">
                     Inventory
-                                    </NavLink>
+                </NavLink>
                 <NavLink to="/services" className="navbar__list__item">
                     Services
                 </NavLink>
@@ -45,7 +45,8 @@ const Navbar= props => {
 const mapStateToProps = state => {
     return {
         isAuth: state.auth.auth,
-        userName: state.auth.userName
+        userName: state.auth.userName,
+        lang: state.parameters.lang
     }
 }
 export default connect(mapStateToProps)(withRouter(Navbar));

@@ -49,14 +49,22 @@ class Inventory extends Component {
         lastPage: null
     }
 
+    componentWillMount(){
+        console.log('fetching',this.props.history, this.props.location)
+    }
+
     componentDidMount(){    
+      
+
+
         /*** START INIT MIN AND MAX PRICE ***/
         let minPrice = this.props.price.min;
         let maxPrice = this.props.price.max;
-
         /*** END INIT MIN AND MAX PRICE ***/  
+
         let parsedQuery = queryString.parse(this.props.location.search);
-        if(Object.keys(parsedQuery).length !== 0){
+
+        if(Object.keys(parsedQuery).length > 2){
             this.setState(prevState => ({
             ...prevState,
             query: {
@@ -126,6 +134,8 @@ class Inventory extends Component {
 
 
     fetchProductsHandler = () => {
+
+       
         const {query} = this.state
         let url =  new URL('http://localhost:8000/product/client');
         let params;
@@ -169,10 +179,13 @@ class Inventory extends Component {
           return res.json()
         })
         .then(resData => {  
+       
+
+
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
-              pathname: '/inventory',
-              search: `sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${minPriceQuery}&maxPrice=${maxPriceQuery}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+              pathname: `/inventory`,
+              search: `lang=${this.props.lang}&currency=${this.props.currency}&sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${minPriceQuery}&maxPrice=${maxPriceQuery}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
           })
         })
         .catch(err => {
@@ -391,7 +404,9 @@ const mapStateToProps = state => {
         currentInventoryPage: state.product.currentInventoryPage,
         itemsPerPage: state.product.itemsPerPage,
         currency: state.parameters.currency,
-        quotes: state.parameters.quotes
+        quotes: state.parameters.quotes,
+        lang: state.parameters.lang,
+        currency: state.parameters.currency
     }
 }
 

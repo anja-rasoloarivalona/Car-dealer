@@ -51,6 +51,14 @@ class App extends Component {
     //   console.log(err)
     // })
 
+    // console.log('histor', this.props.history, this.props.location);
+
+    this.props.history.push({
+      pathname: this.props.history.pathname,
+      search: `lang=${this.props.lang}&currency=${this.props.currency}`
+    })
+
+
     this.setState({ loading: true});
     this.initAppDataHandler();
     const token = localStorage.getItem('woto-token');
@@ -80,9 +88,9 @@ class App extends Component {
        // connectionId: connectionId
     }
     this.props.setLoginStateToTrue(loginData);
-    this.initUserFavoriteProducts(loginData.userId)
+    this.initUserFavoriteProducts(loginData.userId);
     let timeStamp = timeStampGenerator();
-    this.startConnection(userId, timeStamp)
+    this.startConnection(userId, timeStamp);
   }
 
   initAppDataHandler = () => {
@@ -259,12 +267,15 @@ class App extends Component {
                     <Navbar/>
                     {/* {chat} */}
                     <Switch>
-                        <Route path='/' exact render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
-                        <Route path='/inventory' component={Inventory}/>
-                        <Route path='/product/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
+                    <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
+                        
+                        <Route path='/inventory/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
+                        <Route path={`/inventory`} component={Inventory}/>
                         <Route path='/auth' component={Auth} />
                         <Route path='/my-account' render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
                         <Route path='/services' component={Services} />
+
+
                     </Switch>
                     
                     <Footer hide={hideFooter}/>      
@@ -286,7 +297,9 @@ const mapStateToProps = state => {
     token: state.auth.token,
     userId: state.auth.userId,
     connectionId: state.auth.connectionId,
-    brandAndModelsData: state.product.brandAndModelsData
+    brandAndModelsData: state.product.brandAndModelsData,
+    lang: state.parameters.lang,
+    currency: state.parameters.currency
   }
 }
 

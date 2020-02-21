@@ -29,6 +29,11 @@ class Home extends Component {
             this.setState({ homeInventoryLimit: 8})
         }
 
+        this.props.history.push({
+            pathname: this.props.history.pathname,
+            search: `lang=${this.props.lang}&currency=${this.props.currency}`
+          })
+
 
 
         
@@ -75,7 +80,7 @@ class Home extends Component {
 
     requestProductDetails = data => {
         this.props.setProductRequestedData(data);
-        this.props.history.push(`/car/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`); 
+        this.props.history.push(`/inventory/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`); 
         if(this.props.fetchProductDetailsHandler){
             this.props.fetchProductDetailsHandler(data)
         }     
@@ -211,7 +216,9 @@ class Home extends Component {
 
 const mapStateToProps = state => {
     return {
-        mostPopularSedan: state.product.mostPopularSedan
+        mostPopularSedan: state.product.mostPopularSedan,
+        lang: state.parameters.lang,
+        currency: state.parameters.currency
     }
 }
 

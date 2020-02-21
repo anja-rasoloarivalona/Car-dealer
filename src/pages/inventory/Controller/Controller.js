@@ -19,11 +19,6 @@ import DropDownList from '../../../components/DropDownList/DropDownList'
         let data = this.props.brandAndModelsData;
 
 
-        let value = {
-            min: Math.floor(query.price.value.min) ,
-            max: Math.ceil(query.price.value.max) ,
-        }
-
         let brandData = Object.keys(data)
         let bodyTypeBrandData = [];
         if(query.bodyType !== 'all'){
