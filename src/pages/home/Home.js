@@ -175,7 +175,7 @@ class Home extends Component {
                     </nav>
                     <div className="home__router__nav__count">
                         <IconSvg icon="car"/>
-                        <div>Available 99 cars</div>
+                        <div>Available {this.props.totalProductsCounter} cars</div>
                     </div>
                 </div>
             </section>
@@ -218,7 +218,8 @@ const mapStateToProps = state => {
     return {
         mostPopularSedan: state.product.mostPopularSedan,
         lang: state.parameters.lang,
-        currency: state.parameters.currency
+        currency: state.parameters.currency,
+        totalProductsCounter: state.product.totalProductsCounter
     }
 }
 
