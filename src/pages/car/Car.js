@@ -94,11 +94,21 @@ class Car extends Component {
         return res.json()
       })
       .then(resData => {
+          let product = resData.product;
+          let favorite;
+          let userFavorites = this.props.userFavorites;
+          let userFavoritesProductsIds = [];
+          userFavorites.forEach(product => userFavoritesProductsIds.push(product._id))
+          if(userFavoritesProductsIds.includes(product._id)){
+              favorite = true
+          } else {
+              favorite = false
+          }         
           window.scrollTo(0, 0)
           this.setState({ 
               product: resData.product, 
               relatedProducts: resData.relatedProducts,
-              favorite: resData.favorite,
+              favorite: favorite,
               loading: false})
       })
       .catch(err => {
@@ -330,7 +340,8 @@ const mapStateToProps = state => {
     return {
         productRequested: state.product.productRequested,
         mostPopularProducts: state.product.mostPopularProducts,
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        userFavorites: state.user.favorites
     }
 }
 
