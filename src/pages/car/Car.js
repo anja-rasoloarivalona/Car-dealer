@@ -56,20 +56,23 @@ class Car extends Component {
             userIdFetching = userId
         }
 
-        let brand, model, price, prodId;
+        let brand, model, price, prodId, bodyType;
         if(productRequested){
             //If a requested product has been initialized in redux
             brand = productRequested.general.brand;
             model = productRequested.general.model;
             price = productRequested.general.price;
-            prodId = productRequested._id
+            bodyType = productRequested.general.bodyType;
+            prodId = productRequested._id;
+
         } else {
             //If not, we use the URL search params (example : when page did mount after reloading)
             const search = this.props.location.search;
             const params = new URLSearchParams(search);
             brand =  params.get('brand');
             model =  params.get('model');
-            price =  params.get('price')  ;
+            price =  params.get('price');
+            bodyType = params.get('bodyType')
             prodId = this.props.match.params.prodId         
         }
 
@@ -78,10 +81,11 @@ class Car extends Component {
             prodId = data._id
             brand = data.general.brand;
             model = data.general.model;
-            price = data.general.price
+            price = data.general.price;
+            bodyType = data.general.bodyType
         }
       
-        let url = `http://localhost:8000/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&price=${price}`    
+        let url = `http://localhost:8000/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&bodyType=${bodyType}&price=${price}`    
         fetch( url, {
         headers: {
           'Content-type': 'application/json'

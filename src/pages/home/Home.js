@@ -80,7 +80,7 @@ class Home extends Component {
 
     requestProductDetails = data => {
         this.props.setProductRequestedData(data);
-        this.props.history.push(`/inventory/${data._id}?brand=${data.general.brand}&model=${data.general.model}&price=${data.general.price}`); 
+        this.props.history.push(`/inventory/${data._id}?brand=${data.general.brand}&model=${data.general.model}&bodyType=${data.general.bodyType}&price=${data.general.price}`); 
         if(this.props.fetchProductDetailsHandler){
             this.props.fetchProductDetailsHandler(data)
         }     
