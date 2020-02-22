@@ -8,6 +8,7 @@ import Technical from './technical/Technical';
 import Features from './features/Features';
 import Loader from '../../components/loader/Loader';
 import ProductsList from '../../components/ProductsList/ProductsList';
+import Amount from '../../components/Amount/Amount';
 
 class Car extends Component {
 
@@ -234,7 +235,7 @@ class Car extends Component {
                         </div>
                         <div className="single-car__header__info">
                             <div className="single-car__header__info__priceContainer">
-                                <div className="single-car__header__info__price">{product.general.price.toLocaleString()} MRU</div>
+                                <div className="single-car__header__info__price"> <Amount amount={product.general.price} showCurrency/></div>
                             </div>
                             <ul className="single-car__header__info__list">
                                     <li className="single-car__header__info__list__item">
@@ -244,6 +245,10 @@ class Car extends Component {
                                     <li className="single-car__header__info__list__item">
                                         <div className="single-car__header__info__list__item__key">brand</div>
                                         <div className="single-car__header__info__list__item__value">{product.general.brand}</div>
+                                    </li>
+                                    <li className="single-car__header__info__list__item">
+                                        <div className="single-car__header__info__list__item__key">body type</div>
+                                        <div className="single-car__header__info__list__item__value">{product.general.bodyType}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
                                         <div className="single-car__header__info__list__item__key">model</div>

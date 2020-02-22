@@ -163,6 +163,10 @@
     }
     .single-car__header__info__list__item__key {
         font-weight: 600;
+        text-transform: capitalize;
+    }
+    .single-car__header__info__list__item__value {
+        color: var(--color-grey-dark)
     }
     /* --------- End Header infos --------*/
 
@@ -232,6 +236,7 @@
 .single-car__section__title{
     color: var(--color-primary);
     margin-bottom: 2rem;
+    text-transform: uppercase;
 }
 
 .single-car__related {

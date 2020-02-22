@@ -21,6 +21,10 @@ const overview = props => {
                     <div className="overview__list__item__value">{product.general.model}</div>
                 </li>
                 <li className="overview__list__item">
+                    <div className="overview__list__item__key">Body Type</div>
+                    <div className="overview__list__item__value">{product.general.bodyType}</div>
+                </li>
+                <li className="overview__list__item">
                     <div className="overview__list__item__key">Year</div>
                     <div className="overview__list__item__value">{product.general.year}</div>
                 </li>
@@ -46,18 +50,15 @@ const overview = props => {
                 </div>
                 <ul className="overview__list">
                     <li className="overview__list__item">
-                        <div className="overview__list__item__key">Couleur extérieur</div>
-                        <div className="overview__list__item__value">gris</div>
+                        <div className="overview__list__item__key">Interior color</div>
+                        <div className="overview__list__item__value">{product.design.intColor}</div>
                     </li>
                     <li className="overview__list__item">
-                        <div className="overview__list__item__key">Couleur intérieur</div>
-                        <div className="overview__list__item__value">gris</div>
+                        <div className="overview__list__item__key">Exterior color</div>
+                        <div className="overview__list__item__value">{product.design.extColor}</div>
                     </li>                            
             </ul>
             </section>
-
-            
-           
         </div>
     )
 }
