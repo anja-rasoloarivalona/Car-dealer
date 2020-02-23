@@ -9,18 +9,24 @@ import Features from './features/Features';
 import Loader from '../../components/loader/Loader';
 import ProductsList from '../../components/ProductsList/ProductsList';
 import Amount from '../../components/Amount/Amount';
+import IconSvg from '../../utilities/svg/svg';
 
 class Car extends Component {
 
-    state = {
-        index: 0,       
-        product: null,
-        relatedProducts: [],
-        initiatlIndex: 0,
-        loading: true,
-        partRequested: 'overview',
-        favorite: false,
+    constructor(props){
+        super(props);
+        this.state = {
+            index: 0,       
+            product: null,
+            relatedProducts: [],
+            initiatlIndex: 0,
+            loading: true,
+            partRequested: 'overview',
+            favorite: false,
+        }
+        this.escFunction = this.escFunction.bind(this)
     }
+  
 
     imageSlideHandler = () => {
     let {index, images, initiatlIndex} =  this.state;
@@ -37,14 +43,16 @@ class Car extends Component {
     }
     componentDidMount(){
       //  this.imageSlideHandler()
-      this.fetchProductDetailsHandler()
+      this.fetchProductDetailsHandler();
+      document.addEventListener("keydown", this.escFunction, false);
     }
     componentWillUnmount(){
-        clearInterval(this.inter)
+        clearInterval(this.inter);
+        document.removeEventListener("keydown", this.escFunction, false);
     }
     changeGalleryImgIndex = url => {
-        const { images} = this.state;
-        let index = images.indexOf(`${url}`);
+        const { product } = this.state;
+        let index = product.imageUrls.indexOf(`${url}`);
         this.setState({ index: index})
     }
 
@@ -170,6 +178,12 @@ class Car extends Component {
         this.props.hideScrollBarHandler()
     }
 
+    escFunction(event){
+        if(event.keyCode === 27 && this.props.hideScrollBar) {
+          this.props.showScrollBarHandler()
+        }
+      }
+
     render() {
         let product = this.state.product
         let products = this.state.relatedProducts
@@ -210,10 +224,13 @@ class Car extends Component {
                             </div>                       
                             {this.props.hideScrollBar && (
                                 <div className="single-car__header__main__gallery--fullContainer">
+
                                     <div className="single-car__header__main__gallery--fullContainer__closeBtn"
                                         onClick={this.props.showScrollBarHandler}>
-                                        <span>Close</span>
+                                        <IconSvg icon="close"/>
                                     </div>
+
+
                                     <div className="single-car__header__main__gallery--full">
                                         <Gallery
                                             index={this.state.index}
