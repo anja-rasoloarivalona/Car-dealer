@@ -1,36 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './Chat.css';
-
-
 import openSocket from 'socket.io-client';
-
 import { connect } from 'react-redux';
-
 import { timeStampGenerator } from '../../utilities/timeStampGenerator';
-
-
-
-
+import IconSvg from '../../utilities/svg/svg';
+import AutoSizeTextArea from '../AutosizeTextArea/AutosizetextArea';
 
 
  class Chat extends Component {
-
-
     state = {
         messages: null,
-
         messageInput: '',
-
-        showChat: false,
-
+        showChat: true,
         name: ''
     }
 
     componentDidMount(){
-        
         let url = "http://localhost:8000/messages/" + this.props.userId;
         let method = "GET";
-
         fetch( url, {
            headers: {
                "Content-Type": "application/json"
@@ -41,26 +28,19 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
             if(res.status !== 200){
                 throw new Error('Failed to fetch messages')
             }
-
             return res.json()
         })
         .then( resData => {
-
             this.setState({ 
                 messages: resData.messages.messages,
-                name: resData.messages.firstName
+                name: this.props.userName
             })
-
-
         })
         .catch(err => {
             console.log(err)
         })
 
-
         const socket = openSocket('http://localhost:8000');
-
-
         socket.on('adminSentMessage', data => {    
            if(this.props.userId === data.messageData.userId && this.state.showChat === true){
                 this.readNewMessagesHandler();
@@ -72,9 +52,7 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
 
     readNewMessagesHandler = () => {
         let url = "http://localhost:8000/messages/" + this.props.userId;
-
             let timeStamp = timeStampGenerator();
-
                 fetch( url, {
                     headers: {
                         "Content-Type": "application/json"
@@ -92,25 +70,17 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
                     return res.json()
                 })
                 .then( resData => {
-
                     console.log('resdata', resData)
-
-
                 })
                 .catch(err => {
                     console.log(err)
                 })
            
     }
-
     sendMessageHandler = () => {
-
-
         let timeStamp = timeStampGenerator();
-
         let url = "http://localhost:8000/messages/user/" + this.props.userId;
         let method = "POST";
-
         fetch(url, {
             method: method,
             headers: {
@@ -123,16 +93,9 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
             })
         })
         .then( res => {
-            console.log('sent baby');
             return res.json()
-
         })
         .then( resData => {
-
-
-            console.log('resData', resData);
-
-
             this.addMessages(resData.data);
             this.setState({ messageInput: ''});
         })
@@ -140,135 +103,68 @@ import { timeStampGenerator } from '../../utilities/timeStampGenerator';
             console.log(err)
         })
     } 
-
     addMessages = message => {
         let newMessages = [...this.state.messages, message]
         this.setState({ messages: newMessages})
     }
-
-    messageChangeHandler = (e) => {
-        this.setState({ messageInput: e.target.value})
+    messageChangeHandler = value => {
+        this.setState({ messageInput: value})
     }
-
-
-    handleKeyDown = (e) => {
-
-        e.target.style.height = 'inherit';
-        e.target.style.height = `${e.target.scrollHeight}px`; 
-        // In case you have a limitation
-        // e.target.style.height = `${Math.min(e.target.scrollHeight, limit)}px`
-      }
-
-      keypress = e => {
-        if(e.key === 'Enter'){
-            e.preventDefault();
-            this.sendMessageHandler()   
-        }
-      }
-
-      toggleShowChat = () => {
-
-            let test = 0;
-
-            this.state.messages.forEach(i => {
-                if(i.read === false){
-                    test++
-                } else return 
+    toggleShowChat = () => {
+        let unreadMessageCounter = 0;
+        this.state.messages.forEach(i => {
+            if(i.read === false){
+                unreadMessageCounter++
+            } else return 
             })
-
-            if(test > 0){
+            if(unreadMessageCounter > 0){
                 this.readNewMessagesHandler()
             }
-
-          
-          this.setState( prevState => ({
+            this.setState( prevState => ({
               showChat: !prevState.showChat
-          }))
-
-
-      }
+            }))
+    }
 
       
 
     render() {
+
+        const { showChat, messageInput } = this.state
         return (
-            <section className={`chat ${this.state.showChat ?'': 'hide'}`}>
+            <Fragment>
+                <section className="chat" onClick={this.toggleShowChat}>
+                    <div className="chat__icon">
+                        <IconSvg icon="messenger"/>
+                    </div>
+                </section>
+                <div className={`chat__messages ${showChat ? 'show' : ''}`}>
+                    <div className="chat__messages__header">
+                        <IconSvg icon="close" />
+                        <span>Open conversation</span>
+                    </div>
 
-                <div className="chat__bar"
-                    onClick={this.toggleShowChat}>
-                    Messages
+                    <div className="chat__messages__body">
+                         
+                    </div>
+                    <div className="chat__messages__input">
+                        <AutoSizeTextArea 
+                            value={messageInput}
+                            placeholder="Write a message"
+                            onChange={this.messageChangeHandler}
+                        />
+                        <IconSvg icon="send"/>
+                    </div>
                 </div>
-
-                <div className={`chat__body 
-                                 ${this.state.showChat ? '' : 'hide'}`}> 
-
-                        {
-                          this.state.messages && this.state.messages.map( message => 
-                            
-                            (
-                                <div>
-                                        <div className={`chat__message ${message.senderType === 'admin' ? 'chat__message--admin' : 'chat__message--user' }`}>
-                                            {message.message}
-                                        </div>
-                                </div>
-                            )
-                            
-                            )
-                        }
-
-                       {/*
-                           this.state.messages.map( message => {
-
-                            if(message.type === 'user'){
-                                return (
-                                    <div className="user__message__container">
-                                        <div></div>
-                                        <div className="chat__message chat__message--user">
-                                            {message.message}
-                                        </div> 
-                                    </div>
-
-                                     
-                                )
-                            }
-
-                            if(message.type === 'admin'){
-                                return (
-                                    <div>
-                                        <div className="chat__message chat__message--admin">
-                                            {message.message}
-                                        </div>
-                                    </div>
-                                    
-
-                                )
-                            }
-                            
-                           })
-                        */} 
-
-
-                </div>
-
-                <div className={`chat__input 
-                                ${this.state.showChat ? '' : 'hide'}`}>
-
-                    <textarea className="textarea"
-                            value={this.state.messageInput}
-                            onChange={(e) => this.messageChangeHandler(e)}
-                            placeholder='message'
-                            onKeyDown={this.handleKeyDown}
-                            onKeyPress={this.keypress}
-                            />
-                </div>
-            </section>
+            </Fragment>
+            
         )
     }
 }
 
 const mapStateToProps = state => {
     return {
-        userId: state.auth.userId
+        userId: state.auth.userId,
+        userName: state.auth.userName
     }
 }
 

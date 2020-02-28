@@ -109,7 +109,6 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
-        console.log(resData)
         this.props.initAppData(resData)
         this.setState({ 
           carsHomeIntro: resData.publicityProducts, 
@@ -243,14 +242,7 @@ class App extends Component {
 
   render() {
     const { loading , hideScrollBar, hideFooter} = this.state
-
     let app;
-
-    let chat = null
-    if(this.props.auth && this.props.token && this.props.userId){
-      chat = <Chat />
-    }
-
     if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
@@ -265,7 +257,7 @@ class App extends Component {
                 <div className={`app`}>
                     <Navtop />
                     <Navbar/>
-                    {/* {chat} */}
+                    {this.props.auth && this.props.token && this.props.userId && <Chat />}
                     <Switch>
                     <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         
