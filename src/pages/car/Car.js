@@ -250,6 +250,7 @@ class Car extends Component {
                                 ))}
                             </div>
                         </div>
+                        
                         <div className="single-car__header__info">
                             <div className="single-car__header__info__priceContainer">
                                 <div className="single-car__header__info__price"> <Amount amount={product.general.price} showCurrency/></div>
