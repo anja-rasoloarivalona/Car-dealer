@@ -26,6 +26,20 @@
     fill: var(--color-primary)
 }
 
+.chat__notif {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: red;
+    color: var(--color-white);
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
 
 .chat__messages {
     position: fixed;
@@ -73,6 +87,12 @@
 
 .chat__messages__body {
     flex: 1;
+    overflow-y: scroll;
+    padding-left: 1rem;
+}
+
+.chat__messages__body .messagesContainer__body__chat__content{
+    font-size: 1.2rem;
 }
 
 .chat__messages__input {

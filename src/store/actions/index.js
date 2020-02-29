@@ -27,3 +27,9 @@ export {
     setCurrency,
     setLang
 } from './parameters'
+
+
+export {
+    addNewMessageNotification,
+    resetNewMessageNotification
+} from './notification'

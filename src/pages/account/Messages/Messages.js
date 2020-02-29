@@ -6,6 +6,7 @@ import {timeStampGenerator} from '../../../utilities/timeStampGenerator'
 import MessagesList from './MessagesList/MessagesList'
 import IconSvg from '../../../utilities/svg/svg'
 import AutoSizeTextArea from '../../../components/AutosizeTextArea/AutosizetextArea'
+import * as actions from '../../../store/actions'
 
 class Messages extends Component {
 
@@ -31,6 +32,12 @@ class Messages extends Component {
             return res.json()
         })
         .then( resData => {
+
+            if(this.props.newMessage > 0){
+                this.props.resetNewMessageNotification()
+                this.readNewMessagesHandler()
+            }
+
             this.setState({ 
                 messages: resData.messages.messages
             }, () => this.scrollToBottom())
@@ -41,10 +48,8 @@ class Messages extends Component {
 
         const socket = openSocket('http://localhost:8000');
         
-        socket.on('adminSentMessage', data => { 
-            console.log('socket ', data)   
+        socket.on('adminSentMessage', data => {  
             if(this.props.userId === data.messageData.userId){
-                console.log('socket valid')   
                  this.readNewMessagesHandler();
                  this.addMessages(data.messageData)
             }
@@ -73,7 +78,6 @@ class Messages extends Component {
                 })
                 .then( resData => {
                     console.log('resdata', resData)
-
                 })
                 .catch(err => {
                     console.log(err)
@@ -81,7 +85,6 @@ class Messages extends Component {
     }
 
     addMessages = message => {
-        console.log('adding message')
         let newMessages = [...this.state.messages, message]
         this.setState({ messages: newMessages}, () => this.scrollToBottom())
     }
@@ -108,9 +111,7 @@ class Messages extends Component {
                 })
             })
             .then( res => {
-                console.log('sent baby');
                 return res.json()
-    
             })
             .then( resData => {
                 this.addMessages(resData.data);
@@ -170,8 +171,16 @@ class Messages extends Component {
 const mapStateToProps = state => {
     return {
         userId: state.auth.userId,
-        userName: state.auth.userName
+        userName: state.auth.userName,
+        newMessage: state.notification.newMessage
     }
 }
 
-export default connect(mapStateToProps)(Messages)
+const mapDispatchToProps = dispatch => {
+    return {
+        addNewMessageNotification: data =>  dispatch(actions.addNewMessageNotification(data)),
+        resetNewMessageNotification: () => dispatch(actions.resetNewMessageNotification())
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Messages)

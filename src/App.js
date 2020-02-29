@@ -5,6 +5,7 @@ import { connect} from 'react-redux';
 import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
 import { Spring } from 'react-spring/renderprops'
+import notification from './assets/eventually.mp3'
 
 /*------------COMPONENTS---------------------*/
 import Navtop from './components/navigation/navtop/Navtop';
@@ -239,6 +240,10 @@ class App extends Component {
     this.setState({ hideScrollBar: true}, () => document.body.className="hideScrollBar")
   }
 
+  playNotificationSound = () => {
+    this.player.play();
+  }
+
 
   render() {
     const { loading , hideScrollBar, hideFooter} = this.state
@@ -257,7 +262,8 @@ class App extends Component {
                 <div className={`app`}>
                     <Navtop />
                     <Navbar/>
-                    {this.props.auth && this.props.token && this.props.userId && <Chat />}
+                    <audio src={notification} ref={ref => this.player = ref}  />
+                    {this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
                     <Switch>
                     <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         

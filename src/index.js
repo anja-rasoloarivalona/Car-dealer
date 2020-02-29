@@ -11,6 +11,7 @@ import authReducer from './store/reducers/auth';
 import productReducer from './store/reducers/product';
 import userReducer from './store/reducers/user';
 import parametersReducer from './store/reducers/parameters';
+import notificationReducer from './store/reducers/notification'
 
 import thunk from 'redux-thunk';
 
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     auth: authReducer,
     product: productReducer,
     user: userReducer,
-    parameters: parametersReducer 
+    parameters: parametersReducer,
+    notification: notificationReducer
 })
 
 const store = createStore(
