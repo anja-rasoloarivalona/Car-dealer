@@ -10,8 +10,7 @@
 }
 
 .navtop__logo {
-    width: 30%;
-    padding-left: 6rem;
+    padding: 0 6rem;
     font-size: 2.5rem;
     color: var(--color-primary);
 }
@@ -19,7 +18,6 @@
 .navtop__contact {
     display: flex;
     justify-content: center;
-    width: 30%;
 }
 
 .navtop__contact__detail {
@@ -53,6 +51,7 @@
 
 .navtop__cta {
     display: flex;
+    background: blue;
 }
 
 .navtop__cta .drop-down-list {

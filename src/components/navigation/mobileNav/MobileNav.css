@@ -1,0 +1,113 @@
+.mobile-nav {
+    position: fixed;
+    height: 8rem;
+    background: var(--color-dark);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 25;
+    width: 100%;
+}
+
+.mobile-nav__toggler {
+    width: 14vw;
+    height: calc(10vw * .8);
+    max-width: 6rem;
+    max-height: 4rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mobile-nav__toggler span {
+    width: 100%;
+    height: .5rem;
+    background: var(--color-white);
+}
+
+.mobile-nav__logo {
+    font-size: 2.5rem;
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.mobile-nav__login {
+    padding: 1rem 2rem;
+    color: var(--color-white);
+    font-size: var(--font-size-xl);
+}
+
+.mobile-nav__backdrop {
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    width: 100%;
+    height: calc(100vh - 8rem);
+    background: rgba(14, 14, 14, 0.644);
+    z-index: 22;
+}
+
+.mobile-nav__listContainer {
+    position: fixed;
+    top: 8rem;
+    left: 0;
+    width: 70%;
+    max-width: 35rem;
+    height: calc(100vh - 8rem);
+    background: var(--color-white);
+    z-index: 23;
+    transform: translateX(-100%);
+    transition: all .3s ease-in;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 2rem 0;
+}
+
+.mobile-nav__listContainer.show {
+    transform: translateX(0%);
+}
+
+.mobile-nav__list {
+   width: 100%;
+   display: flex;
+  flex-direction: column;
+}
+
+
+
+.mobile-nav__list__item {
+   padding: 1rem 0;
+   padding-left: 1rem;
+   text-decoration: none;
+   text-align: center;
+   margin-bottom: 1rem;
+   font-size: var(--font-size-xl);
+   color: var(--color-primary);
+}
+
+.mobile-nav__list__socialMedia {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mobile-nav__list__socialMedia svg {
+    width: 3rem;
+    height: 3rem;
+    fill: var(--color-primary);
+    margin: 0 1.5rem;
+}
+
+.mobile-nav__parameters {
+    background: var(--color-grey);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mobile-nav__parameters .drop-down-list {
+    margin: 1rem 0;
+}

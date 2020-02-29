@@ -13,15 +13,15 @@ const Navbar= props => {
                             ${props.scrolled ? 'fixed': ''}
                             `}>
             <ul className="navbar__list">
-                <NavLink exact to={`/`} className="navbar__list__item">
-                    Home
-                                    </NavLink>
-                <NavLink to={`/inventory`} className="navbar__list__item">
-                    Inventory
-                </NavLink>
-                <NavLink to="/services" className="navbar__list__item">
-                    Services
-                </NavLink>
+                    <NavLink exact to={`/`} className="navbar__list__item">
+                        Home
+                    </NavLink>
+                    <NavLink to={`/inventory`} className="navbar__list__item">
+                        Inventory
+                    </NavLink>
+                    <NavLink to="/services" className="navbar__list__item">
+                        Services
+                    </NavLink>
             </ul>
 
             <div className="navbar__cta">

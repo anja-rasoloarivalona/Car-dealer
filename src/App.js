@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './App.css';
 import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
 import { connect} from 'react-redux';
@@ -10,6 +10,7 @@ import notification from './assets/eventually.mp3'
 /*------------COMPONENTS---------------------*/
 import Navtop from './components/navigation/navtop/Navtop';
 import Navbar from './components/navigation/navbar/Navbar';
+import MobileNav from './components/navigation/mobileNav/MobileNav'
 import Footer from './components/footer/Footer'
 import Chat from './components/chat/Chat';
 import Loader from './components/loader/Loader'
@@ -309,6 +310,9 @@ class App extends Component {
   render() {
     const { loading , hideScrollBar, hideFooter,scrolled, scrollDirection} = this.state
     let app;
+
+    let windowWidth = window.innerWidth;
+
     if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
@@ -321,8 +325,17 @@ class App extends Component {
           {props => (
               <div style={props}>
                 <div className={`app`}>
-                    <Navtop scrolled={scrolled} scrollDirection={scrollDirection}/>
-                    <Navbar scrolled={scrolled} scrollDirection={scrollDirection}/>
+
+                    {windowWidth > 850 && (
+                        <Fragment>
+                          <Navtop scrolled={scrolled} scrollDirection={scrollDirection}/>
+                          <Navbar scrolled={scrolled} scrollDirection={scrollDirection}/>
+                        </Fragment>
+                    )}
+                    {windowWidth <= 850 && (
+                      <MobileNav />
+                    )}
+                   
 
                     <audio src={notification} ref={ref => this.player = ref}  />
                     {this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
