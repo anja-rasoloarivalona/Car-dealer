@@ -15,7 +15,9 @@ const navtop = props => {
         props.setCurrency(currency)
     }
     return (
-        <div className="navtop">
+        <div className={`navtop 
+
+                        `}>
             <div className="navtop__logo">
                 WOTO
             </div>

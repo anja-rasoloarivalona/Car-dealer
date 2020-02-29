@@ -9,7 +9,9 @@ const Navbar= props => {
     let userName = props.userName;
         let isAuth = props.isAuth
         return (
-            <nav className={`navbarContainer`}>
+            <nav className={`navbarContainer 
+                            ${props.scrolled ? 'fixed': ''}
+                            `}>
             <ul className="navbar__list">
                 <NavLink exact to={`/`} className="navbar__list__item">
                     Home

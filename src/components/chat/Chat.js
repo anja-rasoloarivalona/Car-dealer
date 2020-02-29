@@ -13,7 +13,7 @@ import * as actions from '../../store/actions'
     state = {
         messages: null,
         messageInput: '',
-        showChat: false,
+        showChat: true,
         name: ''
     }
 

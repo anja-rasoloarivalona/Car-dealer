@@ -5,8 +5,8 @@
     align-items: center;
     justify-content: space-around;
     height: 5rem;
-    background: var(--color-white);
-    
+    background: var(--color-white); 
+    transition: none;
 }
 
 .navtop__logo {

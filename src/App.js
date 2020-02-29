@@ -33,10 +33,16 @@ class App extends Component {
     carsHomeInventory : [],
     loading: false,
     hideScrollBar: false,
-    hideFooter: false
+    hideFooter: false,
+    scrolled: false,
+    scrollDirection: 'bottom'
   }
 
   componentDidMount(){
+    window.addEventListener('scroll', this.listenToScroll)
+    this.scrollPos = 0;
+    this.scrollDirection = 'bottom'
+
     let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
     // let url = 'http://api.currencylayer.com/list?access_key=393f7172bfdb3cbdf353b2fd78462005'
    
@@ -94,6 +100,56 @@ class App extends Component {
     this.startConnection(userId, timeStamp);
   }
 
+
+  listenToScroll = () => {
+    const winScroll = document.body.scrollTop || document.documentElement.scrollTop
+    const isTop = winScroll < 50;
+
+
+
+    if(!isTop && this.scrollPos > winScroll){
+      this.scrollPos = winScroll
+
+      console.log('top')
+      this.setState({ scrolled: true, scrollDirection: "top" })
+    } 
+
+    if(!isTop && this.scrollPos < winScroll){
+      this.scrollPos = winScroll
+      this.setState({ scrolled: true, scrollDirection: "bottom" })
+    } 
+
+    if(isTop){
+      this.scrollPos = winScroll
+      this.setState({ scrolled: false })
+    }
+    
+  
+
+
+    // if(this.scrollPos > winScroll){
+    //   this.scrollDirection = "top"
+    // } else if(this.scrollPos < winScroll){
+    //   this.scrollDirection = "bottom"
+    // }
+
+    // this.scrollPos = winScroll
+
+    // this.setState({ scrollPos: winScroll, scrollDirection: this.scrollDirection})
+
+
+    // if(winScroll > this.state.winScroll){
+    //   direction = "bot"
+    // } else {
+    //   direction = "top"
+    // }
+
+
+
+  
+  }
+
+
   initAppDataHandler = () => {
       let url = 'http://localhost:8000/product/init';
       let method = 'GET';
@@ -129,9 +185,14 @@ class App extends Component {
        if(this.state.footer === true){
          this.setState({ hideFooter: false})
        }
-     }
-    
+    }
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('scroll', this.listenToScroll)
+  }
+
+  
 
 
   startConnection = (userId, timeStamp) => {
@@ -246,7 +307,7 @@ class App extends Component {
 
 
   render() {
-    const { loading , hideScrollBar, hideFooter} = this.state
+    const { loading , hideScrollBar, hideFooter,scrolled, scrollDirection} = this.state
     let app;
     if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
@@ -260,8 +321,9 @@ class App extends Component {
           {props => (
               <div style={props}>
                 <div className={`app`}>
-                    <Navtop />
-                    <Navbar/>
+                    <Navtop scrolled={scrolled} scrollDirection={scrollDirection}/>
+                    <Navbar scrolled={scrolled} scrollDirection={scrollDirection}/>
+
                     <audio src={notification} ref={ref => this.player = ref}  />
                     {this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
                     <Switch>
