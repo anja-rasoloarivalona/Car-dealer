@@ -10,7 +10,6 @@ import Paginator from '../../components/Paginator/Paginator';
 import { amountFormater } from '../../utilities/amountFormater'
 
 class Inventory extends Component {
-
     state = {
         products: null,
         loading: true,
@@ -49,14 +48,8 @@ class Inventory extends Component {
         lastPage: null
     }
 
-    componentWillMount(){
-        console.log('fetching',this.props.history, this.props.location)
-    }
 
     componentDidMount(){    
-      
-
-
         /*** START INIT MIN AND MAX PRICE ***/
         let minPrice = this.props.price.min;
         let maxPrice = this.props.price.max;
@@ -406,7 +399,6 @@ const mapStateToProps = state => {
         currency: state.parameters.currency,
         quotes: state.parameters.quotes,
         lang: state.parameters.lang,
-        currency: state.parameters.currency
     }
 }
 

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import './Messages.css'
 import { connect } from 'react-redux'
 import openSocket from 'socket.io-client';

@@ -9,6 +9,7 @@ import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
 
 import {timeStampGenerator } from '../../../utilities/timeStampGenerator';
 import openSocket from 'socket.io-client';
+import { withRouter } from 'react-router-dom'
 
  class Login extends Component {
 
@@ -103,6 +104,7 @@ import openSocket from 'socket.io-client';
                 localStorage.setItem('woto-expiryDate', expiryDate.toISOString());
 
                 this.props.setLoadingToFalse()
+                this.props.history.push('/my-account/messages')
 
         })
         .catch( err => {
@@ -194,4 +196,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(null, mapDispatchToProps)(withRouter(Login));

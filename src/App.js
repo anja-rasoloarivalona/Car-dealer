@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
-import { Route, Switch, withRouter, Redirect } from 'react-router-dom';
+import { Route, Switch, withRouter  } from 'react-router-dom';
 import { connect} from 'react-redux';
 import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
@@ -44,7 +44,7 @@ class App extends Component {
     this.scrollPos = 0;
     this.scrollDirection = 'bottom'
 
-    let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
+    // let url = 'http://api.currencylayer.com/live?access_key=393f7172bfdb3cbdf353b2fd78462005&currencies=CAD,EUR'
     // let url = 'http://api.currencylayer.com/list?access_key=393f7172bfdb3cbdf353b2fd78462005'
    
     // fetch(url)
@@ -85,7 +85,7 @@ class App extends Component {
       return 
     }
 
-    if(this.props.location.pathname === '/my-account'){
+    if(this.props.location.pathname.includes('/my-account')){
       this.setState({ hideFooter: true})
     }
     let loginData = {
@@ -101,55 +101,22 @@ class App extends Component {
     this.startConnection(userId, timeStamp);
   }
 
-
   listenToScroll = () => {
     const winScroll = document.body.scrollTop || document.documentElement.scrollTop
     const isTop = winScroll < 50;
-
-
-
     if(!isTop && this.scrollPos > winScroll){
       this.scrollPos = winScroll
-
-      console.log('top')
       this.setState({ scrolled: true, scrollDirection: "top" })
     } 
-
     if(!isTop && this.scrollPos < winScroll){
       this.scrollPos = winScroll
       this.setState({ scrolled: true, scrollDirection: "bottom" })
     } 
-
     if(isTop){
       this.scrollPos = winScroll
       this.setState({ scrolled: false })
     }
-    
-  
-
-
-    // if(this.scrollPos > winScroll){
-    //   this.scrollDirection = "top"
-    // } else if(this.scrollPos < winScroll){
-    //   this.scrollDirection = "bottom"
-    // }
-
-    // this.scrollPos = winScroll
-
-    // this.setState({ scrollPos: winScroll, scrollDirection: this.scrollDirection})
-
-
-    // if(winScroll > this.state.winScroll){
-    //   direction = "bot"
-    // } else {
-    //   direction = "top"
-    // }
-
-
-
-  
   }
-
 
   initAppDataHandler = () => {
       let url = 'http://localhost:8000/product/init';
@@ -180,21 +147,18 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps){  
-     if( prevProps.location.pathname !== this.props.location.pathname  && this.props.location.pathname === '/my-account'){
-        this.setState({ hideFooter: true})
-     } else {
-       if(this.state.footer === true){
-         this.setState({ hideFooter: false})
+     if( prevProps.location.pathname !== this.props.location.pathname){
+       if(this.props.location.pathname.includes('/my-account')){ 
+        this.setState({ hideFooter: true}, () => console.log(this.state.hideFooter))
+       } else {
+        this.setState({ hideFooter: false}, () => console.log(this.state.hideFooter))   
        }
-    }
+     }   
   }
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.listenToScroll)
   }
-
-  
-
 
   startConnection = (userId, timeStamp) => {
         fetch('http://localhost:8000/auth/start-connection',{
@@ -333,12 +297,15 @@ class App extends Component {
                         </Fragment>
                     )}
                     {windowWidth <= 850 && (
-                      <MobileNav />
+                      <MobileNav logoutHandler={this.logoutHandler}/>
                     )}
                    
 
                     <audio src={notification} ref={ref => this.player = ref}  />
-                    {this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
+
+                    {windowWidth > 600 && this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
+
+
                     <Switch>
                     <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
                         

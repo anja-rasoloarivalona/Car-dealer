@@ -1,10 +1,27 @@
 .home-search{
     grid-column: 1 / -1;
     grid-row: 4 / 5;
-    background: var(--color-grey);
+    background: var(--color-grey-light);
     padding: 6rem 0;
 }
 
+@media (max-width: 850px){
+    .home-search .inventory__controller {
+        grid-template-columns: repeat(2, 20rem);
+        grid-template-rows: 5rem;
+        grid-auto-rows: 5rem;
+        padding: 0;
+    }
+}
+
+@media (max-width: 410px){
+    .home-search .inventory__controller {
+        grid-template-columns: 20rem;
+    }
+    .home-search {
+        padding: 2rem 0;
+    }
+}
 
 .home-search__cta {
     display: flex;

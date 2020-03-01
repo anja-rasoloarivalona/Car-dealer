@@ -1,17 +1,17 @@
 .auth {
     grid-column: 2 / 4;
     height: calc(100vh - 10rem);
-
-
     background: white;
-
-
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
+}
 
-   
-
+@media (max-width: 850px){
+    .auth  {
+        margin-top: 8rem;
+        height: calc(100vh - 8rem);
+    }
 }
 
 .auth__controller {
@@ -36,14 +36,36 @@
 
 
 .auth__container {
-    /*overflow: hidden;*/
-
-    width: 35%;
+    width: 50%;
+    max-width: 50rem;
     height: 75%;
     transform: translateY(-3rem);
-
     position: relative;
     z-index: 22;
+}
+
+@media (max-width: 850px){
+    .auth__container {
+        width: 70%;
+    }
+}
+
+@media (max-width: 610px){
+    .auth__container {
+        width: 80%;
+    }
+}
+
+@media (max-width:426px){
+    .auth__container {
+        width: 90%;
+    }
+}
+
+@media (max-width:362px){
+    .auth__container {
+        width: 98%;
+    }
 }
     
 .auth__form {

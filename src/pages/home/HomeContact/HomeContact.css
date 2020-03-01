@@ -7,12 +7,11 @@
     background-position: center;
     background-attachment: fixed;
     background-size: cover;
-    padding: 6rem 0;
-    height: 50rem;
     margin-bottom: 5rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 6rem 0;
 }
 
 .home-contact__title {
@@ -22,11 +21,24 @@
     margin-bottom: 2rem;
 }
 
+@media (max-width: 850px){
+    .home-contact__title {
+        font-size: 2.5rem;
+      }
+}
+
+@media (max-width: 385px){
+    .home-contact__title  {
+        font-size: 2rem;
+      }
+}
+
 .home-contact__text {
     max-width: 90%;
     color: var(--color-grey-light);
     font-size: 1.4rem;
     margin-bottom: 4rem;
+    text-align: justify;
 }
 
 .home-contact__form {
@@ -35,6 +47,13 @@
     background: var(--color-white);
     border-radius: .5rem;
 }
+
+@media (max-width: 402px){
+    .home-contact__form{
+        width: 80%;
+      }
+}
+
 
 
 

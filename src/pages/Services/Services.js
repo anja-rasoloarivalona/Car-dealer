@@ -50,27 +50,27 @@ class Services extends Component {
                     <thead className="services__table__header">
                         <tr>
                             <th>&nbsp;</th>
-                            {header.map(forfait => (
-                                <th>{forfait}</th>
+                            {header.map( (forfait, index) => (
+                                <th key={index}>{forfait}</th>
                             ))}
                         </tr>
                     </thead>
                     <tbody className="services__table__data">
-                    {Object.keys(data).map(option => (
-                        <tr className="services__table__data__row">
+                    {Object.keys(data).map( (option, index) => (
+                        <tr key={index} className="services__table__data__row">
                             <td>
                                 {option.split('_').length > 1 ? `${option.split('_')[0]} ${option.split('_')[1]}`: option}
                             </td>
-                            {header.map(forfait => {
+                            {header.map( (forfait, index) => {
                                 if(data[option].includes(forfait)){
                                     return (
-                                    <td className="services__table__data__row__checked">
+                                    <td className="services__table__data__row__checked" key={index}>
                                         <IconSvg icon="checkmark"/>
                                     </td>
                                     )
                                 } else return(
-                                    <td className="services__table__data__row__unchecked">
-                                        <IconSvg icon="close"/>
+                                    <td className="services__table__data__row__unchecked" key={index}>
+                                        <IconSvg icon="cross"/>
                                     </td>
                                     )
                             })}

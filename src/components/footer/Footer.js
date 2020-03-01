@@ -4,7 +4,6 @@ import IconSvg from '../../utilities/svg/svg';
 import DropDownList from '../DropDownList/DropDownList';
 import * as actions from '../../store/actions'
 import {connect} from 'react-redux'
-import test from '../../assets/img/intro1.jpeg';
 import {withRouter} from 'react-router-dom'
 
 class Footer extends Component {

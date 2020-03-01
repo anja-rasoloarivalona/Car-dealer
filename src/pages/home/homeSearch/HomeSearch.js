@@ -11,6 +11,7 @@ class HomeSearch extends Component {
         query: {
             brand: 'all',
             model: 'all',
+            bodyType: 'all',
             year: {
                 value: {
                     min: 2008,
@@ -55,6 +56,16 @@ class HomeSearch extends Component {
                     }   
                 }                 
             },
+        }))
+    }
+
+    selectBodyTypeHandler = bodyType => {
+        this.setState(prevState => ({
+            ...prevState,
+            query: {
+                ...prevState.query,
+                bodyType: bodyType
+            }
         }))
     }
 
@@ -112,7 +123,7 @@ class HomeSearch extends Component {
     const { query } = this.state;
     this.props.history.push({
         pathname: '/inventory',
-        search: `sort=${query.sort}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+        search: `sort=${query.sort}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${query.price.value.min}&maxPrice=${query.price.value.max}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
     })
    }
     render() {
@@ -128,6 +139,7 @@ class HomeSearch extends Component {
                         changePriceHandler={this.changePriceHandler}
                         changeYearHandler={this.changeYearHandler}
                         changeComplete={this.changeComplete}
+                        selectBodyTypeHandler={this.selectBodyTypeHandler}
                         data={this.props.brandAndModelsData}
                 />
 

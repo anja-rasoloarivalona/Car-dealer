@@ -11,12 +11,13 @@
     background: var(--color-white);
     overflow-y: scroll; 
     padding-left: 2rem
-    /* ;
-    overflow-x: hidden;
-    position: relative;
-    padding-left: 2rem;
-    padding-top: 2rem;
-    padding-bottom: 1rem; */
+}
+
+
+@media (max-width: 850px){
+    .messages__body  {
+       flex: 1;
+    }
 }
 
 .messages__sender {

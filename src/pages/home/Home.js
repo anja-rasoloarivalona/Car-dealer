@@ -1,4 +1,4 @@
-import React, { Component, Fragment, memo } from 'react'
+import React, { Component } from 'react'
 import './Home.css';
 import IconSvg from '../../utilities/svg/svg';
 import {HomeInventoryMemo} from './homeInventory/HomeInventory';
