@@ -93,7 +93,6 @@ class App extends Component {
         token: token,
         userId: userId,
         userName: userName
-       // connectionId: connectionId
     }
     this.props.setLoginStateToTrue(loginData);
     this.initUserFavoriteProducts(loginData.userId);
@@ -149,9 +148,9 @@ class App extends Component {
   componentDidUpdate(prevProps){  
      if( prevProps.location.pathname !== this.props.location.pathname){
        if(this.props.location.pathname.includes('/my-account')){ 
-        this.setState({ hideFooter: true}, () => console.log(this.state.hideFooter))
+        this.setState({ hideFooter: true})
        } else {
-        this.setState({ hideFooter: false}, () => console.log(this.state.hideFooter))   
+        this.setState({ hideFooter: false})   
        }
      }   
   }
@@ -269,14 +268,11 @@ class App extends Component {
   playNotificationSound = () => {
     this.player.play();
   }
-
-
+  
   render() {
     const { loading , hideScrollBar, hideFooter,scrolled, scrollDirection} = this.state
     let app;
-
     let windowWidth = window.innerWidth;
-
     if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
@@ -289,7 +285,6 @@ class App extends Component {
           {props => (
               <div style={props}>
                 <div className={`app`}>
-
                     {windowWidth > 850 && (
                         <Fragment>
                           <Navtop scrolled={scrolled} scrollDirection={scrollDirection}/>
@@ -299,23 +294,15 @@ class App extends Component {
                     {windowWidth <= 850 && (
                       <MobileNav logoutHandler={this.logoutHandler}/>
                     )}
-                   
-
                     <audio src={notification} ref={ref => this.player = ref}  />
-
                     {windowWidth > 600 && this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
-
-
                     <Switch>
                     <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
-                        
                         <Route path='/inventory/:prodId' render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
                         <Route path={`/inventory`} component={Inventory}/>
                         <Route path='/auth' component={Auth} />
                         <Route path='/my-account' render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
                         <Route path='/services' component={Services} />
-
-
                     </Switch>
                     
                     <Footer hide={hideFooter}/>      
