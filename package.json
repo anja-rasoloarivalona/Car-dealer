@@ -1,9 +1,10 @@
-{
+{"homepage": "http://anja-rasoloarivalona.github.io/Car-dealer",
   "name": "africauto",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
     "autosize": "^4.0.2",
+    "gh-pages": "^2.2.0",
     "query-string": "^6.8.3",
     "react": "^16.9.0",
     "react-datepicker": "^2.9.6",
@@ -23,6 +24,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy": "gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
