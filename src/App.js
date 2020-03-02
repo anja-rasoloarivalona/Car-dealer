@@ -302,9 +302,7 @@ class App extends Component {
                         <Route path={`/inventory`} component={Inventory}/>
                         <Route path={'/auth'} component={Auth} />
                         <Route path={'/my-account'} render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
-                        <Route path={'/services'} component={Services} />
-                        <Redirect to='/'/>      
-                        {/* <Redirect to = {process.env.PUBLIC_URL + "/"} /> */}
+                        <Route path={'/services'} component={Services} /> 
                     </Switch>
                     
                     <Footer hide={hideFooter}/>      
