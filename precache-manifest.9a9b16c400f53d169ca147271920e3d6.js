@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "cc1e1b7d0646b3453c44743271b0359c",
+    "revision": "57f3863661c3e39484c8bbf016d17f33",
     "url": "/Car-dealer/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Car-dealer/static/css/2.6d7d54d2.chunk.css"
   },
   {
-    "revision": "1e703398feeb153cedf6",
+    "revision": "bbc14ab8b1c38ac922bd",
     "url": "/Car-dealer/static/css/main.4fba9b63.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Car-dealer/static/js/2.c0e623c7.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "1e703398feeb153cedf6",
-    "url": "/Car-dealer/static/js/main.25a93e9f.chunk.js"
+    "revision": "bbc14ab8b1c38ac922bd",
+    "url": "/Car-dealer/static/js/main.8ea85f3a.chunk.js"
   },
   {
     "revision": "6a82ad25ab37999a340e",
