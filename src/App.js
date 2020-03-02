@@ -303,6 +303,7 @@ class App extends Component {
                         <Route path={'/auth'} component={Auth} />
                         <Route path={'/my-account'} render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
                         <Route path={'/services'} component={Services} />
+                        <Redirect to='/'/>      
                         {/* <Redirect to = {process.env.PUBLIC_URL + "/"} /> */}
                     </Switch>
                     
