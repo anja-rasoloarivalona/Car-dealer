@@ -13,13 +13,13 @@ const Navbar= props => {
                             ${props.scrolled ? 'fixed': ''}
                             `}>
             <ul className="navbar__list">
-                    <NavLink exact to="/" className="navbar__list__item">
+                    <NavLink exact to="/Car-dealer" className="navbar__list__item">
                         Home
                     </NavLink>
-                    <NavLink to="/inventory" className="navbar__list__item">
+                    <NavLink to="Car-dealer/inventory" className="navbar__list__item">
                         Inventory
                     </NavLink>
-                    <NavLink to="/services" className="navbar__list__item">
+                    <NavLink to="Car-dealer/services" className="navbar__list__item">
                         Services
                     </NavLink>
             </ul>
@@ -28,7 +28,7 @@ const Navbar= props => {
 
                 
                 {!isAuth && (
-                        <Link className="navbar__cta__login" to="/auth">
+                        <Link className="navbar__cta__login" to="Car-dealer/auth">
                             <IconSvg icon="user"/>
                             <span>Login</span>
                         </Link>

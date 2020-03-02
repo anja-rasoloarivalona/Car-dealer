@@ -36,9 +36,9 @@ const store = createStore(
 ReactDOM.render(
 
     <Provider store={store}>
-        <BrowserRouter >
+        <HashRouter >
             <App />
-        </BrowserRouter >
+        </HashRouter >
     </Provider>
     
 , 
