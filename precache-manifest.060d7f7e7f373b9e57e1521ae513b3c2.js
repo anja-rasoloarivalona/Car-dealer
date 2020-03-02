@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "2478536fe135ebc9328cf3141911aa6f",
+    "revision": "922ec012864611192b45d02d9bf67242",
     "url": "/Car-dealer/index.html"
   },
   {
-    "revision": "0c0b47c5af772a1bdf25",
+    "revision": "ac232fe536dd45769a53",
     "url": "/Car-dealer/static/css/2.6d7d54d2.chunk.css"
   },
   {
-    "revision": "48aa6688bb01f96b5a27",
+    "revision": "8e79925c2840db05bfed",
     "url": "/Car-dealer/static/css/main.4fba9b63.chunk.css"
   },
   {
-    "revision": "0c0b47c5af772a1bdf25",
-    "url": "/Car-dealer/static/js/2.c0e623c7.chunk.js"
+    "revision": "ac232fe536dd45769a53",
+    "url": "/Car-dealer/static/js/2.fd1b4e83.chunk.js"
   },
   {
     "revision": "270bd3baadcd3e629547e0c9e6559506",
-    "url": "/Car-dealer/static/js/2.c0e623c7.chunk.js.LICENSE.txt"
+    "url": "/Car-dealer/static/js/2.fd1b4e83.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "48aa6688bb01f96b5a27",
-    "url": "/Car-dealer/static/js/main.ad2424ec.chunk.js"
+    "revision": "8e79925c2840db05bfed",
+    "url": "/Car-dealer/static/js/main.2dc4c7be.chunk.js"
   },
   {
     "revision": "6a82ad25ab37999a340e",
