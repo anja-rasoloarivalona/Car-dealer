@@ -61,10 +61,10 @@ class App extends Component {
 
     // console.log('histor', this.props.history, this.props.location);
 
-    this.props.history.push({
-      pathname: this.props.history.pathname,
-      search: `lang=${this.props.lang}&currency=${this.props.currency}`
-    })
+    // this.props.history.push({
+    //   pathname: this.props.history.pathname,
+    //   search: `lang=${this.props.lang}&currency=${this.props.currency}`
+    // })
 
 
     this.setState({ loading: true});
