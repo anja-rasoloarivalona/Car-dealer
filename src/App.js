@@ -118,7 +118,7 @@ class App extends Component {
   }
 
   initAppDataHandler = () => {
-      let url = 'https://git.heroku.com/africauto.git/product/init';
+      let url = 'https://africauto.herokuapp.com/product/init';
       let method = 'GET';
       fetch( url, {
         method: method,
@@ -160,7 +160,7 @@ class App extends Component {
   }
 
   startConnection = (userId, timeStamp) => {
-        fetch('https://git.heroku.com/africauto.git/auth/start-connection',{
+        fetch('https://africauto.herokuapp.com/auth/start-connection',{
           method: 'POST',
           headers: {
             'Content-type': 'application/json'
@@ -181,7 +181,7 @@ class App extends Component {
           return res.json()
         })
         .then( resData => {
-          let socket = openSocket('https://git.heroku.com/africauto.git', {query: `data=${userId} ${resData.connectionId}`});
+          let socket = openSocket('https://africauto.herokuapp.com/', {query: `data=${userId} ${resData.connectionId}`});
           socket.connect();
           this.props.setConnectionId(resData.connectionId)
         })
@@ -200,7 +200,7 @@ class App extends Component {
   }
 
   endConnection = (userId, connectionId, timeStamp, logout) => {
-      fetch('https://git.heroku.com/africauto.git/auth/end-connection',{
+      fetch('https://africauto.herokuapp.com/auth/end-connection',{
         method: 'POST',
         headers: {
           'Content-type': 'application/json'
@@ -237,7 +237,7 @@ class App extends Component {
   }
 
   initUserFavoriteProducts = userId => {
-    let url = 'https://git.heroku.com/africauto.git/user/favorites/' + userId;
+    let url = 'https://africauto.herokuapp.com/user/favorites/' + userId;
     fetch( url, {
       headers: {
         'Content-type': 'application/json'

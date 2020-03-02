@@ -128,7 +128,7 @@ class Inventory extends Component {
 
     fetchProductsHandler = () => {
         const {query} = this.state
-        let url =  new URL('https://git.heroku.com/africauto.git/product/client');
+        let url =  new URL('https://africauto.herokuapp.com/product/client');
         let params;
 
         //current value with the corresponding currency

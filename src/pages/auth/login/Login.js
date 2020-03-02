@@ -59,7 +59,7 @@ import { withRouter } from 'react-router-dom'
             }
         }
         let timeStamp = timeStampGenerator();
-        fetch('https://git.heroku.com/africauto.git/auth/login', {
+        fetch('https://africauto.herokuapp.com/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -85,7 +85,7 @@ import { withRouter } from 'react-router-dom'
             return res.json()
         })
         .then( resData => {
-            let socket = openSocket('https://git.heroku.com/africauto.git', {query: `data=${resData.userId} ${resData.connectionId}`});
+            let socket = openSocket('https://africauto.herokuapp.com', {query: `data=${resData.userId} ${resData.connectionId}`});
             socket.connect()
                 this.props.loginSucceeded(resData);
                 localStorage.setItem('woto-token', resData.token);

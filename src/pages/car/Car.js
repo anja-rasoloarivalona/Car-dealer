@@ -94,7 +94,7 @@ class Car extends Component {
             bodyType = data.general.bodyType
         }
       
-        let url = `https://git.heroku.com/africauto.git/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&bodyType=${bodyType}&price=${price}`    
+        let url = `https://africauto.herokuapp.com/product/${prodId}?userId=${userIdFetching}&brand=${brand}&model=${model}&bodyType=${bodyType}&price=${price}`    
         fetch( url, {
         headers: {
           'Content-type': 'application/json'
@@ -139,10 +139,10 @@ class Car extends Component {
         let url;     
         if(this.state.favorite){
             //the current product is already in the favorite list
-            url = 'https://git.heroku.com/africauto.git/user/remove-favorite/' + this.props.userId + `?prodId=${prodId}`;
+            url = 'https://africauto.herokuapp.com/user/remove-favorite/' + this.props.userId + `?prodId=${prodId}`;
             this.props.removeUserFavoriteProduct(this.state.product)
         } else {
-            url = 'https://git.heroku.com/africauto.git/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
+            url = 'https://africauto.herokuapp.com/user/add-favorite/' + this.props.userId + `?prodId=${prodId}`;
             this.props.addUserFavoriteProduct(this.state.product)
         }       
         let method = 'POST'
