@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import './App.css';
-import { Route, Switch, withRouter, Redirect  } from 'react-router-dom';
+import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect} from 'react-redux';
 import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
@@ -133,6 +133,7 @@ class App extends Component {
         return res.json()
       })
       .then(resData => {
+        console.log(resData)
         this.props.initAppData(resData)
         this.setState({ 
           carsHomeIntro: resData.publicityProducts, 
