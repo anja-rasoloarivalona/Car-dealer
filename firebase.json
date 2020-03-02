@@ -6,10 +6,11 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [],
     "rewrites": [
       {
         "source": "**",
-        "redirects": []
+        "destination": "/index.html"
       }
     ]
   }
