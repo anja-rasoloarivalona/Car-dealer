@@ -14,7 +14,6 @@ class Account extends Component {
     }
 
     componentDidMount(){
-        console.log(this.props.location.pathname)
         if(this.props.location.pathname !== "/my-account/messages"){
             this.setState({ scrolling: true })
         } else {
@@ -37,16 +36,11 @@ class Account extends Component {
     }
     
     render() {
-
         let products = this.props.favorites;
-
-        const { scrolling } = this.state
-
-       
+        const { scrolling } = this.state 
 
         return (
-            <div className="account">
-                  
+            <div className="account">       
                 <div className="account__sidebar">
                         <ul className="account__sidebar__list">
                             <NavLink to="/my-account/messages" className="account__sidebar__list__item">
@@ -64,9 +58,7 @@ class Account extends Component {
                         >
                             <span>Logout</span>
                         </div>
-                </div>
-
-                
+                </div>             
                 <div className={`account__currentSection ${scrolling ? "scroll" : ''}`}>
                     <Switch>
                         <Route path="/my-account/favorites"  render={(props) => <ProductsList {...props}  productsList={products}/>} />

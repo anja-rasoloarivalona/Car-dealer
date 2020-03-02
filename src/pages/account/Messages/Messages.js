@@ -16,7 +16,7 @@ class Messages extends Component {
     }
 
     componentDidMount(){   
-        let url = "http://localhost:8000/messages/" + this.props.userId;
+        let url = "https://git.heroku.com/africauto.git/messages/" + this.props.userId;
         let method = "GET";
         fetch( url, {
            headers: {
@@ -33,6 +33,9 @@ class Messages extends Component {
         })
         .then( resData => {
 
+            console.log(resData);
+
+            
             if(this.props.newMessage > 0){
                 this.props.resetNewMessageNotification()
                 this.readNewMessagesHandler()
@@ -46,8 +49,7 @@ class Messages extends Component {
             console.log(err)
         })
 
-        const socket = openSocket('http://localhost:8000');
-        
+        const socket = openSocket('https://git.heroku.com/africauto.git');
         socket.on('adminSentMessage', data => {  
             if(this.props.userId === data.messageData.userId){
                  this.readNewMessagesHandler();
@@ -58,7 +60,7 @@ class Messages extends Component {
 
 
     readNewMessagesHandler = () => {
-        let url = "http://localhost:8000/messages/" + this.props.userId;
+        let url = "https://git.heroku.com/africauto.git/messages/" + this.props.userId;
             let timeStamp = timeStampGenerator();
                 fetch( url, {
                     headers: {
@@ -96,7 +98,7 @@ class Messages extends Component {
     sendMessageHandler = () => {
         if(this.state.messageInput !== ''){
             let timeStamp = timeStampGenerator();
-            let url = "http://localhost:8000/messages/user/" + this.props.userId;
+            let url = "https://git.heroku.com/africauto.git/messages/user/" + this.props.userId;
             let method = "POST";
     
             fetch(url, {

@@ -36,7 +36,6 @@ import { withRouter } from 'react-router-dom'
                     value: value
                 }
             }
-
             return {
                 loginForm: updatedForm
             }
@@ -46,13 +45,11 @@ import { withRouter } from 'react-router-dom'
     loginHandler = (e, loginFormData) => {
         e.preventDefault();
         this.props.setLoadingToTrue();
-
         if(loginFormData){
             const errors = validator(
                 loginFormData.email,
                 loginFormData.password
             )
-
             if(errors.length > 0){
                 this.setState({ error: errors})
                 this.props.setLoadingToFalse()
@@ -61,11 +58,8 @@ import { withRouter } from 'react-router-dom'
                 return 
             }
         }
-
         let timeStamp = timeStampGenerator();
-
-
-        fetch('http://localhost:8000/auth/login', {
+        fetch('https://git.heroku.com/africauto.git/auth/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -88,11 +82,10 @@ import { withRouter } from 'react-router-dom'
             if(res.status !== 200 && res.status !== 201){
                 throw new Error('Could not authenticate you')
             }
-
             return res.json()
         })
         .then( resData => {
-            let socket = openSocket('http://localhost:8000', {query: `data=${resData.userId} ${resData.connectionId}`});
+            let socket = openSocket('https://git.heroku.com/africauto.git', {query: `data=${resData.userId} ${resData.connectionId}`});
             socket.connect()
                 this.props.loginSucceeded(resData);
                 localStorage.setItem('woto-token', resData.token);

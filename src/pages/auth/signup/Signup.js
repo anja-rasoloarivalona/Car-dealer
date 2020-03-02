@@ -38,13 +38,6 @@ class Signup extends Component {
         
     }
 
-    componentWillMount(){
-        console.log(this.state)
-    }
-
-    
-
-
     inputChangeHandler = (input, value) => {
         this.setState( prevState => {
             const updatedForm = {
@@ -54,20 +47,15 @@ class Signup extends Component {
                     value: value
                 }
             }
-
             return {
                 signupForm: updatedForm
             }
         })
     }
 
-    submitHandler = (e, signupFormData) => {
-        
+    submitHandler = (e, signupFormData) => {  
         e.preventDefault();
-
         this.props.setLoadingToTrue()
-
-
         const errors = validator(
             signupFormData.userEmail,
             signupFormData.userPassword,
@@ -82,16 +70,13 @@ class Signup extends Component {
             this.props.setErrors()
             return 
         }
-
         const formData = new FormData();
-
-
         formData.append('firstName', signupFormData.firstName.value);
         formData.append('lastName', signupFormData.lastName.value);
         formData.append('email', signupFormData.userEmail.value);
         formData.append('password', signupFormData.userPassword.value)
 
-        fetch('http://localhost:8000/auth/signup', {
+        fetch('https://git.heroku.com/africauto.git/auth/signup', {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
@@ -130,7 +115,6 @@ class Signup extends Component {
         this.props.resetErrors()
     }
 
-    
 
     render() {
 
@@ -202,7 +186,6 @@ class Signup extends Component {
                         onChange={this.inputChangeHandler}
                     />
             </ul>
-
             <div className='signup__options'>
                 <div className="signup__options--1">
                     Déjà un compte ?
@@ -216,12 +199,8 @@ class Signup extends Component {
             </div>
             
         </form>
-
-
             )
         }
-
-
         return form
             
     }

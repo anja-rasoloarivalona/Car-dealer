@@ -127,10 +127,8 @@ class Inventory extends Component {
 
 
     fetchProductsHandler = () => {
-
-       
         const {query} = this.state
-        let url =  new URL('http://localhost:8000/product/client');
+        let url =  new URL('https://git.heroku.com/africauto.git/product/client');
         let params;
 
         //current value with the corresponding currency
@@ -309,7 +307,6 @@ class Inventory extends Component {
         }))
     }
     changeComplete = () => {
-        console.log('change complete')
         this.fetchProductsHandler()
     }
 
@@ -349,7 +346,6 @@ class Inventory extends Component {
         if(!loading){
             inventory = (
                 <div className="inventory">
-    
                         <Controller
                             currency={this.props.currency}
                             query={query}
@@ -361,26 +357,24 @@ class Inventory extends Component {
                             changeYearHandler={this.changeYearHandler}
                             changeComplete={this.changeComplete}
                             data={this.props.brandAndModelsData}
-                        />
+                        /> 
 
-                    
-                    <section className="inventory__container">
-                        {products && (
-                            <Paginator
-                            onRequestPreviousPage={this.paginationHandler.bind(this, 'previous')}
-                            onRequestNextPage={this.paginationHandler.bind(this, 'next')}
-                            lastPage={Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)}
-                            currentPage={this.props.currentInventoryPage}
-                            onRequestPageNumber={this.paginationHandler}
-                            products={products}
-                            itemsPerPage={this.props.itemsPerPage}
-                            >
-                                <ProductsList productsList={products}/>
-                            </Paginator>
-                                          
-                        )}
-                    </section>
-                    
+                        <section className="inventory__container">
+                            {products && (
+                                <Paginator
+                                onRequestPreviousPage={this.paginationHandler.bind(this, 'previous')}
+                                onRequestNextPage={this.paginationHandler.bind(this, 'next')}
+                                lastPage={Math.ceil(this.props.totalProductsCounter / this.props.itemsPerPage)}
+                                currentPage={this.props.currentInventoryPage}
+                                onRequestPageNumber={this.paginationHandler}
+                                products={products}
+                                itemsPerPage={this.props.itemsPerPage}
+                                >
+                                    <ProductsList productsList={products}/>
+                                </Paginator>
+                                            
+                            )}
+                        </section>        
                 </div>
             )
         }
