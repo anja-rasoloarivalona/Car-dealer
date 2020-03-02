@@ -16,10 +16,10 @@ const Navbar= props => {
                     <NavLink exact to="/" className="navbar__list__item">
                         Home
                     </NavLink>
-                    <NavLink to="inventory" className="navbar__list__item">
+                    <NavLink to="/inventory" className="navbar__list__item">
                         Inventory
                     </NavLink>
-                    <NavLink to="services" className="navbar__list__item">
+                    <NavLink to="/services" className="navbar__list__item">
                         Services
                     </NavLink>
             </ul>
@@ -28,7 +28,7 @@ const Navbar= props => {
 
                 
                 {!isAuth && (
-                        <Link className="navbar__cta__login" to="auth">
+                        <Link className="navbar__cta__login" to="/auth">
                             <IconSvg icon="user"/>
                             <span>Login</span>
                         </Link>
