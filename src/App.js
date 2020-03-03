@@ -298,12 +298,12 @@ class App extends Component {
                     <audio src={notification} ref={ref => this.player = ref}  />
                     {windowWidth > 600 && this.props.auth && this.props.token && this.props.userId && <Chat playNotificationSound={this.playNotificationSound}/>}
                     <Switch>
-                    <Route exact path={process.env.PUBLIC_URL + `/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
-                        <Route path={process.env.PUBLIC_URL + '/inventory/:prodId'} render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
-                        <Route path={process.env.PUBLIC_URL + `/inventory`} component={Inventory}/>
-                        <Route path={process.env.PUBLIC_URL + '/auth'} component={Auth} />
-                        <Route path={process.env.PUBLIC_URL + '/my-account'} render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
-                        <Route path={process.env.PUBLIC_URL + '/services'} component={Services} /> 
+                    <Route exact path={`/`} render={(props) => <Home {...props} carsHomeIntro={this.state.carsHomeIntro} carsHomeInventory={this.state.carsHomeInventory}/>}/>
+                        <Route path={'/inventory/:prodId'} render={(props) => <SingleCar {...props} hideScrollBar={hideScrollBar} showScrollBarHandler={this.showScrollBarHandler} hideScrollBarHandler={this.hideScrollBarHandler} /> }/>
+                        <Route path={`/inventory`} component={Inventory}/>
+                        <Route path={'/auth'} component={Auth} />
+                        <Route path={'/my-account'} render={(props) => <Account {...props} logoutHandler={this.logoutHandler} /> }/>
+                        <Route path={'/services'} component={Services} /> 
                     </Switch>
                     
                     <Footer hide={hideFooter}/>      
