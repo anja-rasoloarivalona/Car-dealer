@@ -16,10 +16,10 @@ const Navbar= props => {
                     <NavLink exact to="/" className="navbar__list__item">
                         Home
                     </NavLink>
-                    <Link to="inventory" className={`navbar__list__item ${props.location.pathname.includes('inventory') ?  'active' : ''}`}>
+                    <Link to="../inventory" className={`navbar__list__item ${props.location.pathname.includes('inventory') ?  'active' : ''}`}>
                         Inventory
                     </Link>
-                    <Link to="services" className={`navbar__list__item ${props.location.pathname.includes('services') ?  'active' : ''}`}>
+                    <Link to="../services" className={`navbar__list__item ${props.location.pathname.includes('services') ?  'active' : ''}`}>
                         Services
                     </Link>
             </ul>
