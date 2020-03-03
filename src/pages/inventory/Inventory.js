@@ -339,9 +339,7 @@ class Inventory extends Component {
 
     render() {
         const {products, loading, query} = this.state;
-        let inventory = (<div className="inventory__loader">
-                            <Loader />
-                        </div>)
+        let inventory = <Loader />
         if(!loading){
             inventory = (
                 <div className="inventory">
