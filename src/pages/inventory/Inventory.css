@@ -1,13 +1,22 @@
 .inventory {
     grid-column: 1 / -1;
-    min-height: 100vh;
+    min-height: calc(100vh - 11rem);
     display: flex;
     flex-direction: column;
+}
+
+.inventory__loader {
+    width: 100vw;
+    height: calc(100vh - 11rem);;
 }
 
 @media (max-width:850px){
     .inventory  {
         margin-top: 8rem;
+        min-height: calc(100vh - 8rem);
+    }
+    .inventory__loader {
+        height: calc(100vh - 8rem);
     }
 }
 .inventory__container { 

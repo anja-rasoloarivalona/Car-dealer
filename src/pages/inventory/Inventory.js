@@ -170,9 +170,6 @@ class Inventory extends Component {
           return res.json()
         })
         .then(resData => {  
-       
-
-
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
               pathname: `/inventory`,
@@ -342,7 +339,9 @@ class Inventory extends Component {
 
     render() {
         const {products, loading, query} = this.state;
-        let inventory = <Loader />
+        let inventory = (<div className="inventory__loader">
+                            <Loader />
+                        </div>)
         if(!loading){
             inventory = (
                 <div className="inventory">

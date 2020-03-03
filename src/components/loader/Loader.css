@@ -1,9 +1,7 @@
 .loader-container {
-
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.603);
-    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: var(--color-white);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -21,7 +19,7 @@
     bottom: 0;
     width: 10px;
     height: 50%;
-    background: var(--color-white);
+    background: var(--color-primary);
     -webkit-transform-origin: center bottom;
             transform-origin: center bottom;
     box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
