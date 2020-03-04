@@ -56,7 +56,7 @@ const navtop = props => {
             <div className="navtop__cta">
                 <DropDownList 
                     value={props.lang}
-                    list={['english', 'spanish', 'french']}
+                    list={['english','french']}
                     selectItemHandler={setLangHandler}
                 />
                 <DropDownList 

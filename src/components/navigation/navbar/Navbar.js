@@ -29,7 +29,7 @@ const Navbar= props => {
 
                 
                 {!isAuth && (
-                        <Link className="navbar__cta__login" to="auth">
+                        <Link className="navbar__cta__login" to="../auth">
                             <IconSvg icon="user"/>
                             <span><FormattedMessage id="login" defaultMessage="login"/></span>
                         </Link>

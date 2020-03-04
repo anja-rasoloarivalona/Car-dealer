@@ -7,6 +7,7 @@ import IconSvg from '../../utilities/svg/svg';
 import AutoSizeTextArea from '../AutosizeTextArea/AutosizetextArea';
 import MessagesList from '../../pages/account/Messages/MessagesList/MessagesList';
 import * as actions from '../../store/actions'
+import { FormattedMessage } from 'react-intl'
 
 
  class Chat extends Component {
@@ -137,12 +138,16 @@ import * as actions from '../../store/actions'
     }
     toggleShowChat = () => {
         let unreadMessageCounter = 0;
-        this.state.messages.forEach(i => {
-            if(i.read === false){
-                unreadMessageCounter++
-            } 
-        })
 
+        if(this.state.messages && this.state.messages.length > 0){
+            this.state.messages.forEach(i => {
+                if(i.read === false){
+                    unreadMessageCounter++
+                } 
+            })
+    
+        }
+      
         if(this.props.newMessage > 0){
             unreadMessageCounter += this.props.newMessage
         }
@@ -174,7 +179,7 @@ import * as actions from '../../store/actions'
             ) 
         } else {
             messagesList = (
-                <div className="messagesContainer__body__start">Start conversation</div>
+                <div className="messagesContainer__body__start"><FormattedMessage id="startConversation" defaultMessage="start conversation"/></div>
             )
         }
 
@@ -195,7 +200,7 @@ import * as actions from '../../store/actions'
                 <div className={`chat__messages ${showChat ? 'show' : ''}`}>
                     <div className="chat__messages__header">
                         <IconSvg icon="close" onClick={this.toggleShowChat}/>
-                        <span>Open conversation</span>
+                        <span><FormattedMessage id="openConversation" defaultMessage="open conversation"/></span>
                     </div>
 
                     <div className="chat__messages__body">

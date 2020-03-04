@@ -10,6 +10,7 @@ import Loader from '../../components/loader/Loader';
 import ProductsList from '../../components/ProductsList/ProductsList';
 import Amount from '../../components/Amount/Amount';
 import IconSvg from '../../utilities/svg/svg';
+import { FormattedMessage } from 'react-intl'
 
 class Car extends Component {
 
@@ -257,51 +258,51 @@ class Car extends Component {
                             </div>
                             <ul className="single-car__header__info__list">
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">reference</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="reference" defaultMessage="reference"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.supplier.reference}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">brand</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="brand" defaultMessage="brand"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.brand}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">body type</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="bodyType" defaultMessage="body type"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.bodyType}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">model</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="model" defaultMessage="model"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.model}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">year</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="year" defaultMessage="year"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.year}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">kilometer</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="kilometers" defaultMessage="kilometers"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.nbKilometers} km</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">YOR</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="YOR" defaultMessage="YOR"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.yearOfRelease}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">fuel</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="fuel" defaultMessage="fuel"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.gazol}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">gear box</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="gearBox" defaultMessage="gear box"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.transmissionType}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">serial number</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="serialNumber" defaultMessage="serial number"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.serialNumber}</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">views</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="views" defaultMessage="views"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.general.viewCounter ? product.general.viewCounter : '-' }</div>
                                     </li>
                                     <li className="single-car__header__info__list__item">
-                                        <div className="single-car__header__info__list__item__key">followers</div>
+                                        <div className="single-car__header__info__list__item__key"><FormattedMessage id="followers" defaultMessage="followers"/></div>
                                         <div className="single-car__header__info__list__item__value">{product.followersCounter ? product.followersCounter : '-'}</div>
                                     </li>
                             </ul>
@@ -315,17 +316,17 @@ class Car extends Component {
                             <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'overview' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'overview'})}>
-                                Overview
+                                <FormattedMessage id="overview" defaultMessage="overview"/>
                             </li>
                             <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'technical' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'technical'})}>
-                                Technical
+                                <FormattedMessage id="technical" defaultMessage="technical"/>
                             </li>
                             <li className={`single-car__details__nav__item
                                         ${this.state.partRequested === 'features' ? 'active': ''}`}
                                 onClick={() => this.setState({ partRequested: 'features'})}>
-                                Features
+                                <FormattedMessage id="features" defaultMessage="features"/>
                             </li>
                         </ul>
                         {this.state.partRequested === 'overview' && <Overview product={product}/>}
@@ -339,7 +340,7 @@ class Car extends Component {
 
                     <section className="single-car__related">
                         <h2 className="single-car__section__title">
-                            Similar vehicles
+                            <FormattedMessage id="similarVehicles" defaultMessage="similar vehicles"/>
                         </h2>
                         <ProductsList 
                             productsList={products}
@@ -349,7 +350,7 @@ class Car extends Component {
 
                     <section className="single-car__mostPopular">
                         <h2 className="single-car__section__title">
-                            Most popular
+                           <FormattedMessage id="mostPopular" defaultMessage="most popular"/>
                         </h2>
                         <ProductsList 
                             productsList={this.props.mostPopularProducts}

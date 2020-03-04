@@ -7,6 +7,7 @@ import MessagesList from './MessagesList/MessagesList'
 import IconSvg from '../../../utilities/svg/svg'
 import AutoSizeTextArea from '../../../components/AutosizeTextArea/AutosizetextArea'
 import * as actions from '../../../store/actions'
+import { FormattedMessage } from 'react-intl';
 
 class Messages extends Component {
 
@@ -140,7 +141,7 @@ class Messages extends Component {
             ) 
         } else {
             messagesList = (
-                <div className="messagesContainer__body__start">Start conversation</div>
+                <div className="messagesContainer__body__start"><FormattedMessage id="startConversation" defaultMessage="start conversation"/></div>
             )
         }
 

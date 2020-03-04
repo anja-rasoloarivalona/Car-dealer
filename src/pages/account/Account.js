@@ -6,6 +6,7 @@ import Messages from './Messages/Messages'
 import IconSvg from '../../utilities/svg/svg'
 import ProductsList from '../../components/ProductsList/ProductsList'
 import { Route, Switch, withRouter, NavLink } from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 class Account extends Component {
     state = {
@@ -50,13 +51,13 @@ class Account extends Component {
 
                             <NavLink to="/my-account/favorites" className="account__sidebar__list__item">
                                     <IconSvg icon="heart"/>
-                                   <span>Favorites</span> 
+                                   <span><FormattedMessage id="favorites"  defaultMessage="favorites"/></span> 
                             </NavLink>
                         </ul>
                         <div className="account__sidebar__logout"
                              onClick={this.props.logoutHandler}
                         >
-                            <span>Logout</span>
+                            <span><FormattedMessage id="logout"  defaultMessage="logout"/></span>
                         </div>
                 </div>             
                 <div className={`account__currentSection ${scrolling ? "scroll" : ''}`}>

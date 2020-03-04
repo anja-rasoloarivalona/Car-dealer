@@ -81,7 +81,7 @@ class Home extends Component {
 
     requestProductDetails = data => {
         this.props.setProductRequestedData(data);
-        this.props.history.push(`/inventory/${data._id}?brand=${data.general.brand}&model=${data.general.model}&bodyType=${data.general.bodyType}&price=${data.general.price}`); 
+        this.props.history.push(`/inventory/${data._id}?bodyType=${data.general.bodyType}&brand=${data.general.brand}&currency=${this.props.currency}&lang=${this.props.lang}&model=${data.general.model}&price=${data.general.price}`); 
         if(this.props.fetchProductDetailsHandler){
             this.props.fetchProductDetailsHandler(data)
         }     
@@ -220,7 +220,7 @@ const mapStateToProps = state => {
         mostPopularSedan: state.product.mostPopularSedan,
         lang: state.parameters.lang,
         currency: state.parameters.currency,
-        totalProductsCounter: state.product.totalProductsCounter
+        totalProductsCounter: state.product.totalProductsCounter,
     }
 }
 
