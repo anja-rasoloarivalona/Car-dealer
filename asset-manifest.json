@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/woto-motors/static/css/main.1a2ace25.chunk.css",
-    "main.js": "/woto-motors/static/js/main.65e28451.chunk.js",
-    "main.js.map": "/woto-motors/static/js/main.65e28451.chunk.js.map",
+    "main.css": "/woto-motors/static/css/main.e41e9d66.chunk.css",
+    "main.js": "/woto-motors/static/js/main.b04b236d.chunk.js",
+    "main.js.map": "/woto-motors/static/js/main.b04b236d.chunk.js.map",
     "runtime-main.js": "/woto-motors/static/js/runtime-main.7d4be6d6.js",
     "runtime-main.js.map": "/woto-motors/static/js/runtime-main.7d4be6d6.js.map",
     "static/css/2.6d7d54d2.chunk.css": "/woto-motors/static/css/2.6d7d54d2.chunk.css",
-    "static/js/2.b785da03.chunk.js": "/woto-motors/static/js/2.b785da03.chunk.js",
-    "static/js/2.b785da03.chunk.js.map": "/woto-motors/static/js/2.b785da03.chunk.js.map",
+    "static/js/2.370ec3b4.chunk.js": "/woto-motors/static/js/2.370ec3b4.chunk.js",
+    "static/js/2.370ec3b4.chunk.js.map": "/woto-motors/static/js/2.370ec3b4.chunk.js.map",
     "index.html": "/woto-motors/index.html",
-    "precache-manifest.30301b979e8c29e0e891b3fe0a89f4c0.js": "/woto-motors/precache-manifest.30301b979e8c29e0e891b3fe0a89f4c0.js",
+    "precache-manifest.4dc13abdbe20453e5bbed1b30b4830a8.js": "/woto-motors/precache-manifest.4dc13abdbe20453e5bbed1b30b4830a8.js",
     "service-worker.js": "/woto-motors/service-worker.js",
     "static/css/2.6d7d54d2.chunk.css.map": "/woto-motors/static/css/2.6d7d54d2.chunk.css.map",
-    "static/css/main.1a2ace25.chunk.css.map": "/woto-motors/static/css/main.1a2ace25.chunk.css.map",
-    "static/js/2.b785da03.chunk.js.LICENSE.txt": "/woto-motors/static/js/2.b785da03.chunk.js.LICENSE.txt",
+    "static/css/main.e41e9d66.chunk.css.map": "/woto-motors/static/css/main.e41e9d66.chunk.css.map",
+    "static/js/2.370ec3b4.chunk.js.LICENSE.txt": "/woto-motors/static/js/2.370ec3b4.chunk.js.LICENSE.txt",
     "static/media/Services.css": "/woto-motors/static/media/desert-suv.4b55d60c.jpg",
     "static/media/eventually.mp3": "/woto-motors/static/media/eventually.b5e7acad.mp3",
     "static/media/HomeContact.css": "/woto-motors/static/media/help.40e159c3.jpg",
@@ -22,8 +22,8 @@
   "entrypoints": [
     "static/js/runtime-main.7d4be6d6.js",
     "static/css/2.6d7d54d2.chunk.css",
-    "static/js/2.b785da03.chunk.js",
-    "static/css/main.1a2ace25.chunk.css",
-    "static/js/main.65e28451.chunk.js"
+    "static/js/2.370ec3b4.chunk.js",
+    "static/css/main.e41e9d66.chunk.css",
+    "static/js/main.b04b236d.chunk.js"
   ]
 }
