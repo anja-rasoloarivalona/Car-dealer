@@ -1,11 +1,9 @@
 import React, { Component , Fragment} from 'react'
 import './Auth.css';
-
 import Login from './login/Login';
 import Signup from './signup/Signup';
-
-
 import Loader from '../../components/loader/Loader';
+import { FormattedMessage } from 'react-intl'
 
 
 class Auth extends Component {
@@ -59,12 +57,12 @@ class Auth extends Component {
                                 <div className={`auth__controller__button 
                                                 ${this.state.requestedForm === 'signup' ? 'active' : ''}`} 
                                     onClick={() => this.setRequestedForm('signup')}>
-                                    Signup
+                                    <FormattedMessage id="signUp" defaultMessage="sign up"/>
                                 </div>
                                 <div className={`auth__controller__button 
                                                 ${this.state.requestedForm === 'login' ? 'active' : ''}`}
                                     onClick={() => this.setRequestedForm('login')}>
-                                    Login
+                                    <FormattedMessage id="login" defaultMessage="login"/>
                                 </div>
                             </div>
                             )

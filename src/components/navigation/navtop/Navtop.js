@@ -4,15 +4,36 @@ import IconSvg from '../../../utilities/svg/svg';
 import DropDownList from '../../DropDownList/DropDownList';
 import { connect } from 'react-redux';
 import * as actions from '../../../store/actions';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
+import queryString from 'query-string'
 
 const navtop = props => {
     const setCurrencyHandler = currency => {
+        let parsedQuery = queryString.parse(props.location.search);
+        parsedQuery = {
+            ...parsedQuery,
+            currency: currency
+        }
+        let stringifiedQuery = queryString.stringify(parsedQuery)
         props.history.push({
             pathname: props.history.pathname,
-            search: `lang=${props.lang}&currency=${currency}`
+            search: `${stringifiedQuery}`
         })
         props.setCurrency(currency)
+    }
+
+    const setLangHandler = lang => {
+        let parsedQuery = queryString.parse(props.location.search);
+        parsedQuery = {
+            ...parsedQuery,
+            lang: lang
+        }
+        let stringifiedQuery = queryString.stringify(parsedQuery)
+        props.history.push({
+            pathname: props.history.pathname,
+            search: `${stringifiedQuery}`
+        })
+        props.setLang(lang)
     }
     return (
         <div className={`navtop 
@@ -36,7 +57,7 @@ const navtop = props => {
                 <DropDownList 
                     value={props.lang}
                     list={['english', 'spanish', 'french']}
-                    selectItemHandler={props.setLang}
+                    selectItemHandler={setLangHandler}
                 />
                 <DropDownList 
                     value={props.currency}

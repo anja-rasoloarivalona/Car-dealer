@@ -4,6 +4,29 @@ import Button from '../../../components/button/Button';
 import './Signup.css';
 import { validator } from '../../../utilities/validators';
 import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
+import { defineMessages, injectIntl, FormattedMessage } from 'react-intl'
+
+
+const messages = defineMessages({
+    firstName: {
+        id: "firstName",
+        defaultMessage: "first name"
+    },
+    lastName: {
+        id: "lastName",
+        defaultMessage: "last name"
+    },
+    confirmPassword: {
+        id: "confirmPassword",
+        defaultMessage: "confirm password",
+    },
+    password: {
+        id: "password",
+        defaultMessage: "password"
+    }
+})
+
+
 
 class Signup extends Component {
 
@@ -18,12 +41,12 @@ class Signup extends Component {
                 errorLabel: 'A lastname'
             },
 
-            userEmail: {
+            email: {
                 value: '',
                 errorLabel: 'An email'
             },
 
-            userPassword:{
+            password:{
                 value: '',
                 errorLabel: 'A password'
             },
@@ -57,8 +80,8 @@ class Signup extends Component {
         e.preventDefault();
         this.props.setLoadingToTrue()
         const errors = validator(
-            signupFormData.userEmail,
-            signupFormData.userPassword,
+            signupFormData.email,
+            signupFormData.password,
             signupFormData.confirm_password,
             signupFormData.firstName,
             signupFormData.lastName
@@ -73,8 +96,8 @@ class Signup extends Component {
         const formData = new FormData();
         formData.append('firstName', signupFormData.firstName.value);
         formData.append('lastName', signupFormData.lastName.value);
-        formData.append('email', signupFormData.userEmail.value);
-        formData.append('password', signupFormData.userPassword.value)
+        formData.append('email', signupFormData.email.value);
+        formData.append('password', signupFormData.password.value)
 
         fetch('https://africauto.herokuapp.com/auth/signup', {
             method: 'PUT',
@@ -118,6 +141,8 @@ class Signup extends Component {
 
     render() {
 
+        const {formatMessage } = this.props.intl
+
         let form;
 
         if(this.state.error ) {
@@ -138,7 +163,7 @@ class Signup extends Component {
                         value={this.state.signupForm['firstName'].value}
                         label='prénom'
                         onChange={this.inputChangeHandler}
-                        placeholder='prénom'
+                        placeholder={formatMessage(messages.firstName)}
                         border
                         required={true}/>
                     
@@ -148,7 +173,7 @@ class Signup extends Component {
                             id='lastName'
                             value={this.state.signupForm['lastName'].value}
                             onChange={this.inputChangeHandler}
-                            placeholder='nom'
+                            placeholder={formatMessage(messages.lastName)}
                             border
                             required={true}/>
 
@@ -156,8 +181,8 @@ class Signup extends Component {
                         <Input  type='email'
                             control='input'
                             label='email'
-                            id='userEmail'
-                            value={this.state.signupForm['userEmail'].value}
+                            id='email'
+                            value={this.state.signupForm['email'].value}
                             onChange={this.inputChangeHandler}
                             placeholder='email'
                             
@@ -167,17 +192,17 @@ class Signup extends Component {
                     <Input  type='password'
                             control='input'
                             label='mot de passe'
-                            id='userPassword'
-                            value={this.state.signupForm['userPassword'].value}
+                            id='password'
+                            value={this.state.signupForm['password'].value}
                             onChange={this.inputChangeHandler}
-                            placeholder='mot de passe'
+                            placeholder={formatMessage(messages.password)}
                             border
                             autoComplete = 'new-password'
                             required={true}/>
                     <Input 
                         id='confirm_password'
                         label='confirmer mot de passe'
-                        placeholder='confirmer mot de passe'
+                        placeholder={formatMessage(messages.confirmPassword)}
                         type='password'
                         control='input' 
                         required={true}
@@ -188,13 +213,13 @@ class Signup extends Component {
             </ul>
             <div className='signup__options'>
                 <div className="signup__options--1">
-                    Déjà un compte ?
+                    <FormattedMessage id="alreadyHaveAnAccount" defaultMessage="already have an account"/> ?
                 </div>
             </div>
 
             <div className="auth__button">
                 <Button color='primary' type='submit'>
-                    Sign up
+                    <FormattedMessage id="signUp" defaultMessage="sign up"/>
                 </Button>
             </div>
             
@@ -206,4 +231,4 @@ class Signup extends Component {
     }
 }
 
-export default Signup;
+export default injectIntl(Signup) ;

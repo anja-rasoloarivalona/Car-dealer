@@ -173,7 +173,7 @@ class Inventory extends Component {
           this.setState({ products: resData.products, loading: false});
           this.props.history.push({
               pathname: `/inventory`,
-              search: `lang=${this.props.lang}&currency=${this.props.currency}&sort=${query.sort}&page=${query.page}&bodyType=${query.bodyType}&brand=${query.brand}&model=${query.model}&minPrice=${minPriceQuery}&maxPrice=${maxPriceQuery}&minYear=${query.year.value.min}&maxYear=${query.year.value.max}`
+              search: `bodyType=${query.bodyType}&brand=${query.brand}&currency=${this.props.currency}&lang=${this.props.lang}&maxPrice=${maxPriceQuery}&maxYear=${query.year.value.max}&minPrice=${minPriceQuery}&minYear=${query.year.value.min}&model=${query.model}&page=${query.page}&sort=${query.sort}`
           })
         })
         .catch(err => {

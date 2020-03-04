@@ -341,6 +341,7 @@
     align-items: center;
     font-size: 3rem;
     font-weight: 700;
+    text-transform: uppercase;
 }
 
 @media (max-width: 850px){

@@ -10,6 +10,15 @@ import ErrorHandler from '../../../components/errorHandler/ErrorHandler';
 import {timeStampGenerator } from '../../../utilities/timeStampGenerator';
 import openSocket from 'socket.io-client';
 import { withRouter } from 'react-router-dom'
+import { injectIntl, defineMessages, FormattedMessage } from 'react-intl'
+
+
+const messages = defineMessages({
+    password: {
+        id: "password",
+        defaultMessage: "password"
+    }
+})
 
  class Login extends Component {
 
@@ -121,6 +130,7 @@ import { withRouter } from 'react-router-dom'
 
 
     render() {
+        const {formatMessage } = this.props.intl
 
         let form;
 
@@ -153,7 +163,7 @@ import { withRouter } from 'react-router-dom'
                                     id='password'
                                     value={this.state.loginForm['password'].value}
                                     onChange={this.inputChangeHandler}
-                                    placeholder='mot de passe'
+                                    placeholder={formatMessage(messages.password)}
                                     border
                                     required={true}
                                     autoComplete = 'new-password'/>
@@ -161,16 +171,16 @@ import { withRouter } from 'react-router-dom'
 
                     <div className='login__options'>
                         <div className="login__options--1" >
-                            Mot de passe oublié
+                            <FormattedMessage id="forgotPassword" defaultMessage="Forgot your password"/>
                         </div>
                         <div className="login__options--1">
-                            Pas encore membre ?
+                            <FormattedMessage id="notAMemberYet" defaultMessage="Not a member yet"/> ?
                         </div>
                     </div>
 
                     <div className="auth__button">
                         <Button color='primary' type='submit'>
-                            Login
+                            <FormattedMessage id="login" defaultMessage="login"/>
                         </Button>
                     </div>
                 
@@ -189,4 +199,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(withRouter(Login));
+export default connect(null, mapDispatchToProps)(withRouter(injectIntl(Login)));

@@ -3,7 +3,8 @@ import './Navbar.css';
 import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux';
 import IconSvg from '../../../utilities/svg/svg';
-import { NavLink, Link} from 'react-router-dom'
+import { NavLink, Link} from 'react-router-dom';
+import { FormattedMessage } from 'react-intl'
 
 const Navbar= props => {
     let userName = props.userName;
@@ -14,13 +15,13 @@ const Navbar= props => {
                             `}>
             <ul className="navbar__list">
                     <NavLink exact to="/" className="navbar__list__item">
-                        Home
+                        <FormattedMessage id="home" defaultMessage="home"/>
                     </NavLink>
                     <Link to="../inventory" className={`navbar__list__item ${props.location.pathname.includes('inventory') ?  'active' : ''}`}>
-                        Inventory
+                        <FormattedMessage id="inventory" defaultMessage="inventory"/>
                     </Link>
                     <Link to="../services" className={`navbar__list__item ${props.location.pathname.includes('services') ?  'active' : ''}`}>
-                        Services
+                        <FormattedMessage id="services" defaultMessage="services"/>
                     </Link>
             </ul>
 
@@ -30,7 +31,7 @@ const Navbar= props => {
                 {!isAuth && (
                         <Link className="navbar__cta__login" to="auth">
                             <IconSvg icon="user"/>
-                            <span>Login</span>
+                            <span><FormattedMessage id="login" defaultMessage="login"/></span>
                         </Link>
                 )}
 

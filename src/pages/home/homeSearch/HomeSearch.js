@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import Controller from '../../../pages/inventory/Controller/Controller';
 import Button from '../../../components/button/Button';
 import {withRouter} from 'react-router-dom'
+import {FormattedMessage  } from 'react-intl'
 
 class HomeSearch extends Component {
 
@@ -147,7 +148,7 @@ class HomeSearch extends Component {
                     <Button color="primary"
                             onClick={this.searchHandler}
                     >
-                        Search
+                        <FormattedMessage id="search" defaultMessage="search"/>
                     </Button>
                 </div>
 

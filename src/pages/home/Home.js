@@ -9,7 +9,8 @@ import Button from '../../components/button/Button';
 import * as actions from '../../store/actions';
 import { connect } from 'react-redux';
 import ProductList from '../../components/ProductsList/ProductsList'
-import Amount from '../../components/Amount/Amount'
+import Amount from '../../components/Amount/Amount';
+import { FormattedMessage } from 'react-intl'
 
 class Home extends Component {
 
@@ -29,10 +30,10 @@ class Home extends Component {
             this.setState({ homeInventoryLimit: 8})
         }
 
-        this.props.history.push({
-            pathname: this.props.history.pathname,
-            search: `lang=${this.props.lang}&currency=${this.props.currency}`
-          })
+        // this.props.history.push({
+        //     pathname: this.props.history.pathname,
+        //     search: `currency=${this.props.currency}&lang=${this.props.lang}`
+        //   })
 
 
 
@@ -140,7 +141,7 @@ class Home extends Component {
                                 </div>                              
                                  <Button color="primary"
                                   onClick={() => this.requestProductDetails(product)}>
-                                     Voir
+                                     <FormattedMessage id="see" defaultMessage="see"/>
                                  </Button>
                                  
                             </div>
@@ -153,16 +154,16 @@ class Home extends Component {
 
             <section className="home__router">
                 <div className="home__router__nav">
-                    <h1><span>WELCOME TO&nbsp;</span><span>WOTO MOTORS</span></h1>
+                    <h1><span><FormattedMessage id="welcomeTo" defaultMessage="welcome to"/>&nbsp;</span><span>WOTO MOTORS</span></h1>
                     <nav className="home__router__nav__list">
                         <li 
                             className={`home__router__nav__list__item ${this.state.partRequested === 'inventory' ? 'active': ''}`} 
                             onClick={() => this.setState({ partRequested: 'inventory'})}>
-                                Inventory
+                                <FormattedMessage id="inventory" defaultMessage="inventory"/>
                         </li>
                         <li className={`home__router__nav__list__item ${this.state.partRequested === 'search' ? 'active': ''}`}
                             onClick={() => this.setState({ partRequested: 'search'})}>
-                                Search
+                               <FormattedMessage id="search" defaultMessage="search"/>
                         </li>
                         {/* <li className={`home__router__nav__list__item ${this.state.partRequested === 'contact' ? 'active': ''}`}
                             onClick={() => this.setState({ partRequested: 'contact'})}>
@@ -170,12 +171,12 @@ class Home extends Component {
                         </li> */}
                         <li className={`home__router__nav__list__item ${this.state.partRequested === 'services' ? 'active': ''}`}
                             onClick={() => this.setState({ partRequested: 'services'})}>
-                                Services
+                                <FormattedMessage id="services" defaultMessage="services"/>
                         </li>
                     </nav>
                     <div className="home__router__nav__count">
                         <IconSvg icon="car"/>
-                        <div>Available {this.props.totalProductsCounter} cars</div>
+                        <div>{this.props.totalProductsCounter} <FormattedMessage id="availableCars" defaultMessage="available cars"/></div>
                     </div>
                 </div>
             </section>
@@ -204,7 +205,7 @@ class Home extends Component {
             
             <div className="home__mostPopSedan">
                 <h1 className="home__mostPopSedan__title">
-                    Most popular sedan
+                    <FormattedMessage id="mostPopularSedan" defaultMessage="The most popular sedan"/>
                 </h1>
                 <ProductList productsList={this.props.mostPopularSedan}/>
             </div>

@@ -5,6 +5,7 @@ import DropDownList from '../DropDownList/DropDownList';
 import * as actions from '../../store/actions'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 class Footer extends Component {
 
@@ -44,20 +45,20 @@ class Footer extends Component {
                     <div className="footer__list__item">
                         <h3 className="footer__title">WOTO Motors</h3>
                         <p>
-                            Aliquam non lacus nec ligula efficitur malesuada ac sit amet orci. Aliquam volutpat, sapien eu blandit laoreet, sapien quam semper nunc, a mollis turpis lacus vitae nibh. Nullam eleifend varius dolor, quis dapibus sem tempor eget. Nulla sed aliquam nibh. In eu luctus tortor. Vestibulum ullamcorper ex nisl,
+                            <FormattedMessage id="wotoFooter" defaultMessage="Woto motors is a car dealership based in Quebec. We deliver vehicles all over the world. For more information, log into your woto account and communicate with our agents."/>
                         </p>
                     </div>
                     <div className="footer__list__item">
-                        <h3 className="footer__title">Site map</h3>
+                        <h3 className="footer__title"><FormattedMessage id="siteMap" defaultMessage="site map"/></h3>
                         <ul className="footer__list__item__list">
                             <li className="footer__list__item__list__item">
-                               <a href="/">Home</a>
+                               <a href="/"><FormattedMessage id="home" defaultMessage="home"/></a>
                             </li>
                             <li className="footer__list__item__list__item">
-                                <a href="/inventory">Inventory</a>
+                                <a href="/inventory"><FormattedMessage id="inventory" defaultMessage="inventory"/></a>
                             </li>
                             <li className="footer__list__item__list__item">
-                                <a href="/services">Services</a>
+                                <a href="/services"><FormattedMessage id="services" defaultMessage="services"/></a>
                             </li>
                         </ul>
                     </div>
@@ -67,7 +68,7 @@ class Footer extends Component {
 
                 <li className="footer__list__group">
                     <div className="footer__list__item">
-                        <h3 className="footer__title">Subscribe</h3>
+                        <h3 className="footer__title"><FormattedMessage id="subscribe" defaultMessage="subscribe"/></h3>
 
                         <div className="footer__inputContainer">
                             <input className="footer__input"
@@ -82,16 +83,16 @@ class Footer extends Component {
                         </div>
                         
                         {susbscribed && (
-                            <p>You've been subscribed. Thank you for joining us</p>
+                            <p><FormattedMessage id="youVeBeenSubscribed" defaultMessage="You've been subscribed. Thank you for joining us"/></p>
                         )}
                          {!susbscribed && (
-                            <p>Get latest updates and offers</p>
+                            <p><FormattedMessage id="getLastUpdate" defaultMessage="Get latest updates and offers"/></p>
                         )}
 
                        
                     </div>
                     <div className="footer__list__item">
-                        <h3 className="footer__title">Parameters</h3>
+                        <h3 className="footer__title"><FormattedMessage id="parameters" defaultMessage="parameters"/></h3>
                         <ul className="footer__list__item__list">
                             <li className="footer__list__item__list__item">
                                 <DropDownList 

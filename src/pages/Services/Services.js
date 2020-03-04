@@ -2,34 +2,57 @@ import React, { Component } from 'react'
 import './Services.css'
 import IconSvg from '../../utilities/svg/svg'
 import { connect } from 'react-redux'
+import { FormattedMessage, defineMessages, injectIntl } from 'react-intl'
 
+
+const messages = defineMessages({
+    purchase: {
+        id: "purchase",
+        defaultMessage: "purchase"
+    },
+    vehicle_paper: {
+        id: "vehicle_paper",
+        defaultMessage: "vehicle_paper"
+    },
+    customs_clearance: {
+        id: "customs_clearance",
+        defaultMessage: "customs_clearance"
+    },
+    insurance: {
+        id: "insurance",
+        defaultMessage: "insurance"
+    },
+
+})
 
 class Services extends Component {
 
     componentDidMount(){
         window.scrollTo(0 , 0)
-        this.props.history.push({
-            pathname: this.props.history.pathname,
-            search: `lang=${this.props.lang}&currency=${this.props.currency}`
-          })
+        // this.props.history.push({
+        //     pathname: this.props.history.pathname,
+        //     search: `currency=${this.props.currency}&lang=${this.props.lang}`
+        //   })
     }
 
     render() {
+
+        const {formatMessage } = this.props.intl
  
     let data = {
-        purchase : [
+        [formatMessage(messages.purchase)] : [
             'basic', 'conventionnel', 'tranquility', 'clés en main'
         ],
-        vehicle_paper: [
+        [formatMessage(messages.vehicle_paper)]: [
             'basic', 'conventionnel', 'tranquility', 'clés en main'
         ],
         transport: [
             'conventionnel', 'tranquility', 'clés en main'
         ],
-        customs_clearance: [
+        [formatMessage(messages.customs_clearance)]: [
             'conventionnel', 'tranquility', 'clés en main'
         ],
-        insurance : [
+        [formatMessage(messages.insurance)] : [
            'tranquility', 'clés en main'
         ],
     }
@@ -40,9 +63,9 @@ class Services extends Component {
         return (
             <div className="services">
             <header className="services__header">
-                <h1 className="services__header__title">Your next car is here</h1>
+                <h1 className="services__header__title"><FormattedMessage id="yourNextCarHere" defaultMessage="your next car is here"/></h1>
                 <div className="services__header__text">
-                    Maecenas iaculis diam ac orci fringilla, rutrum congue nunc bibendum. Duis egestas orci non justo pharetra commodo. Fusce augue nisi, varius id orci at, porttitor gravida tellus. Proin condimentum justo sapien, sed aliquet libero tincidunt commodo. Proin euismod nulla erat, sed hendrerit erat congue eu. Ut dolor odio, feugiat non neque ut, euismod bibendum leo. Duis tempus volutpat efficitur. Praesent fringilla enim tellus, sed semper ligula feugiat nec.
+                    <FormattedMessage id="serviceText" defaultMessage="Wherever you are, we have what you need. We offer 4 different types of service depending on the place of delivery. We also give our customers the possibility to choose a customized package. Therefore, we invite you to contact one of our agents."/>
                 </div>
             </header>
 
@@ -59,7 +82,7 @@ class Services extends Component {
                     {Object.keys(data).map( (option, index) => (
                         <tr key={index} className="services__table__data__row">
                             <td>
-                                {option.split('_').length > 1 ? `${option.split('_')[0]} ${option.split('_')[1]}`: option}
+                                {option.split('_').length > 1 ? `${option.split('_')[0]}     ${option.split('_')[1]} ${option.split('_')[2] !== undefined ? option.split('_')[2] : "" }    `: option}
                             </td>
                             {header.map( (forfait, index) => {
                                 if(data[option].includes(forfait)){
@@ -93,4 +116,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default  connect(mapStateToProps)(Services)
+export default  connect(mapStateToProps)(injectIntl(Services))

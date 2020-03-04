@@ -4,8 +4,11 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import { connect} from 'react-redux';
 import * as actions from './store/actions'
 import openSocket from 'socket.io-client';
-import { Spring } from 'react-spring/renderprops'
+// import { Spring } from 'react-spring/renderprops'
 import notification from './assets/eventually.mp3'
+import { IntlProvider} from 'react-intl';
+import messages from './messages'
+import queryString from 'query-string'
 
 /*------------COMPONENTS---------------------*/
 import Navtop from './components/navigation/navtop/Navtop';
@@ -36,7 +39,9 @@ class App extends Component {
     hideScrollBar: false,
     hideFooter: false,
     scrolled: false,
-    scrollDirection: 'bottom'
+    scrollDirection: 'bottom',
+
+    lang: "english"
   }
 
   componentDidMount(){
@@ -65,6 +70,24 @@ class App extends Component {
     //   pathname: this.props.history.pathname,
     //   search: `lang=${this.props.lang}&currency=${this.props.currency}`
     // })
+
+
+    let parsedQuery = queryString.parse(this.props.location.search);
+
+    
+
+    if(Object.keys(parsedQuery).length > 0){
+      this.props.setLang(parsedQuery.lang)
+      this.props.setCurrency(parsedQuery.currency)
+    } else {
+      this.props.history.push({
+            pathname: this.props.history.pathname,
+            search: `currency=${this.props.currency}&lang=${this.props.lang}`
+          })
+    }
+    
+
+
 
 
     this.setState({ loading: true});
@@ -147,12 +170,26 @@ class App extends Component {
 
   componentDidUpdate(prevProps){  
      if( prevProps.location.pathname !== this.props.location.pathname){
+
+
        if(this.props.location.pathname.includes('/my-account')){ 
         this.setState({ hideFooter: true})
        } else {
         this.setState({ hideFooter: false})   
        }
-     }   
+
+
+       if(!this.props.location.pathname.includes('/inventory')){
+            this.props.history.push({
+                  pathname: this.props.history.pathname,
+                  search: `currency=${this.props.currency}&lang=${this.props.lang}`
+                })
+          }
+     }  
+     
+     if(prevProps.lang !== this.props.lang){
+       this.setState({ lang: this.props.lang})
+     }
   }
 
   componentWillUnmount() {
@@ -270,20 +307,29 @@ class App extends Component {
   }
   
   render() {
-    const { loading , hideScrollBar, hideFooter,scrolled, scrollDirection} = this.state
+    const { loading , hideScrollBar, hideFooter,scrolled, scrollDirection, lang} = this.state
     let app;
     let windowWidth = window.innerWidth;
+
+    let langManager = {
+      french: "fr",
+      english: "en"
+    }
+
+
     if(loading === true || !this.props.brandAndModelsData){
       app = <Loader />
 
     } else {
       app = (
-        <Spring
-          from={{marginTop: 1000}}
-          to = {{ marginTop: 0}}
-          config={{delay: 500}}>
-          {props => (
-              <div style={props}>
+        // <Spring
+        //   from={{marginTop: 1000}}
+        //   to = {{ marginTop: 0}}
+        //   config={{delay: 500}}>
+        //   {props => (
+        //       <div style={props}>
+
+
                 <div className={`app`}>
                     {windowWidth > 850 && (
                         <Fragment>
@@ -307,13 +353,22 @@ class App extends Component {
                     
                     <Footer hide={hideFooter}/>      
                 </div>
-              </div>
-            )
-          }
-        </Spring>
+
+
+
+        //       </div>
+        //     )
+        //   }
+        // </Spring>
       )
     }   
-    return app
+    return (
+      <IntlProvider locale={langManager[lang]} 
+              messages={messages[langManager[lang]]}
+      >
+        {app}
+      </IntlProvider>
+    )
   }
 }
 
@@ -336,7 +391,9 @@ const mapDispatchToProps = dispatch => {
     setLoginStateToFalse: () => dispatch(actions.setLoginStateToFalse()),
     setConnectionId: connectionId => dispatch(actions.setConnectionId(connectionId)),
     initAppData: data => dispatch(actions.initAppData(data)),
-    setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products))
+    setUserFavoriteProducts: products => dispatch(actions.setUserFavoriteProducts(products)),
+    setLang: lang => dispatch(actions.setLang(lang)),
+    setCurrency: currency => dispatch(actions.setCurrency(currency)),
   }
 }
 

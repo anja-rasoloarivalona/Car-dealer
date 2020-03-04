@@ -3,11 +3,12 @@ import './HomeService.css';
 import IconSvg from '../../../utilities/svg/svg';
 import Button from '../../../components/button/Button';
 import {withRouter} from 'react-router-dom'
+import { FormattedMessage } from 'react-intl'
 
 const homeService = props => {
     return (
         <section className="home-service">
-            <h1 className="home-service__title">Nos offres</h1>
+            <h1 className="home-service__title"><FormattedMessage id="ourOffers" defaultMessage="our offers"/></h1>
 
             <ul className="home-service__list">
                 <li className="home-service__list__item">
@@ -43,7 +44,7 @@ const homeService = props => {
             <Button color="primary"
                     onClick={() => props.history.push("/services")}
             >
-                LEARN MORE
+                <FormattedMessage id="learnMore" defaultMessage="LEARN MORE"/>
             </Button>
         </section>
     )
