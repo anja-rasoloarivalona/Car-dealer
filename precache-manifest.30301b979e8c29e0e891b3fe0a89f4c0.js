@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "bb16c7be7f8c2d9f2b2b0583ca5070e5",
+    "revision": "f4a23767a2d004b89a0d42d3236e5d5b",
     "url": "/woto-motors/index.html"
   },
   {

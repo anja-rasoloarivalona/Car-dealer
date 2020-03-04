@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/woto-motors/precache-manifest.4d49113043dbc6c6ddb2ebca2bc02348.js"
+  "/woto-motors/precache-manifest.30301b979e8c29e0e891b3fe0a89f4c0.js"
 );
 
 self.addEventListener('message', (event) => {
