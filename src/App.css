@@ -54,7 +54,19 @@ body {
   transition-delay: 1s;
 }
 
+body::-webkit-scrollbar {
+  width: 15px;
+}
 
+body::-webkit-scrollbar-thumb {
+  background: #d4d4d4; 
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary)
+}
 
 body.hideScrollBar::-webkit-scrollbar {
   display: none;
