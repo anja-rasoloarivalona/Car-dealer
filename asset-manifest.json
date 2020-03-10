@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/woto-motors/static/css/main.f4bf2ea3.chunk.css",
-    "main.js": "/woto-motors/static/js/main.127fb8bd.chunk.js",
-    "main.js.map": "/woto-motors/static/js/main.127fb8bd.chunk.js.map",
+    "main.css": "/woto-motors/static/css/main.e60db280.chunk.css",
+    "main.js": "/woto-motors/static/js/main.85cd2d84.chunk.js",
+    "main.js.map": "/woto-motors/static/js/main.85cd2d84.chunk.js.map",
     "runtime-main.js": "/woto-motors/static/js/runtime-main.7d4be6d6.js",
     "runtime-main.js.map": "/woto-motors/static/js/runtime-main.7d4be6d6.js.map",
     "static/css/2.6d7d54d2.chunk.css": "/woto-motors/static/css/2.6d7d54d2.chunk.css",
     "static/js/2.6c8a00de.chunk.js": "/woto-motors/static/js/2.6c8a00de.chunk.js",
     "static/js/2.6c8a00de.chunk.js.map": "/woto-motors/static/js/2.6c8a00de.chunk.js.map",
     "index.html": "/woto-motors/index.html",
-    "precache-manifest.88cbc6f88f859f41998765c54177dfb7.js": "/woto-motors/precache-manifest.88cbc6f88f859f41998765c54177dfb7.js",
+    "precache-manifest.991e81d6659de3f03e68cc65ef66ea13.js": "/woto-motors/precache-manifest.991e81d6659de3f03e68cc65ef66ea13.js",
     "service-worker.js": "/woto-motors/service-worker.js",
     "static/css/2.6d7d54d2.chunk.css.map": "/woto-motors/static/css/2.6d7d54d2.chunk.css.map",
-    "static/css/main.f4bf2ea3.chunk.css.map": "/woto-motors/static/css/main.f4bf2ea3.chunk.css.map",
+    "static/css/main.e60db280.chunk.css.map": "/woto-motors/static/css/main.e60db280.chunk.css.map",
     "static/js/2.6c8a00de.chunk.js.LICENSE.txt": "/woto-motors/static/js/2.6c8a00de.chunk.js.LICENSE.txt",
     "static/media/Services.css": "/woto-motors/static/media/desert-suv.4b55d60c.jpg",
     "static/media/eventually.mp3": "/woto-motors/static/media/eventually.b5e7acad.mp3",
@@ -23,7 +23,7 @@
     "static/js/runtime-main.7d4be6d6.js",
     "static/css/2.6d7d54d2.chunk.css",
     "static/js/2.6c8a00de.chunk.js",
-    "static/css/main.f4bf2ea3.chunk.css",
-    "static/js/main.127fb8bd.chunk.js"
+    "static/css/main.e60db280.chunk.css",
+    "static/js/main.85cd2d84.chunk.js"
   ]
 }
